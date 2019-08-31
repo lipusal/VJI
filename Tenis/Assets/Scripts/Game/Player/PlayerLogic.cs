@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Game.Input;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class PlayerLogic : MonoBehaviour
     private int moveForwardBackwardValue;
     private CharacterController _characterController;
     private float speed = 4f;
+    private float force = 10f;
 
     void Start()
     {
@@ -74,4 +76,11 @@ public class PlayerLogic : MonoBehaviour
         _characterController.Move(new Vector3(leftRightMove, 0, forwardBackardMove));
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+        {
+            other.GetComponent<Rigidbody>().velocity = force * new Vector3(0f, 1f, 5f);
+        }
+    }
 }
