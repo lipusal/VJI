@@ -16,14 +16,19 @@ public class PlayerLogic : MonoBehaviour
     public KeyCode bacwardButton = KeyCode.DownArrow;
     // Button to hit
     public KeyCode hitButton = KeyCode.A;
+
+    public Transform aimTarget;
+    public float aimTargetSpeed;
+    
+    public float movementSpeed = 4f;
+    public float hitForce = 10f;
+
     private bool _isHitting;
     // Moving Left or Right (-1: left, 1: right, 0: none)
     private int moveLeftRightValue;
     // Moving Up or Down (-1: down, 1: up, 0: none)
     private int moveForwardBackwardValue;
     private CharacterController _characterController;
-    private float speed = 4f;
-    private float force = 10f;
 
     void Start()
     {
@@ -36,13 +41,22 @@ public class PlayerLogic : MonoBehaviour
     void Update()
     {
         ReadInput();
-        UpdatePosition();
+
+        if(!_isHitting)
+        {
+            UpdatePosition();
+        }
+        else
+        {
+            UpdateAimTargetPosition();
+        }
     }
     
     private void ReadInput()
     {
         moveLeftRightValue = 0;
         moveForwardBackwardValue = 0;
+
         if (ActionMapper.GetMoveLeft(leftButton))
         {
             moveLeftRightValue += -1;
@@ -63,24 +77,37 @@ public class PlayerLogic : MonoBehaviour
             moveForwardBackwardValue += -1;
         }
 
-        if (ActionMapper.GetHit(hitButton))
+        if (ActionMapper.GetHitPressed(hitButton))
         {
             _isHitting = true;
+        }
+
+        if (ActionMapper.GetHitReleased(hitButton))
+        {
+            _isHitting = false;
         }
     }
     
     private void UpdatePosition()
     {
-        float leftRightMove = speed * moveLeftRightValue * Time.deltaTime;
-        float forwardBackardMove = speed * moveForwardBackwardValue * Time.deltaTime;
+        float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
+        float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
+
         _characterController.Move(new Vector3(leftRightMove, 0, forwardBackardMove));
+    }
+
+    private void UpdateAimTargetPosition()
+    {
+        aimTarget.Translate(new Vector3(aimTargetSpeed * moveLeftRightValue * Time.deltaTime, 0, 0));
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ball"))
         {
-            other.GetComponent<Rigidbody>().velocity = force * new Vector3(0f, 1f, 5f);
+            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+
+            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 5, 0);
         }
     }
 }

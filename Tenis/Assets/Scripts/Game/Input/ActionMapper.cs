@@ -24,9 +24,14 @@ namespace Game.Input
             return UnityEngine.Input.GetKey(backwardButton);
         }
 
-        public static bool GetHit(KeyCode hitButton)
+        public static bool GetHitPressed(KeyCode hitButton)
         {
             return UnityEngine.Input.GetKeyDown(hitButton);
+        }
+
+        public static bool GetHitReleased(KeyCode hitButton)
+        {
+            return UnityEngine.Input.GetKeyUp(hitButton);
         }
     }
 }
