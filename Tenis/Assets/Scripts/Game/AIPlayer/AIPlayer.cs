@@ -8,7 +8,7 @@ public class AIPlayer : MonoBehaviour
 
     private float speed = 15;
 
-    private float hitForce = 40;
+    private float hitForce = 28;
 
     public Transform aimTarget;
 
