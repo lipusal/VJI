@@ -4,38 +4,32 @@ using System.Collections.Generic;
 using Game.Input;
 using UnityEngine;
 
-public class PlayerLogic : MonoBehaviour
+public class Player2Logic : MonoBehaviour
 {
     // Button to move left
     public KeyCode leftButton = KeyCode.LeftArrow;
-
     // Button to move right
     public KeyCode rightButton = KeyCode.RightArrow;
-
     // Button to move forward
     public KeyCode forwardButton = KeyCode.UpArrow;
-
     // Button to move backward
     public KeyCode bacwardButton = KeyCode.DownArrow;
-
     // Button to hit
     public KeyCode hitButton = KeyCode.A;
 
     public Transform aimTarget;
     public float aimTargetSpeed;
-
+    
     public float movementSpeed = 14f;
     public float hitForce = 40f;
-
+    
     // Is true after hit button is pressed
     private bool _isHitting;
-
     // Is true after hit button is released;
     private bool _finishHitting;
 
     // Moving Left or Right (-1: left, 1: right, 0: none)
     private int moveLeftRightValue;
-
     // Moving Up or Down (-1: down, 1: up, 0: none)
     private int moveForwardBackwardValue;
     private CharacterController _characterController;
@@ -53,7 +47,7 @@ public class PlayerLogic : MonoBehaviour
     {
         ReadInput();
 
-        if (!_isHitting)
+        if(!_isHitting)
         {
             UpdatePosition();
         }
@@ -62,7 +56,7 @@ public class PlayerLogic : MonoBehaviour
             UpdateAimTargetPosition();
         }
     }
-
+    
     private void ReadInput()
     {
         moveLeftRightValue = 0;
@@ -73,7 +67,7 @@ public class PlayerLogic : MonoBehaviour
         {
             moveLeftRightValue += -1;
         }
-
+        
         if (ActionMapper.GetMoveRight(rightButton))
         {
             moveLeftRightValue += 1;
@@ -83,7 +77,7 @@ public class PlayerLogic : MonoBehaviour
         {
             moveForwardBackwardValue += 1;
         }
-
+        
         if (ActionMapper.GetMoveBackward(bacwardButton))
         {
             moveForwardBackwardValue += -1;
@@ -100,7 +94,7 @@ public class PlayerLogic : MonoBehaviour
             _finishHitting = true;
         }
     }
-
+    
     private void UpdatePosition()
     {
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
@@ -111,27 +105,16 @@ public class PlayerLogic : MonoBehaviour
 
     private void UpdateAimTargetPosition()
     {
-        aimTarget.Translate(new Vector3(aimTargetSpeed * moveLeftRightValue * Time.deltaTime, 0,
-            aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime));
+        aimTarget.Translate(new Vector3(aimTargetSpeed * moveLeftRightValue * Time.deltaTime, 0, aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime));
     }
-
-
-//    private void OnTriggerStay(Collider other)
-//    {
-//        if (_finishHitting && other.CompareTag("Ball"))
-//        {
-//            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-//
-//            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 6.2f, 0);
-//        }
-//    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ball"))
         {
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-
+            
             other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 6.2f, 0);
         }
     }
