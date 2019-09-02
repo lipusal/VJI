@@ -22,8 +22,12 @@ public class PlayerLogic : MonoBehaviour
     
     public float movementSpeed = 14f;
     public float hitForce = 40f;
-
+    
+    // Is true after hit button is pressed
     private bool _isHitting;
+    // Is true after hit button is released;
+    private bool _finishHitting;
+
     // Moving Left or Right (-1: left, 1: right, 0: none)
     private int moveLeftRightValue;
     // Moving Up or Down (-1: down, 1: up, 0: none)
@@ -34,6 +38,7 @@ public class PlayerLogic : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _isHitting = false;
+        _finishHitting = false;
         moveLeftRightValue = 0;
         moveForwardBackwardValue = 0;
     }
@@ -56,6 +61,7 @@ public class PlayerLogic : MonoBehaviour
     {
         moveLeftRightValue = 0;
         moveForwardBackwardValue = 0;
+        _finishHitting = false;
 
         if (ActionMapper.GetMoveLeft(leftButton))
         {
@@ -85,6 +91,7 @@ public class PlayerLogic : MonoBehaviour
         if (ActionMapper.GetHitReleased(hitButton))
         {
             _isHitting = false;
+            _finishHitting = true;
         }
     }
     
@@ -100,12 +107,12 @@ public class PlayerLogic : MonoBehaviour
     {
         aimTarget.Translate(new Vector3(aimTargetSpeed * moveLeftRightValue * Time.deltaTime, 0, aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime));
     }
+    
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Ball"))
+        if (_finishHitting && other.CompareTag("Ball"))
         {
-            Debug.Log("applying force to ball");
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
             
             other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 6.2f, 0);
