@@ -22,10 +22,13 @@ public class PlayerLogic : MonoBehaviour
     public KeyCode hitButton = KeyCode.A;
 
     public Transform aimTarget;
-    public float aimTargetSpeed;
+    public float aimTargetSpeed = 18;
 
     public float movementSpeed = 14f;
-    public float hitForce = 40f;
+    public float maxHitForce = 40f;
+    private float _currentHitForce;
+    private float deltaHitForce = 1;
+    public float minHitForce = 18f;
 
     // Is true after hit button is pressed
     private bool _isHitting;
@@ -47,6 +50,7 @@ public class PlayerLogic : MonoBehaviour
         _finishHitting = false;
         moveLeftRightValue = 0;
         moveForwardBackwardValue = 0;
+        _currentHitForce = minHitForce;
     }
 
     void Update()
@@ -91,7 +95,13 @@ public class PlayerLogic : MonoBehaviour
 
         if (ActionMapper.GetHitPressed(hitButton))
         {
+            if (!_isHitting)
+            {
+                _currentHitForce = minHitForce;
+            }
             _isHitting = true;
+            _currentHitForce += _currentHitForce + deltaHitForce;
+            _currentHitForce = Math.Min(_currentHitForce, maxHitForce);
         }
 
         if (ActionMapper.GetHitReleased(hitButton))
@@ -132,7 +142,9 @@ public class PlayerLogic : MonoBehaviour
         {
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
 
-            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 6.2f, 0);
+            other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            _currentHitForce = minHitForce;
+
         }
     }
 }

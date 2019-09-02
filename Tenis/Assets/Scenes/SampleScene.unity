@@ -1949,7 +1949,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299943505}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b6a6f2fbc82d4cafb073ddd160ec030, type: 3}
   m_Name: 
@@ -1962,7 +1962,7 @@ MonoBehaviour:
   aimTarget: {fileID: 1492476147}
   aimTargetSpeed: 15
   movementSpeed: 14
-  hitForce: 40
+  hitForce: 25
 --- !u!65 &299943508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1994,6 +1994,20 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 2.1, z: 0}
+--- !u!114 &299943511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299943505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe3b22b41f2045aabcf39c3ae58877b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballPosition: {fileID: 1061059253}
+  aimTarget: {fileID: 1492476147}
 --- !u!1 &319831410
 GameObject:
   m_ObjectHideFlags: 0
@@ -9268,8 +9282,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 40.448338, y: 4.8875904, z: 1}
-  m_Center: {x: 0.0056533813, y: 1.9437952, z: -2.4828243e-17}
+  m_Size: {x: 38.47921, y: 4.2146297, z: 0.44311187}
+  m_Center: {x: -0.9788895, y: 1.607315, z: 0.08587368}
 --- !u!1 &1408284756
 GameObject:
   m_ObjectHideFlags: 0
@@ -9369,9 +9383,10 @@ MonoBehaviour:
   bacwardButton: 275
   hitButton: 108
   aimTarget: {fileID: 598947288}
-  aimTargetSpeed: 15
+  aimTargetSpeed: 18
   movementSpeed: 14
-  hitForce: 30
+  maxHitForce: 40
+  minHitForce: 18
 --- !u!65 &1417308007
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9383,8 +9398,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.9343805, y: 4.7106895, z: 2.170709}
-  m_Center: {x: 0.11538243, y: 2.1883483, z: 0.6772449}
+  m_Size: {x: 3.9343805, y: 6.7973204, z: 3.301669}
+  m_Center: {x: 0.11538243, y: 3.2316637, z: 0.8613813}
 --- !u!1 &1421632865
 GameObject:
   m_ObjectHideFlags: 0

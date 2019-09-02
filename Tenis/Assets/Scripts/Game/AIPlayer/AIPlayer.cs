@@ -37,7 +37,7 @@ public class AIPlayer : MonoBehaviour
         {
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
             
-            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 6.2f, 0);
+            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 7f, 0);
         }
     }
 }
