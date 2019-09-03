@@ -99,6 +99,7 @@ public class PlayerLogic : MonoBehaviour
             {
                 _currentHitForce = minHitForce;
             }
+
             _isHitting = true;
             _currentHitForce += _currentHitForce + deltaHitForce;
             _currentHitForce = Math.Min(_currentHitForce, maxHitForce);
@@ -132,9 +133,11 @@ public class PlayerLogic : MonoBehaviour
 //        {
 //            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
 //
-//            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 6.2f, 0);
+//            other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+//            _currentHitForce = minHitForce;
 //        }
 //    }
+
 
     private void OnTriggerEnter(Collider other)
     {
