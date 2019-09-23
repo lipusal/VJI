@@ -1,0 +1,442 @@
+fileFormatVersion: 2
+guid: 72cb4ee228e34422a80d7082baad07a4
+ModelImporter:
+  serializedVersion: 26
+  internalIDToNameTable:
+  - first:
+      74: 6872430442033563718
+    second: agustin1
+  - first:
+      74: -5252816984213320552
+    second: idle
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'agustin1' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'agustin_Spine1' has translation animation that
+      will be discarded.\n\t'agustin_Head' has translation animation that will be
+      discarded.\n\t'agustin_LeftHand' has translation animation that will be discarded.\n\t'agustin_RightHand'
+      has translation animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: agustin1
+      takeName: agustin1
+      internalID: 6872430442033563718
+      firstFrame: 0
+      lastFrame: 11742
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: idle
+      takeName: agustin1
+      internalID: -5252816984213320552
+      firstFrame: 460
+      lastFrame: 535
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: agustin_Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: agustin_Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Grupo4-MoCaps-s1(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_Hips
+      parentName: Grupo4-MoCaps-s1(Clone)
+      position: {x: 0, y: 0.87119704, z: 0.06515522}
+      rotation: {x: 0.0034607693, y: -0.012163107, z: -0.0019889665, w: 0.9999181}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftUpLeg
+      parentName: agustin_Hips
+      position: {x: -0.08851955, y: 0, z: 0}
+      rotation: {x: 0.016649812, y: -0.008224209, z: -0.05393164, w: 0.99837196}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftLeg
+      parentName: agustin_LeftUpLeg
+      position: {x: -0, y: -0.41593665, z: 0}
+      rotation: {x: 0.034232583, y: -0.0052613677, z: 0.034550134, w: 0.99880266}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftFoot
+      parentName: agustin_LeftLeg
+      position: {x: -0, y: -0.32643402, z: 0}
+      rotation: {x: -0.046545804, y: -0.11446697, z: 0.0304992, w: 0.99186724}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftToeBase
+      parentName: agustin_LeftFoot
+      position: {x: -0, y: -0.0575377, z: 0.13277933}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightUpLeg
+      parentName: agustin_Hips
+      position: {x: 0.08851955, y: 0, z: 0}
+      rotation: {x: 0.015401575, y: 0.0007565891, z: 0.06689276, w: 0.997641}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightLeg
+      parentName: agustin_RightUpLeg
+      position: {x: -0, y: -0.41593665, z: 0}
+      rotation: {x: 0.06087419, y: -0.00046299206, z: -0.061176732, w: 0.9962688}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightFoot
+      parentName: agustin_RightLeg
+      position: {x: -0, y: -0.32643402, z: 0}
+      rotation: {x: -0.0771388, y: 0.15799017, z: -0.017776424, w: 0.9842625}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightToeBase
+      parentName: agustin_RightFoot
+      position: {x: -0, y: -0.0575377, z: 0.13277933}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_Spine
+      parentName: agustin_Hips
+      position: {x: -0, y: 0.07258603, z: 0}
+      rotation: {x: -0.043973144, y: 0.003527054, z: 0.009544565, w: 0.99898094}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_Spine1
+      parentName: agustin_Spine
+      position: {x: -0.000001437962, y: 0.1756711, z: -0.0000039339066}
+      rotation: {x: 0.0013141022, y: 0.0011833798, z: -0.00066895207, w: 0.9999982}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftShoulder
+      parentName: agustin_Spine1
+      position: {x: -0.035840813, y: 0.15123123, z: -0.00196952}
+      rotation: {x: -0.002400584, y: 0.042056486, z: -0.14634846, w: 0.9883358}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftArm
+      parentName: agustin_LeftShoulder
+      position: {x: -0.12862465, y: 0, z: 0}
+      rotation: {x: -0.0006814232, y: 0.0049409554, z: 0.14909239, w: 0.9888108}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftForeArm
+      parentName: agustin_LeftArm
+      position: {x: -0.2610293, y: 0, z: 0}
+      rotation: {x: -0.03645102, y: 0.0010571784, z: -0.00046573463, w: 0.9993348}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_LeftHand
+      parentName: agustin_LeftForeArm
+      position: {x: -0.25112644, y: -0.0000022649765, z: -0.0000022826716}
+      rotation: {x: -0.036420427, y: 0.0035338812, z: 0.03702973, w: 0.998644}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_Neck
+      parentName: agustin_Spine1
+      position: {x: -0, y: 0.1936121, z: 0}
+      rotation: {x: 0.13017221, y: 0.035767164, z: -0.049737398, w: 0.98959696}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_Head
+      parentName: agustin_Neck
+      position: {x: -0.0000010952353, y: 0.13548541, z: 0.017481834}
+      rotation: {x: -0.007212379, y: 0.032026146, z: -0.01505849, w: 0.99934757}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightShoulder
+      parentName: agustin_Spine1
+      position: {x: 0.03491972, y: 0.15123123, z: -0.00196952}
+      rotation: {x: -0.0037814414, y: 0.008597576, z: 0.11757215, w: 0.99301994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightArm
+      parentName: agustin_RightShoulder
+      position: {x: 0.12862465, y: 0, z: 0}
+      rotation: {x: 0.020670088, y: -0.0031448053, z: -0.09061475, w: 0.99566656}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightForeArm
+      parentName: agustin_RightArm
+      position: {x: 0.2610293, y: 0, z: 0}
+      rotation: {x: -0.075801365, y: 0.0005277248, z: -0.0032663762, w: 0.99711746}
+      scale: {x: 1, y: 1, z: 1}
+    - name: agustin_RightHand
+      parentName: agustin_RightForeArm
+      position: {x: 0.25279385, y: -0.00002193451, z: -0.0000074356794}
+      rotation: {x: -0.07571553, y: 0.0088352375, z: -0.046856657, w: 0.9959887}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

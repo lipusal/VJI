@@ -127,27 +127,27 @@ public class PlayerLogic : MonoBehaviour
     }
 
 
-//    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
+    {
+        if (_finishHitting && other.CompareTag("Ball"))
+        {
+            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+            Debug.Log(aimDirection.x.ToString());
+            other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            _currentHitForce = minHitForce;
+        }
+    }
+
+
+//    private void OnTriggerEnter(Collider other)
 //    {
-//        if (_finishHitting && other.CompareTag("Ball"))
+//        if (other.CompareTag("Ball"))
 //        {
 //            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
 //
 //            other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
 //            _currentHitForce = minHitForce;
+//
 //        }
 //    }
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Ball"))
-        {
-            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-
-            other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-            _currentHitForce = minHitForce;
-
-        }
-    }
 }
