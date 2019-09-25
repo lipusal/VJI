@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class GameLogic
+public class ScoreManager
 {
     private const int ADVANTAGE = Int32.MaxValue;
     private const int NUM_SETS = 3;
@@ -11,8 +9,21 @@ public class GameLogic
     private int[] wonPoints = { 0, 0 };    // One per team
     private int[] wonGames = { 0, 0 };     // One per team
     private int[] wonSets = { 0, 0 };      // Best of NUM_SETS sets
+
+    private static ScoreManager _instance;
+
+    private ScoreManager() {}
+
+    public static ScoreManager GetInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new ScoreManager();
+        }
+        return _instance;
+    }
     
-    public bool onPoint(int teamNumber)
+    public bool OnPoint(int teamNumber)
     {
         var newWonPoints = ++wonPoints[teamNumber];
         var opponentWonPoints = wonPoints[opponentTeamNumber(teamNumber)];
@@ -35,7 +46,7 @@ public class GameLogic
         return false;
     }
 
-    public bool onGame(int teamNumber)
+    public bool OnGame(int teamNumber)
     {
         var newWonGames = ++wonGames[teamNumber];
         var opponentWonGames = wonGames[opponentTeamNumber(teamNumber)];
@@ -52,7 +63,7 @@ public class GameLogic
         return false;
     }
 
-    public bool onSet(int teamNumber)
+    public bool OnSet(int teamNumber)
     {
         return ++wonSets[teamNumber] > NUM_SETS / 2;
     }
