@@ -14112,10 +14112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31df8f56f30d0246a945f3721713b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftButton: 274
-  rightButton: 273
-  forwardButton: 276
-  bacwardButton: 275
+  leftButton: 276
+  rightButton: 275
+  forwardButton: 273
+  bacwardButton: 274
   hitButton: 108
   aimTarget: {fileID: 598947288}
   aimTargetSpeed: 18
