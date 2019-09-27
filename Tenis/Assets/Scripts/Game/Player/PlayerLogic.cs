@@ -132,13 +132,13 @@ public class PlayerLogic : MonoBehaviour
         }
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
 
-        _characterController.Move(new Vector3(leftRightMove, 0, forwardBackardMove));
+        _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
     }
 
     private void UpdateAimTargetPosition()
     {
-        aimTarget.Translate(new Vector3(aimTargetSpeed * moveLeftRightValue * Time.deltaTime, 0,
-            aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime));
+        aimTarget.Translate(new Vector3(aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime, 0,
+            -aimTargetSpeed * moveLeftRightValue * Time.deltaTime));
     }
 
 
