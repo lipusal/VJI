@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
+    private const int IDLE = 0;
+    private const int RIGHT = 1;
+    private const int UP = 2;
+    private const int LEFT = 3;
+    private const int DOWN = 4; //TODO all this should be an enum
+    
     // Button to move left
     public KeyCode leftButton = KeyCode.LeftArrow;
 
@@ -51,6 +57,7 @@ public class PlayerLogic : MonoBehaviour
         moveLeftRightValue = 0;
         moveForwardBackwardValue = 0;
         _currentHitForce = minHitForce;
+        PlayerAnimation.InitializePlayerAnimator(GetComponent<Animator>());
     }
 
     void Update()
@@ -115,6 +122,14 @@ public class PlayerLogic : MonoBehaviour
     private void UpdatePosition()
     {
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
+        if (leftRightMove > 0)
+        {
+            PlayerAnimation.StartMoveAnimation(RIGHT);
+        }
+        else
+        {
+            PlayerAnimation.StartMoveAnimation(IDLE);//TODO should be left
+        }
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
 
         _characterController.Move(new Vector3(leftRightMove, 0, forwardBackardMove));
