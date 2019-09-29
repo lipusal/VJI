@@ -4,11 +4,13 @@ public class ScoreManager
 {
     private const int ADVANTAGE = Int32.MaxValue;
     private const int NUM_SETS = 3;
-    private static String[] scoreStrings = {"0", "15", "30", "45", "Ad"};
+    private static readonly string[] ScoreStrings = {"0", "15", "30", "45", "Ad"};
     
-    private int[] wonPoints = { 0, 0 };    // One per team
-    private int[] wonGames = { 0, 0 };     // One per team
-    private int[] wonSets = { 0, 0 };      // Best of NUM_SETS sets
+    private int[] _wonPoints = { 0, 0 };        // One per team, for current game
+    private int[] _wonGames = { 0, 0 };         // One per team, for current set
+    private int[] _wonSets = { 0, 0 };          // Best of NUM_SETS sets wins
+    private int[,] gameHistory = new int[NUM_SETS, 2]; // One per set, per team (NUM_SETS x 2)
+    public int currentSet = 1;
 
     private static ScoreManager _instance;
 
@@ -23,10 +25,15 @@ public class ScoreManager
         return _instance;
     }
     
+    /**
+     * When a point is scored. Updates scores and returns true if the given team won a game.
+     * teamNumber 0 => player 1 team
+     * teamNumber 1 => CPU/player 2 team
+     */
     public bool OnPoint(int teamNumber)
     {
-        var newWonPoints = ++wonPoints[teamNumber];
-        var opponentWonPoints = wonPoints[opponentTeamNumber(teamNumber)];
+        var newWonPoints = ++_wonPoints[teamNumber];
+        var opponentWonPoints = _wonPoints[OpponentTeamNumber(teamNumber)];
         if (s(newWonPoints) > 45)
         {
             if (s(opponentWonPoints) == 45)
@@ -35,7 +42,7 @@ public class ScoreManager
             } else if (s(opponentWonPoints) == ADVANTAGE)
             {
                 // Break opponent's advantage
-                wonPoints[opponentTeamNumber(teamNumber)]--;
+                _wonPoints[OpponentTeamNumber(teamNumber)]--;
             }
             else
             {
@@ -48,49 +55,40 @@ public class ScoreManager
 
     public bool OnGame(int teamNumber)
     {
-        var newWonGames = ++wonGames[teamNumber];
-        var opponentWonGames = wonGames[opponentTeamNumber(teamNumber)];
-        
-        // Reset game points
-        wonPoints = new[] { 0, 0 };
-        
-        if (newWonGames >= 4 && newWonGames - opponentWonGames >= 2)
-        {
-            // Won a set
-            return true;
-        }
+        var newWonGames = ++_wonGames[teamNumber];
+        var opponentWonGames = _wonGames[OpponentTeamNumber(teamNumber)];
 
-        return false;
+        // Record won game
+        gameHistory[currentSet - 1, teamNumber]++;
+        // Reset game points
+        _wonPoints = new[] { 0, 0 };
+        
+        return newWonGames >= 4 && newWonGames - opponentWonGames >= 2;
     }
 
     public bool OnSet(int teamNumber)
     {
-        return ++wonSets[teamNumber] > NUM_SETS / 2;
+        currentSet++;
+        return ++_wonSets[teamNumber] > NUM_SETS / 2;
     }
 
-    public void onWin(int teamNumber)
+    private int OpponentTeamNumber(int teamNumber)
     {
-        // TODO
+        return (teamNumber + 1) % _wonPoints.Length;
     }
 
-    private int opponentTeamNumber(int teamNumber)
+    /**
+     * Returns a numerical value for a score in the ScoreStrings array. Inverse of u.
+     */
+    private static int s(int scoreIndex)
     {
-        return (teamNumber + 1) % wonPoints.Length;
+        return scoreIndex == 4 ? ADVANTAGE : int.Parse(ScoreStrings[scoreIndex]);
     }
 
-    private int s(int scoreIndex)
-    {
-        if (scoreIndex == 4)
-        {
-            return ADVANTAGE;
-        }
-        else
-        {
-            return int.Parse(scoreStrings[scoreIndex]);
-        }
-    }
-    
-    private int u(int score)
+    /**
+     * Returns an index in the ScoreStrings array from a numerical value. Inverse of s.
+     */
+    private static int u(int score)
     {
         switch (score)
         {
