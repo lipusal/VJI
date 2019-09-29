@@ -14407,10 +14407,23 @@ BoxCollider:
   m_GameObject: {fileID: 1417308002}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4.690042, y: 6.7973204, z: 3.2638938}
   m_Center: {x: 0.4932139, y: 3.2316637, z: 0.8802688}
+--- !u!135 &1417308008
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417308002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5.391521
+  m_Center: {x: -0.05447769, y: 3, z: 2.3915215}
 --- !u!1 &1421632865
 GameObject:
   m_ObjectHideFlags: 0
