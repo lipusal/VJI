@@ -126,9 +126,14 @@ public class PlayerLogic : MonoBehaviour
         {
             PlayerAnimation.StartMoveAnimation(RIGHT);
         }
+        else if(leftRightMove < 0)
+        {
+            PlayerAnimation.StartMoveAnimation(LEFT);
+        }
         else
         {
-            PlayerAnimation.StartMoveAnimation(IDLE);//TODO should be left
+            PlayerAnimation.StartMoveAnimation(IDLE);
+
         }
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
 
