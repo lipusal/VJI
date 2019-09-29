@@ -49,6 +49,9 @@ public class PlayerLogic : MonoBehaviour
     private int moveForwardBackwardValue;
     private CharacterController _characterController;
 
+    // Position of aim target
+    private Vector3 _aimOffset;
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -58,6 +61,7 @@ public class PlayerLogic : MonoBehaviour
         moveForwardBackwardValue = 0;
         _currentHitForce = minHitForce;
         PlayerAnimation.InitializePlayerAnimator(GetComponent<Animator>());
+        _aimOffset = aimTarget.position - transform.position;
     }
 
     void Update()
@@ -105,11 +109,13 @@ public class PlayerLogic : MonoBehaviour
             if (!_isHitting)
             {
                 _currentHitForce = minHitForce;
+                aimTarget.position = transform.position + _aimOffset;
             }
 
             _isHitting = true;
             _currentHitForce += _currentHitForce + deltaHitForce;
             _currentHitForce = Math.Min(_currentHitForce, maxHitForce);
+
         }
 
         if (ActionMapper.GetHitReleased(hitButton))
@@ -123,11 +129,11 @@ public class PlayerLogic : MonoBehaviour
     {
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
-        AnimteMovement(leftRightMove, forwardBackardMove);
+        AnimateMovement(leftRightMove, forwardBackardMove);
         _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
     }
 
-    private void AnimteMovement(float leftRightMove, float forwardBackardMove)
+    private void AnimateMovement(float leftRightMove, float forwardBackardMove)
     {
         if (leftRightMove > 0)
         {
