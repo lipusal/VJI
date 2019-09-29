@@ -122,6 +122,13 @@ public class PlayerLogic : MonoBehaviour
     private void UpdatePosition()
     {
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
+        float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
+        AnimteMovement(leftRightMove, forwardBackardMove);
+        _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
+    }
+
+    private void AnimteMovement(float leftRightMove, float forwardBackardMove)
+    {
         if (leftRightMove > 0)
         {
             PlayerAnimation.StartMoveAnimation(RIGHT);
@@ -130,14 +137,20 @@ public class PlayerLogic : MonoBehaviour
         {
             PlayerAnimation.StartMoveAnimation(LEFT);
         }
+        else if(forwardBackardMove > 0)
+        {
+            PlayerAnimation.StartMoveAnimation(UP);
+        }
+        else if(forwardBackardMove < 0)
+        {
+            PlayerAnimation.StartMoveAnimation(DOWN);
+        }
         else
         {
             PlayerAnimation.StartMoveAnimation(IDLE);
-
         }
-        float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
-
-        _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
+        //TODO consider diagonal movement
+        
     }
 
     private void UpdateAimTargetPosition()
