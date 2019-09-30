@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FrameLord;
 using UnityEngine;
 
-public class BallLogic : MonoBehaviour
+public class BallLogic : MonoBehaviorSingleton<BallLogic>
 {
     private Vector3 initialPosition;
     private int bounceQuantity;
