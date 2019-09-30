@@ -75,7 +75,7 @@ public class ScoreManager
             {
                 //TODO match finished
             }
-
+            
             BallLogic.Instance.ResetConfig();
 
         }

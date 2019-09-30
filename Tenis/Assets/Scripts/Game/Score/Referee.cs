@@ -56,7 +56,15 @@ public class Referee
                 returnValue = -1;
             }
 
-            _lastBoucedSide = currentSide;
+            if (returnValue == 0)
+            {
+                _lastBoucedSide = currentSide;
+            }
+            else
+            {
+                _lastBoucedSide = 0;
+            }
+
         }
 
         return returnValue;
