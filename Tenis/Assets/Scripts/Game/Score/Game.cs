@@ -38,7 +38,7 @@ public class TenisGame  {
         }
         else
         {
-            _points[playerId]++;
+            _points[playerId - 1]++;
             if (HasWon(playerId))
             {
                 _winner = playerId;
@@ -52,13 +52,13 @@ public class TenisGame  {
     private bool HasWon(int playerId)
     {
         int otherPlayerId = (playerId % 2) + 1;
-        int playerPoints = _points[playerId];
-        int otherPlayerPoints = _points[otherPlayerId];
+        int playerPoints = _points[playerId - 1];
+        int otherPlayerPoints = _points[otherPlayerId - 1];
 
         if (playerPoints == otherPlayerPoints && playerPoints >= 4)
         {
-            _points[playerId] = 3;
-            _points[otherPlayerId] = 3;
+            _points[playerId - 1] = 3;
+            _points[otherPlayerId - 1] = 3;
             return false;
         }
         

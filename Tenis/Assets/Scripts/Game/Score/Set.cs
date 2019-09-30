@@ -49,7 +49,7 @@ public class Set
         }
         else
         {
-            _results[playerId]++;
+            _results[playerId - 1]++;
             if (HasWon(playerId))
             {
                 _winner = playerId;
@@ -63,8 +63,8 @@ public class Set
     private bool HasWon(int playerId)
     {
         int otherPlayerId = (playerId % 2) + 1;
-        int playerGames = _results[playerId];
-        int otherPlayerGames = _results[otherPlayerId];
+        int playerGames = _results[playerId - 1];
+        int otherPlayerGames = _results[otherPlayerId - 1];
 
         if (playerGames == MAX_GAMES_PER_SET - 1 && (playerGames - otherPlayerGames >= 2) || playerGames == MAX_GAMES_PER_SET)
         {

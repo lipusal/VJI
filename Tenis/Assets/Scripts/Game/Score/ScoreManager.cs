@@ -69,13 +69,23 @@ public class ScoreManager
     public void manageBounce(Vector3 bouncePosition, int hitterId)
     {
         int result = _referee.isPoint(bouncePosition, hitterId);
-        if ( result > 0)
+        if (result > 0)
         {
-            //TODO addpoint
+            if (OnPoint(hitterId))
+            {
+                //TODO match finished
+            }
+
+            BallLogic.Instance.ResetConfig();
+
         }
         else if (result < 0)
         {
-            //TODO addpoint oponent
+            int opponentId = (hitterId % 2) + 1;
+            if (OnPoint(opponentId))
+            {
+                //TODO match finished
+            }
         }
     }
 
