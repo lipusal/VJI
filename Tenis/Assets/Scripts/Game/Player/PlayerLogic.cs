@@ -85,6 +85,7 @@ public class PlayerLogic : MonoBehaviour
 
         if (!_isHitting)
         {
+            PlayerAnimation.StopHittingAnimation();
             UpdatePosition();
         }
         else
@@ -125,6 +126,7 @@ public class PlayerLogic : MonoBehaviour
             {
                 _currentHitForce = minHitForce;
                 aimTarget.position = transform.position + _aimOffset;
+                PlayerAnimation.StartHittingAnimation();
             }
 
             _isHitting = true;

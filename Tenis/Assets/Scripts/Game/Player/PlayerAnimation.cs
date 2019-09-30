@@ -7,6 +7,7 @@ public class PlayerAnimation
     private static Animator _animator;
 
     private static readonly int Direction = Animator.StringToHash("direction");
+    private static readonly int Hitting = Animator.StringToHash("hitting");
 
     // Start is called before the first frame update
     
@@ -22,5 +23,15 @@ public class PlayerAnimation
         _animator.SetInteger(Direction, direction);
     }
 
+    public static void StartHittingAnimation()
+    {
+        //validate _animator not null?
+        _animator.SetBool(Hitting, true);
+    }
     
+    public static void StopHittingAnimation()
+    {
+        //validate _animator not null?
+        _animator.SetBool(Hitting, false);
+    }
 }
