@@ -85,6 +85,8 @@ public class ScoreManager
             if (OnPoint(opponentId))
             {
                 //TODO match finished
+                BallLogic.Instance.ResetConfig();
+
             }
         }
     }
