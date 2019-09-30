@@ -186,7 +186,6 @@ public class PlayerLogic : MonoBehaviour
         if (_finishHitting && other.CompareTag("Ball"))
         {
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            Debug.Log(aimDirection.x.ToString());
             other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
             _currentHitForce = minHitForce;
             BallLogic.Instance.SetHittingPlayer(_id);

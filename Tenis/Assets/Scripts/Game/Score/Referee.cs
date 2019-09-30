@@ -26,21 +26,37 @@ public class Referee
     // Returns -1 if is point for oponent, 1 if is point for hiting team or zero if it is not point
     public int isPoint(Vector3 bouncePosition, int hitter)
     {
+        int returnValue = 0;
         if (hitter != 0)
         {
             int currentSide = GetBouncingSide(bouncePosition);
-
-            if (IsOut(bouncePosition, GetHittingSide(hitter), currentSide))
-            {
-                Debug.Log("oponent point");
-                return -1;
-            }
-
+            int hittingSide = GetHittingSide(hitter);
             if (currentSide == _lastBoucedSide)
             {
-                Debug.Log("hitting player point");
-                return 1;
+
+                if (hittingSide == currentSide)
+                {
+                    Debug.Log("bounce on same side as hitter");
+
+//                    Debug.Log("opponent player point");
+                    returnValue = -1;
+                }
+                else
+                {
+                    Debug.Log("bounced two times");
+
+//                    Debug.Log("hitting player point");
+                    returnValue = 1;
+
+                }
             }
+            else if (IsOut(bouncePosition))
+            {
+//                Debug.Log("opponent point");
+                returnValue = -1;
+            }
+
+            _lastBoucedSide = currentSide;
         }
 
         return 0;
@@ -67,20 +83,20 @@ public class Referee
         return 2;
     }
 
-    private bool IsOut(Vector3 bouncePosition, int hittingSide, int bouncingSide)
+    private bool IsOut(Vector3 bouncePosition)
     {
-        if (hittingSide == bouncingSide)
-        {
-            return true;
-        }
 
         if (bouncePosition.x < _southCourtSide.x || bouncePosition.x > _northCourtSide.x)
         {
+            Debug.Log("bounce long out");
+
             return true;
         }
 
         if (bouncePosition.z < _westCourtSide.z || bouncePosition.z > _eastCourtSide.z)
         {
+            Debug.Log("bounce wide out");
+
             return true;
         }
 

@@ -30,6 +30,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.position = initialPosition;
+            _hittingPlayer = 0;
         }
         else if (collision.gameObject.CompareTag("Ground"))
         {

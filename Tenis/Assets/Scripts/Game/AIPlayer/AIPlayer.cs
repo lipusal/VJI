@@ -13,10 +13,24 @@ public class AIPlayer : MonoBehaviour
     public Transform aimTarget;
 
     private CharacterController _characterController;
-    // Start is called before the first frame update
+    
+    /* player id according to court side,
+    * 1 if player is on team one or
+    * 2 if player is on team two
+   */
+    private int _id;
+    
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
+        if (transform.position.x < 0)
+        {
+            _id = 1;
+        }
+        else
+        {
+            _id = 2;
+        }
     }
 
     // Update is called once per frame
@@ -38,6 +52,8 @@ public class AIPlayer : MonoBehaviour
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
             
             other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 7f, 0);
+            BallLogic.Instance.SetHittingPlayer(_id);
+
         }
     }
 }
