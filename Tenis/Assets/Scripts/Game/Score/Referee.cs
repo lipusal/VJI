@@ -31,7 +31,7 @@ public class Referee
         {
             int currentSide = GetBouncingSide(bouncePosition);
             int hittingSide = GetHittingSide(hitter);
-            if (currentSide == _lastBoucedSide)
+            if (currentSide == _lastBoucedSide && _lastBoucedSide != 0)
             {
 
                 if (hittingSide == currentSide)
@@ -59,7 +59,7 @@ public class Referee
             _lastBoucedSide = currentSide;
         }
 
-        return 0;
+        return returnValue;
     }
 
     private int GetBouncingSide(Vector3 bouncePosition)

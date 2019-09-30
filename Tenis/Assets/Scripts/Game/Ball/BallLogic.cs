@@ -28,6 +28,8 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     {
         if(collision.gameObject.CompareTag("Wall"))// || collision.gameObject.CompareTag("Net"))
         {
+            _scoreManager.manageBounce(transform.position, _hittingPlayer);
+
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.position = initialPosition;
             _hittingPlayer = 0;
@@ -35,7 +37,6 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         else if (collision.gameObject.CompareTag("Ground"))
         {
             _scoreManager.manageBounce(transform.position, _hittingPlayer);
-            manageBounce();
         }
     }
 

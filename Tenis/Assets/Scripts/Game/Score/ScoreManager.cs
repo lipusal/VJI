@@ -68,11 +68,12 @@ public class ScoreManager
 
     public void manageBounce(Vector3 bouncePosition, int hitterId)
     {
-        if (_referee.isPoint(bouncePosition, hitterId) > 0)
+        int result = _referee.isPoint(bouncePosition, hitterId);
+        if ( result > 0)
         {
             //TODO addpoint
         }
-        else if (_referee.isPoint(bouncePosition, hitterId) < 0)
+        else if (result < 0)
         {
             //TODO addpoint oponent
         }
