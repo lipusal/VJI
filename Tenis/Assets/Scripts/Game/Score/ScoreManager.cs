@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class ScoreManager
 {
@@ -10,6 +11,7 @@ public class ScoreManager
     private Set _currentSet;
     private int _setNumber;
     private int[] _results;
+    private Referee _referee;
 
     
 //    private int[] _wonPoints = { 0, 0 };        // One per team, for current game
@@ -36,6 +38,12 @@ public class ScoreManager
         }
         return _instance;
     }
+
+    public void loadReferee(Vector3 eastCourtSide, Vector3 westCourtSide,
+        Vector3 southCourtSide, Vector3 northCourtSide)
+    {
+        _referee = new Referee(eastCourtSide, westCourtSide, southCourtSide, northCourtSide);
+    }
     
     /**
      * When a point is scored. Updates scores.
@@ -56,6 +64,18 @@ public class ScoreManager
         }
 
         return false;
+    }
+
+    public void manageBounce(Vector3 bouncePosition, int hitterId)
+    {
+        if (_referee.isPoint(bouncePosition, hitterId) > 0)
+        {
+            //TODO addpoint
+        }
+        else if (_referee.isPoint(bouncePosition, hitterId) < 0)
+        {
+            //TODO addpoint oponent
+        }
     }
 
 //    /**

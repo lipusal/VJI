@@ -11,12 +11,17 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     //-1 undefined, 0 lower than net, 1 greater than net
     private int side;
 
+    private ScoreManager _scoreManager;
+    // 1 for team one, 2 for team two
+    private int _hittingPlayer;
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         initialPosition = transform.position;
         bounceQuantity = 0;
         side = -1;
+        _scoreManager = ScoreManager.GetInstance();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -28,6 +33,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         }
         else if (collision.gameObject.CompareTag("Ground"))
         {
+            _scoreManager.manageBounce(transform.position, _hittingPlayer);
             manageBounce();
         }
     }
@@ -49,6 +55,11 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         {
             bounceQuantity = 0;
         }
+    }
+
+    public void SetHittingPlayer(int playerId)
+    {
+        _hittingPlayer = playerId;
     }
 
 //    private int getBouncingSide()

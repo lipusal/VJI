@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.Input;
+using TMPro;
 using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
@@ -52,6 +53,12 @@ public class PlayerLogic : MonoBehaviour
     // Position of aim target
     private Vector3 _aimOffset;
 
+    /* player id according to court side,
+     * 1 if player is on team one or
+     * 2 if player is on team two
+    */
+    private int _id;
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -62,6 +69,14 @@ public class PlayerLogic : MonoBehaviour
         _currentHitForce = minHitForce;
         PlayerAnimation.InitializePlayerAnimator(GetComponent<Animator>());
         _aimOffset = aimTarget.position - transform.position;
+        if (transform.position.x < 0)
+        {
+            _id = 1;
+        }
+        else
+        {
+            _id = 2;
+        }
     }
 
     void Update()
@@ -174,6 +189,7 @@ public class PlayerLogic : MonoBehaviour
             Debug.Log(aimDirection.x.ToString());
             other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
             _currentHitForce = minHitForce;
+            BallLogic.Instance.SetHittingPlayer(_id);
         }
     }
 
