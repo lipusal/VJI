@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FrameLord;
 using Game.Input;
 using TMPro;
 using UnityEngine;
@@ -190,6 +191,7 @@ public class PlayerLogic : MonoBehaviour
     {
         if (_finishHitting && other.CompareTag("Ball"))
         {
+            AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
             other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
             _currentHitForce = minHitForce;

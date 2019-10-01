@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FrameLord;
 using UnityEngine;
 
 public class AIPlayer : MonoBehaviour
@@ -50,7 +51,8 @@ public class AIPlayer : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            
+            AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
+
             other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 7f, 0);
             BallLogic.Instance.SetHittingPlayer(_id);
 
