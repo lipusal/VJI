@@ -53,8 +53,8 @@ public class ScoreManager
     {
         if (_currentSet.AddPoint(teamNumber))
         {
-            _results[teamNumber]++;
-            if (_results[teamNumber] == NUM_SETS)
+            _results[teamNumber - 1]++;
+            if (_results[teamNumber - 1] == NUM_SETS)
             {
                 return true;
             }

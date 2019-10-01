@@ -34,6 +34,7 @@ public class PlayerLogic : MonoBehaviour
     public float movementSpeed = 14f;
     public float maxHitForce = 40f;
     private float _currentHitForce;
+    private float _playerSpeed = 50f;
     private float deltaHitForce = 1;
     public float minHitForce = 18f;
 
@@ -147,7 +148,9 @@ public class PlayerLogic : MonoBehaviour
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
         AnimateMovement(leftRightMove, forwardBackardMove);
-        _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
+        //    _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
+        var vec = new Vector3(forwardBackardMove, 0, -leftRightMove);
+        _characterController.SimpleMove(vec * _playerSpeed);
     }
 
     private void AnimateMovement(float leftRightMove, float forwardBackardMove)
