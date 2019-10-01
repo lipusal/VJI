@@ -91,6 +91,10 @@ public class Set
         return false;
     }
 
+    public int[] GetCurrentSetResults()
+    {
+        return _results;
+    }
     public int[] GetCurrentGameResults()
     {
         return _currentGame.GetResults();

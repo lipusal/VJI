@@ -97,8 +97,8 @@ public class ScoreManager
     {
         string points1 = _currentSet.GetCurrentGameStringResults()[0];
         string points2 = _currentSet.GetCurrentGameStringResults()[1];
-        int games1 = _currentSet.GetCurrentGameResults()[0];
-        int games2 = _currentSet.GetCurrentGameResults()[1];
+        int games1 = _currentSet.GetCurrentSetResults()[0];
+        int games2 = _currentSet.GetCurrentSetResults()[1];
         int sets1 = GetSetsResults()[0];
         int sets2 = GetSetsResults()[1];
         
