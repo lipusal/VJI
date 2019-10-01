@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +12,7 @@ public class Set
     private TenisGame _currentGame;
     private int _gameNumber;
 
-    // 0 if no one has won the game yet, 1 if player 1 won and 2 if player 2 won.
+    // 0 if no one has won the game yet, 1 if player one won and 2 if player two won.
     private int _winner;
 
     public Set()
@@ -93,5 +94,13 @@ public class Set
     public int[] GetCurrentGameResults()
     {
         return _currentGame.GetResults();
+    }
+
+    public string[] GetCurrentGameStringResults()
+    {
+        string[] results = new string[2];
+        results[0] = _currentGame.GetTeam1Points();
+        results[1] = _currentGame.GetTeam2Points();
+        return results;
     }
 }

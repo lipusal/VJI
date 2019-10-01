@@ -77,7 +77,7 @@ public class ScoreManager
             }
             
             BallLogic.Instance.ResetConfig();
-
+            ShowPartialResults();
         }
         else if (result < 0)
         {
@@ -88,8 +88,40 @@ public class ScoreManager
 
             }
             BallLogic.Instance.ResetConfig();
-
+            ShowPartialResults();
         }
+
+    }
+
+    private void ShowPartialResults()
+    {
+        string points1 = _currentSet.GetCurrentGameStringResults()[0];
+        string points2 = _currentSet.GetCurrentGameStringResults()[1];
+        int games1 = _currentSet.GetCurrentGameResults()[0];
+        int games2 = _currentSet.GetCurrentGameResults()[1];
+        int sets1 = GetSetsResults()[0];
+        int sets2 = GetSetsResults()[1];
+        
+
+        Debug.Log("player1: " + sets1 + " " + games1 + " " + points1 + "\n" + "player2 " + sets2 + " " + games2 + " " + points2 + "\n" );
+    }
+
+    private int[] GetSetsResults()
+    {
+        int[] result = new int[2];
+        for (int i = 0; i < _setNumber; i++)
+        {
+            if (_sets[i].GetWinner() == 1)
+            {
+                result[0]++;
+            }
+            else
+            {
+                result[1]++;
+            }
+        }
+
+        return result;
     }
 
 //    /**

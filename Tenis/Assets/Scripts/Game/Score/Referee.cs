@@ -36,16 +36,13 @@ public class Referee
 
                 if (hittingSide == currentSide)
                 {
-                    Debug.Log("bounce on same side as hitter");
-
-//                    Debug.Log("opponent player point");
+//                    Debug.Log("bounce on same side as hitter");
                     returnValue = -1;
                 }
                 else
                 {
-                    Debug.Log("bounced two times");
+//                    Debug.Log("bounced two times");
 
-//                    Debug.Log("hitting player point");
                     returnValue = 1;
 
                 }
@@ -96,14 +93,14 @@ public class Referee
 
         if (bouncePosition.x < _southCourtSide.x || bouncePosition.x > _northCourtSide.x)
         {
-            Debug.Log("bounce long out");
+//            Debug.Log("bounce long out");
 
             return true;
         }
 
         if (bouncePosition.z < _westCourtSide.z || bouncePosition.z > _eastCourtSide.z)
         {
-            Debug.Log("bounce wide out");
+//            Debug.Log("bounce wide out");
 
             return true;
         }
