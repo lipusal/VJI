@@ -24,7 +24,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Wall"))// || collision.gameObject.CompareTag("Net"))
+        if(collision.gameObject.CompareTag("Wall"))
         {
             _scoreManager.manageBounce(transform.position, _hittingPlayer);
 

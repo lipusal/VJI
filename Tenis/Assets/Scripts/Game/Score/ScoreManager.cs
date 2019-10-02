@@ -88,7 +88,7 @@ public class ScoreManager
 
             }
             BallLogic.Instance.ResetConfig();
-            ShowPartialResults();
+           ShowPartialResults();
         }
 
     }
