@@ -34,6 +34,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         }
         else if (collision.gameObject.CompareTag("Ground"))
         {
+            AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_BOUNCE);
             _scoreManager.manageBounce(transform.position, _hittingPlayer);
         }
     }
