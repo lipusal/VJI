@@ -240,12 +240,25 @@ public class PlayerLogic : MonoBehaviour
     {
         if (_finishHitting && other.CompareTag("Ball"))
         {
-            AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
-            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-            _currentHitForce = minHitForce;
-            BallLogic.Instance.SetHittingPlayer(_id);
+            DetectBallSide(other);
+            HitBall(other);
+            
         }
+    }
+
+    private void DetectBallSide(Collider other)
+    {
+        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
+    }
+
+    private void HitBall(Collider other)
+    {
+        AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
+        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+        other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+        _currentHitForce = minHitForce;
+        BallLogic.Instance.SetHittingPlayer(_id);
+        
     }
 
 

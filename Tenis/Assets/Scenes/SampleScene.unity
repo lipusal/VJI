@@ -1068,6 +1068,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.2283432
       objectReference: {fileID: 0}
+    - target: {fileID: 400092, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 400092, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
 --- !u!1 &152458032
@@ -3430,7 +3438,9 @@ MonoBehaviour:
   soundClips:
   - {fileID: 8300000, guid: 05fa943fa2a2542cd88aa07356723559, type: 3}
   - {fileID: 8300000, guid: 22ee69a8e02a14161bf08297f0060f51, type: 3}
+  - {fileID: 8300000, guid: 4ea4e90067694415988ee24c63e96278, type: 3}
   - {fileID: 8300000, guid: b61097292f2424f79854ae739b9c28a6, type: 3}
+  - {fileID: 8300000, guid: 1b93475bbf36a4e139a5f757e31f8436, type: 3}
 --- !u!114 &518081192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3443,10 +3453,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0834ebf62c7a04c55b099647e99a0cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixerMaster: {fileID: 0}
-  mixerMusic: {fileID: 0}
-  mixerFX: {fileID: 0}
-  mixerAmbient: {fileID: 0}
+  mixerMaster: {fileID: 24300002, guid: ef119584b2c384dcc88bd4b73d206398, type: 2}
+  mixerMusic: {fileID: -5793323516659552026, guid: ef119584b2c384dcc88bd4b73d206398,
+    type: 2}
+  mixerFX: {fileID: -4322686342455606890, guid: ef119584b2c384dcc88bd4b73d206398,
+    type: 2}
+  mixerAmbient: {fileID: -4292046194616569743, guid: ef119584b2c384dcc88bd4b73d206398,
+    type: 2}
 --- !u!4 &518081193
 Transform:
   m_ObjectHideFlags: 0
