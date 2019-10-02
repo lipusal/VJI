@@ -40,7 +40,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         else
         {
             Debug.Log("something else");
-            //TODO add point to hitter;
+            //TODO add point to hitter;git s
         }
     }
 

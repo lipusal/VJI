@@ -990,7 +990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -32.3
+      value: -32.04
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3406,6 +3406,7 @@ MonoBehaviour:
   soundClips:
   - {fileID: 8300000, guid: 05fa943fa2a2542cd88aa07356723559, type: 3}
   - {fileID: 8300000, guid: 22ee69a8e02a14161bf08297f0060f51, type: 3}
+  - {fileID: 8300000, guid: b61097292f2424f79854ae739b9c28a6, type: 3}
 --- !u!114 &518081192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6597,7 +6598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30.16
+      value: 27.08
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6605,7 +6606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.1
+      value: -5.2
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalRotation.x
