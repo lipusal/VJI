@@ -13,7 +13,6 @@ public class ScoreManager
     private int _setNumber;
     private int[] _results;
     private Referee _referee;
-    private int _servingTeam;
 
     
 //    private int[] _wonPoints = { 0, 0 };        // One per team, for current game
@@ -30,7 +29,6 @@ public class ScoreManager
         _setNumber = 0;
         _currentSet = new Set();
         _sets[_setNumber] = _currentSet;
-        _servingTeam = 1;
     }
 
     public static ScoreManager GetInstance()
@@ -129,7 +127,7 @@ public class ScoreManager
 
     public int GetServingTeam()
     {
-        return _servingTeam;
+        return _currentSet.GetServingTeam();
     }
 
     // returns 0 if serving side is right and 1 if serving side is left

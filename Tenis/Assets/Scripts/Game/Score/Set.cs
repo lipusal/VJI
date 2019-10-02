@@ -11,6 +11,7 @@ public class Set
     private readonly int[] _results;
     private TenisGame _currentGame;
     private int _gameNumber;
+    private int _servingTeam;
 
     // 0 if no one has won the game yet, 1 if player one won and 2 if player two won.
     private int _winner;
@@ -23,6 +24,7 @@ public class Set
         _currentGame = new TenisGame();
         _gameNumber = 0;
         _games[_gameNumber] = _currentGame;
+        _servingTeam = 1;
 
     }
 
@@ -56,6 +58,8 @@ public class Set
                 _winner = playerId;
                 return true;
             }
+
+            _servingTeam = (_servingTeam + 1) % 2;
         }
 
         return false;
@@ -106,5 +110,10 @@ public class Set
         results[0] = _currentGame.GetTeam1Points();
         results[1] = _currentGame.GetTeam2Points();
         return results;
+    }
+
+    public int GetServingTeam()
+    {
+        return _servingTeam;
     }
 }
