@@ -152,6 +152,7 @@ public class PlayerLogic : MonoBehaviour
         //    _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
         var vec = new Vector3(forwardBackardMove, 0, -leftRightMove);
         _characterController.SimpleMove(vec * _playerSpeed);
+       // AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);
     }
 
     private void AnimateMovement(float leftRightMove, float forwardBackardMove)

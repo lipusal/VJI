@@ -44,6 +44,7 @@ public class AIPlayer : MonoBehaviour
     {
         Vector3 movingDirection = new Vector3(transform.position.x,transform.position.y, ballPosition.position.z) - transform.position;
         _characterController.Move(movingDirection * speed * Time.deltaTime);
+        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);
     }
     
     private void OnTriggerEnter(Collider other)

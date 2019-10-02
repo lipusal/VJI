@@ -5,7 +5,8 @@ public enum SoundId : int
 {
     SOUND_HIT			   = 0,
     SOUND_SERVE            = 1,
-   
+    SOUND_STEPS            = 2,
+    SOUND_BOUNCE           = 3,
 }
 
 /// <summary>
@@ -15,8 +16,11 @@ public class TenisGameSoundList : SoundList
 {
     SoundProp[] sounds =
     {
-        new SoundProp((int) SoundId.SOUND_HIT,         "HitSound",         1, 100),
-        new SoundProp((int) SoundId.SOUND_SERVE,       "ServeSound",         1, 100),
+        new SoundProp((int) SoundId.SOUND_HIT,         "HitSound",         2, 100),
+        new SoundProp((int) SoundId.SOUND_SERVE,       "ServeSound",         2, 100),
+        new SoundProp((int) SoundId.SOUND_STEPS,       "StepsSound",         1, 50),
+        new SoundProp((int) SoundId.SOUND_STEPS,       "BounceSound",         1, 100),
+
     };
 
     new void Start()
