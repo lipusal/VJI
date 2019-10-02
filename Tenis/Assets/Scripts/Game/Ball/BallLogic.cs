@@ -37,6 +37,11 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
             AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_BOUNCE);
             _scoreManager.manageBounce(transform.position, _hittingPlayer);
         }
+        else
+        {
+            Debug.Log("something else");
+            //TODO add point to hitter;
+        }
     }
 
     public void SetHittingPlayer(int playerId)
