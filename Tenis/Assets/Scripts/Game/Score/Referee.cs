@@ -12,6 +12,9 @@ public class Referee
 
     // 0 undefined, -1 south, 1 north
     private int _lastBoucedSide;
+    private int _lastHitter;
+    private int _previousToLastHitter;
+
 
     public Referee(Vector3 eastCourtSide, Vector3 westCourtSide,
                     Vector3 southCourtSide, Vector3 northCourtSide)
@@ -21,9 +24,11 @@ public class Referee
         _southCourtSide = southCourtSide;
         _northCourtSide = northCourtSide;
         _lastBoucedSide = 0;
+        _lastHitter = 0;
+        _previousToLastHitter = 0;
     }
 
-    // Returns -1 if is point for oponent, 1 if is point for hiting team or zero if it is not point
+    // Returns -1 if is point for opponent, 1 if is point for hitting team or zero if it is not point
     public int isPoint(Vector3 bouncePosition, int hitter)
     {
         int returnValue = 0;
@@ -31,17 +36,18 @@ public class Referee
         {
             int currentSide = GetBouncingSide(bouncePosition);
             int hittingSide = GetHittingSide(hitter);
-            if (currentSide == _lastBoucedSide && _lastBoucedSide != 0)
+            if (currentSide == _lastBoucedSide && _lastBoucedSide != 0 && hitter == _previousToLastHitter)
             {
 
                 if (hittingSide == currentSide)
                 {
-//                    Debug.Log("bounce on same side as hitter");
+                    Debug.Log("bounce on same side as hitter");
                     returnValue = -1;
                 }
                 else
                 {
-//                    Debug.Log("bounced two times");
+                    Debug.Log(hitter + " last:" + _previousToLastHitter);
+                    Debug.Log("bounced two times");
 
                     returnValue = 1;
 
@@ -52,7 +58,7 @@ public class Referee
 //                Debug.Log("opponent point");
                 returnValue = -1;
             }
-
+        
             if (returnValue == 0)
             {
                 _lastBoucedSide = currentSide;
@@ -61,10 +67,16 @@ public class Referee
             {
                 _lastBoucedSide = 0;
             }
-
         }
 
         return returnValue;
+    }
+
+    public void UpdateLastHitter(int hitter)
+    {
+        Debug.Log(hitter);
+        _previousToLastHitter = _lastHitter;
+        _lastHitter = hitter;
     }
 
     private int GetBouncingSide(Vector3 bouncePosition)

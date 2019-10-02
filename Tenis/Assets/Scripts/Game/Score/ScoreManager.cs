@@ -145,6 +145,11 @@ public class ScoreManager
 
     }
 
+    public void UpdateLastHitter(int hitter)
+    {
+        _referee.UpdateLastHitter(hitter);
+    }
+
 //    /**
 //     * Returns a numerical value for a score in the ScoreStrings array. Inverse of u.
 //     */

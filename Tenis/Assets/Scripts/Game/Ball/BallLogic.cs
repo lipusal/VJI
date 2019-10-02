@@ -47,6 +47,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     public void SetHittingPlayer(int playerId)
     {
         _hittingPlayer = playerId;
+        ScoreManager.GetInstance().UpdateLastHitter(playerId);
     }
 
     public void ResetConfig()
