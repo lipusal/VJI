@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Score;
 using UnityEngine;
 
 public class ScoreManager
@@ -12,6 +13,7 @@ public class ScoreManager
     private int _setNumber;
     private int[] _results;
     private Referee _referee;
+    private int _servingTeam;
 
     
 //    private int[] _wonPoints = { 0, 0 };        // One per team, for current game
@@ -28,6 +30,7 @@ public class ScoreManager
         _setNumber = 0;
         _currentSet = new Set();
         _sets[_setNumber] = _currentSet;
+        _servingTeam = 1;
     }
 
     public static ScoreManager GetInstance()
@@ -122,6 +125,26 @@ public class ScoreManager
         }
 
         return result;
+    }
+
+    public int GetServingTeam()
+    {
+        return _servingTeam;
+    }
+
+    // returns 0 if serving side is right and 1 if serving side is left
+    public ServingSide GetServingSide()
+    {
+        int[] results = _currentSet.GetCurrentGameResults();
+        if ((results[0] + results[1]) % 2 == 0)
+        {
+            return ServingSide.RIGHT;
+        }
+        else
+        {
+            return ServingSide.LEFT;
+        }
+
     }
 
 //    /**

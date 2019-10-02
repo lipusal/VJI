@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FrameLord;
 using Game.Input;
+using Game.Score;
 using TMPro;
 using UnityEngine;
 
@@ -39,6 +40,10 @@ public class PlayerLogic : MonoBehaviour
     private float deltaHitForce = 1;
     public float minHitForce = 18f;
 
+    private ScoreManager _scoreManager;
+
+    private bool _isServing;
+    
     // Is true after hit button is pressed
     private bool _isHitting;
 
@@ -50,6 +55,7 @@ public class PlayerLogic : MonoBehaviour
 
     // Moving Up or Down (-1: down, 1: up, 0: none)
     private int moveForwardBackwardValue;
+    
     private CharacterController _characterController;
 
     // Position of aim target
@@ -71,6 +77,46 @@ public class PlayerLogic : MonoBehaviour
         _currentHitForce = minHitForce;
         PlayerAnimation.InitializePlayerAnimator(GetComponent<Animator>());
         _aimOffset = aimTarget.position - transform.position;
+        _scoreManager = ScoreManager.GetInstance();
+        SetID();
+        SetIsServing();
+        SetInitialPosition();
+
+    }
+
+    private void SetInitialPosition()
+    {
+        Vector3 currentPosition = transform.position;
+        float x, z; 
+        ServingSide servingSide = _scoreManager.GetServingSide();
+        if (servingSide == ServingSide.RIGHT)
+        {
+            z = -5f;
+        }
+        else
+        {
+            z = 5f;
+        }
+
+        if (_isServing)
+        {
+            x = -32f;
+        }
+        else
+        {
+            x = -27f;
+        }
+
+        transform.position = new Vector3(x, currentPosition.y, z);
+    }
+
+    private void SetIsServing()
+    {
+        _isServing = _id == _scoreManager.GetServingTeam();
+    }
+
+    private void SetID()
+    {
         if (transform.position.x < 0)
         {
             _id = 1;
@@ -79,6 +125,7 @@ public class PlayerLogic : MonoBehaviour
         {
             _id = 2;
         }
+
     }
 
     void Update()
