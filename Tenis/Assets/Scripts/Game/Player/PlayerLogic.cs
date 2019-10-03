@@ -67,6 +67,8 @@ public class PlayerLogic : MonoBehaviour
     */
     private int _id;
 
+    private GameObject _ball;
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -250,7 +252,7 @@ public class PlayerLogic : MonoBehaviour
             
             if (_finishHitting)
             {
-                HitBall(other.gameObject);
+                _ball = other.gameObject;
             }
         }
     }
@@ -260,18 +262,25 @@ public class PlayerLogic : MonoBehaviour
         Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
         // Positive = left
         // Negative = right
-        Debug.Log("deltaPositionz: " + deltaPosition.z);
         _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
        
     }
 
-    private void HitBall(GameObject ball)
+    private void HitBall()
     {
-        AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
-        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-        _currentHitForce = minHitForce;
-        BallLogic.Instance.SetHittingPlayer(_id);
+        if (_ball != null)
+        {
+            AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
+            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            _currentHitForce = minHitForce;
+            BallLogic.Instance.SetHittingPlayer(_id);
+        }
+    }
+
+    private void DeleteBallReference()
+    {
+        _ball = null;
     }
 
 

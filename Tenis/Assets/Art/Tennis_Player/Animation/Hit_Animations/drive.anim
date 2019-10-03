@@ -82328,4 +82328,12 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 1.1666666
+    functionName: HitBall
+    data: 
+    objectReferenceParameter: {fileID: 100000, guid: 5d73599abc19b0b419c64ea38df2aeaf,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

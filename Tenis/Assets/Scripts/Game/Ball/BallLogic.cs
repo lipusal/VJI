@@ -37,10 +37,14 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
             AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_BOUNCE);
             _scoreManager.manageBounce(transform.position, _hittingPlayer);
         }
+        else if (collision.gameObject.CompareTag("Net"))
+        {
+           //TODO play net sound
+        }
         else
         {
             Debug.Log("something else");
-            //TODO add point to hitter;git s
+            //TODO add point to hitter
         }
     }
 
