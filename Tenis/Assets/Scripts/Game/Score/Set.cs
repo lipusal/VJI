@@ -81,9 +81,10 @@ public class Set
 
     public bool AddPoint(int playerId)
     {
+        ScoreManager.GetInstance().GetReferee().SetServing(true);
+        
         if (_currentGame.AddPoint(playerId))
         {
-            ScoreManager.GetInstance().GetReferee().SetServing(true);
             if (AddGame(playerId))
             {
                 return true;

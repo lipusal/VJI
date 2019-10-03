@@ -87,7 +87,7 @@ public class PlayerLogic : MonoBehaviour
 
     }
 
-    private void SetInitialPosition()
+    public void SetInitialPosition()
     {
         Vector3 currentPosition = transform.position;
         float x, z; 
@@ -104,14 +104,15 @@ public class PlayerLogic : MonoBehaviour
         if (_isServing)
         {
             //TODO activate mesh of serving walls
+            ScoreManager.GetInstance().ActivateServingWalls(_id);
             x = -32f;
         }
         else
         {
             x = -27f;
         }
-
-        transform.position = new Vector3(x, currentPosition.y, z);
+        Vector3 newPosition = new Vector3(x, currentPosition.y, z);
+        transform.position = newPosition;
     }
 
     private void SetIsServing()

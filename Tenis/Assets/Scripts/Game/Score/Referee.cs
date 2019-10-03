@@ -12,7 +12,7 @@ public class Referee
     private Vector3 _southCourtSide;
     private Vector3 _northCourtSide;
     
-    // service delimiters
+    // service walls
     private Vector3 _southServiceWall;
     private Vector3 _southEastServiceWall;
     private Vector3 _southWestServiceWall;
@@ -22,7 +22,11 @@ public class Referee
     private Vector3 _northWestServiceWall;
     private Vector3 _northMiddleServiceWall;
 
-    
+    //service delimiters
+    private Vector3 _southServiceDelimiter;
+    private Vector3 _eastServiceDelimiter;
+    private Vector3 _westServiceDelimiter;
+    private Vector3 _northServiceDelimiter;
 
     // 0 undefined, -1 south, 1 north
     private int _lastBoucedSide;
@@ -43,6 +47,8 @@ public class Referee
                     Vector3 southWestServiceWall, Vector3 southMiddleServiceWall,
                     Vector3 northServiceWall, Vector3 northEastServiceWall,
                     Vector3 northWestServiceWall,Vector3 northMiddleServiceWall,
+                    Vector3 southServiceDelimiter, Vector3 eastServiceDelimiter,
+                    Vector3 westServiceDelimiter, Vector3 northServiceDelimiter,
                     PlayerLogic player1, AIPlayer aiPlayer)
     {
         _eastCourtSide = eastCourtSide;
@@ -62,6 +68,11 @@ public class Referee
         _northEastServiceWall = northEastServiceWall;
         _northWestServiceWall = northWestServiceWall;
         _northMiddleServiceWall = northMiddleServiceWall;
+
+        _southServiceDelimiter = southServiceDelimiter;
+        _eastServiceDelimiter = eastServiceDelimiter;
+        _westServiceDelimiter = westServiceDelimiter;
+        _northServiceDelimiter = northServiceDelimiter;
 
         _player1 = player1;
         _aiPlayer = aiPlayer;
@@ -110,7 +121,7 @@ public class Referee
 
     public void UpdateLastHitter(int hitter)
     {
-        Debug.Log(hitter);
+//        Debug.Log(hitter);
         _previousToLastHitter = _lastHitter;
         _lastHitter = hitter;
     }
@@ -165,37 +176,95 @@ public class Referee
         Side servingSide = ScoreManager.GetInstance().GetServingSide();
         int servingTeam = ScoreManager.GetInstance().GetServingTeam();
         Side expectedSide = servingSide == Side.RIGHT ? Side.LEFT : Side.RIGHT;
-        return IsInsideServiceBox(bouncePosition, servingTeam, expectedSide);
+        return IsOutsideServiceBox(bouncePosition, servingTeam, expectedSide);
     }
 
-    // returns true if ball bounce inside expected service box and false if ball bounce out
-    private bool IsInsideServiceBox(Vector3 bouncePosition, int servingTeam, Side expectedSide)
+    // returns true if ball bounce outside expected service box and false if ball bounce in
+    private bool IsOutsideServiceBox(Vector3 bouncePosition, int servingTeam, Side expectedSide)
     {
-        bool isInside;
+        bool isOutside = false;
 //        // servingTeam 1 is south, servingTeam 2 is north
-//        if (servingTeam == 1 && expectedSide == Side.LEFT)
-//        {
-//            isInside = IsInsideNorthWestServiceBox(bouncePosition);
-//        }
-//
-//        else if (servingTeam == 1 && expectedSide == Side.RIGHT)
-//        {
-//            isInside = IsInsideNorthEastServiceBox(bouncePosition);
-//        }
-//        
-//        else if (servingTeam == 2 && expectedSide == Side.LEFT)
-//        {
-//            isInside = IsInsideSouthWestServiceBox(bouncePosition);
-//        }
-//
-//        else if (servingTeam == 2 && expectedSide == Side.RIGHT)
-//        {
-//            isInside = IsInsideSouthEastServiceBox(bouncePosition);
-//        }
-        //TODO implement
+        if (servingTeam == 1 && expectedSide == Side.LEFT)
+        {
+            isOutside = IsOutsideNorthEastServiceBox(bouncePosition);
+        }
 
-        return true;
-//        return isInside;
+        else if (servingTeam == 1 && expectedSide == Side.RIGHT)
+        {
+            isOutside = IsOutsideNorthWestServiceBox(bouncePosition);
+        }
+        
+        else if (servingTeam == 2 && expectedSide == Side.LEFT)
+        {
+            isOutside = IsOutsideSouthEastServiceBox(bouncePosition);
+        }
+
+        else if (servingTeam == 2 && expectedSide == Side.RIGHT)
+        {
+            isOutside = IsOutsideSouthWestServiceBox(bouncePosition);
+        }
+
+        return isOutside;
+    }
+
+    private bool IsOutsideSouthEastServiceBox(Vector3 bouncePosition)
+    {
+        if (bouncePosition.x < _southServiceDelimiter.x)
+        {
+            return true;
+        } 
+        
+        if (bouncePosition.z > _eastCourtSide.z || bouncePosition.z < _eastServiceDelimiter.z)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsOutsideSouthWestServiceBox(Vector3 bouncePosition)
+    {
+        if (bouncePosition.x < _southServiceDelimiter.x)
+        {
+            return true;
+        }
+        
+        if (bouncePosition.z > _westServiceDelimiter.z || bouncePosition.z < _westCourtSide.z)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsOutsideNorthEastServiceBox(Vector3 bouncePosition)
+    {
+       if (bouncePosition.x > _northServiceDelimiter.x)
+       {
+                   return true;
+       }
+
+       if (bouncePosition.z > _eastCourtSide.z || bouncePosition.z < _eastServiceDelimiter.z)
+       {
+           return true;
+       }
+
+       return false;
+    }
+
+    private bool IsOutsideNorthWestServiceBox(Vector3 bouncePosition)
+    {
+        if (bouncePosition.x > _northServiceDelimiter.x)
+        {
+            return true;
+        }
+
+        if (bouncePosition.z > _westServiceDelimiter.z || bouncePosition.z < _westCourtSide.z)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -216,5 +285,18 @@ public class Referee
     public bool GetIsServing()
     {
         return _isServing;
+    }
+
+    public void ActivateServingWalls(int id)
+    {
+       //TODO implement enable walls
+    }
+
+    public void MakePlayerServe(int hitterId)
+    {
+        if (hitterId == 1)
+        {
+            _player1.SetInitialPosition();
+        }
     }
 }

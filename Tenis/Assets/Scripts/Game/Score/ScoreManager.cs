@@ -45,12 +45,16 @@ public class ScoreManager
         Vector3 southEastServiceWall, Vector3 southWestServiceWall,
         Vector3 southMiddleServiceWall, Vector3 northServiceWall,
         Vector3 northEastServiceWall, Vector3 northWestServiceWall, 
-        Vector3 northMiddleServiceWall, PlayerLogic player1, AIPlayer player2)
+        Vector3 northMiddleServiceWall,  Vector3 southServiceDelimiter,
+        Vector3 eastServiceDelimiter, Vector3 westServiceDelimiter,
+        Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer player2)
     {
         _referee = new Referee(eastCourtSide, westCourtSide, southCourtSide, northCourtSide,
                                 southServiceWall, southEastServiceWall, southWestServiceWall,
                                 southMiddleServiceWall, northServiceWall, northEastServiceWall,
-                                northWestServiceWall, northMiddleServiceWall, player1, player2);
+                                northWestServiceWall, northMiddleServiceWall, southServiceDelimiter,
+                                eastServiceDelimiter, westServiceDelimiter, northServiceDelimiter,
+                                player1, player2);
     }
     
     /**
@@ -84,8 +88,6 @@ public class ScoreManager
             {
                 //TODO match finished
             }
-            
-            BallLogic.Instance.ResetConfig();
         }
         else if (result < 0)
         {
@@ -95,15 +97,20 @@ public class ScoreManager
                 //TODO match finished
 
             }
-            BallLogic.Instance.ResetConfig();
         }
 
         if (result != 0)
         {
             ShowPartialResults();
+            _referee.SetServing(true);
+            BallLogic.Instance.ResetConfig();
+            _referee.MakePlayerServe(hitterId); //TODO change to opponent when game
+
+        }
+        else if(hitterId != 0)
+        {
             _referee.SetServing(false);
         }
-
     }
 
     private void ShowPartialResults()
@@ -199,5 +206,9 @@ public class ScoreManager
 //                throw new Exception("Unknown score " + score);
 //        }
 //    }
-    
+
+    public void ActivateServingWalls(int id)
+    {
+        _referee.ActivateServingWalls(id);
+    }
 }
