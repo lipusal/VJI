@@ -41,9 +41,16 @@ public class ScoreManager
     }
 
     public void loadReferee(Vector3 eastCourtSide, Vector3 westCourtSide,
-        Vector3 southCourtSide, Vector3 northCourtSide)
+        Vector3 southCourtSide, Vector3 northCourtSide, Vector3 southServiceWall,
+        Vector3 southEastServiceWall, Vector3 southWestServiceWall,
+        Vector3 southMiddleServiceWall, Vector3 northServiceWall,
+        Vector3 northEastServiceWall, Vector3 northWestServiceWall, 
+        Vector3 northMiddleServiceWall, PlayerLogic player1, AIPlayer player2)
     {
-        _referee = new Referee(eastCourtSide, westCourtSide, southCourtSide, northCourtSide);
+        _referee = new Referee(eastCourtSide, westCourtSide, southCourtSide, northCourtSide,
+                                southServiceWall, southEastServiceWall, southWestServiceWall,
+                                southMiddleServiceWall, northServiceWall, northEastServiceWall,
+                                northWestServiceWall, northMiddleServiceWall, player1, player2);
     }
     
     /**
@@ -69,6 +76,7 @@ public class ScoreManager
 
     public void manageBounce(Vector3 bouncePosition, int hitterId)
     {
+
         int result = _referee.isPoint(bouncePosition, hitterId);
         if (result > 0)
         {
@@ -78,7 +86,6 @@ public class ScoreManager
             }
             
             BallLogic.Instance.ResetConfig();
-            ShowPartialResults();
         }
         else if (result < 0)
         {
@@ -89,7 +96,12 @@ public class ScoreManager
 
             }
             BallLogic.Instance.ResetConfig();
-           ShowPartialResults();
+        }
+
+        if (result != 0)
+        {
+            ShowPartialResults();
+            _referee.SetServing(false);
         }
 
     }
@@ -133,16 +145,20 @@ public class ScoreManager
     // returns 0 if serving side is right and 1 if serving side is left
     public Side GetServingSide()
     {
+        int servingTeam = GetServingTeam(); // 1 for south,2 for north
         int[] results = _currentSet.GetCurrentGameResults();
+        Side resultSide;
+        
         if ((results[0] + results[1]) % 2 == 0)
         {
-            return Side.RIGHT;
+            resultSide = servingTeam == 1 ? Side.RIGHT : Side.LEFT;
         }
         else
         {
-            return Side.LEFT;
+            resultSide = servingTeam == 1 ? Side.LEFT : Side.RIGHT;
         }
 
+        return resultSide;
     }
 
     public void UpdateLastHitter(int hitter)
@@ -150,6 +166,10 @@ public class ScoreManager
         _referee.UpdateLastHitter(hitter);
     }
 
+    public Referee GetReferee()
+    {
+        return _referee;
+    }
 //    /**
 //     * Returns a numerical value for a score in the ScoreStrings array. Inverse of u.
 //     */

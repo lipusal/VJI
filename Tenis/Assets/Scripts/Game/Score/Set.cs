@@ -11,7 +11,7 @@ public class Set
     private readonly int[] _results;
     private TenisGame _currentGame;
     private int _gameNumber;
-    private int _servingTeam;
+    private int _servingTeam; // 1 for south, 2 for north
 
     // 0 if no one has won the game yet, 1 if player one won and 2 if player two won.
     private int _winner;
@@ -59,7 +59,7 @@ public class Set
                 return true;
             }
 
-            _servingTeam = (_servingTeam + 1) % 2;
+            _servingTeam = (_servingTeam  % 2) + 1;
         }
 
         return false;
@@ -83,6 +83,7 @@ public class Set
     {
         if (_currentGame.AddPoint(playerId))
         {
+            ScoreManager.GetInstance().GetReferee().SetServing(true);
             if (AddGame(playerId))
             {
                 return true;

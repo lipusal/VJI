@@ -238,27 +238,32 @@ public class PlayerLogic : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
-        // Positive = left
-        // Negative = right
-        Debug.Log("deltaPositionz: " + deltaPosition.z);
-        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
+        
         
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (_finishHitting && other.CompareTag("Ball"))
+        if (other.CompareTag("Ball"))
         {
-            HitBall(other, _ballSide);
+            DetectBallSide(other);
             
+            if (_finishHitting)
+            {
+                HitBall(other, _ballSide);
+            }
         }
     }
 
-//    private Side DetectBallSide(Collider other)
-//    {
-//       
-//    }
+    private void DetectBallSide(Collider other)
+    {
+        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
+        // Positive = left
+        // Negative = right
+        Debug.Log("deltaPositionz: " + deltaPosition.z);
+        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
+       
+    }
 
     private void HitBall(Collider other, Side? ballSide)
     {
@@ -281,4 +286,8 @@ public class PlayerLogic : MonoBehaviour
 //
 //        }
 //    }
+    public void SetServing(bool serving)
+    {
+        _isServing = serving;
+    }
 }

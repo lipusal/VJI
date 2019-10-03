@@ -14,6 +14,8 @@ public class AIPlayer : MonoBehaviour
     public Transform aimTarget;
 
     private CharacterController _characterController;
+
+    private bool _isServing;
     
     /* player id according to court side,
     * 1 if player is on team one or
@@ -23,6 +25,7 @@ public class AIPlayer : MonoBehaviour
     
     void Start()
     {
+        _isServing = false;
         _characterController = GetComponent<CharacterController>();
         if (transform.position.x < 0)
         {
@@ -58,5 +61,10 @@ public class AIPlayer : MonoBehaviour
             BallLogic.Instance.SetHittingPlayer(_id);
 
         }
+    }
+
+    public void SetServing(bool serving)
+    {
+        _isServing = serving;
     }
 }
