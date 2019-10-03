@@ -30,13 +30,9 @@ public class PlayerAnimation
     {
         //validate _animator not null?
 //        _animator.SetInteger(BallSide, (int) side);
-Debug.Log("hitting");
+
         _animator.SetTrigger(Hit);
+        _animator.SetInteger(BallSide,(int) side);
     }
     
-    public static void StopHittingAnimation()
-    {
-        //validate _animator not null?
-        _animator.SetTrigger(Hit);
-    }
 }
