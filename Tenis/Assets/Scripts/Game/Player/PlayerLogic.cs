@@ -278,6 +278,17 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    private void Serve()
+    {
+        AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT); //TODO this when button to serve is pressed?
+        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+        float serveForce = 40f; //TODO use a private variable for serve force
+        BallLogic ball = BallLogic.Instance;
+        //set ball to height of service
+        // activate Ball renderer as it will be turned off when state is serving
+        _ball.GetComponent<Rigidbody>().velocity = aimDirection * serveForce + new Vector3(0, -3.2f, 0);
+        BallLogic.Instance.SetHittingPlayer(_id);
+    }
     private void DeleteBallReference()
     {
         _ball = null;
