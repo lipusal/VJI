@@ -131,16 +131,16 @@ public class ScoreManager
     }
 
     // returns 0 if serving side is right and 1 if serving side is left
-    public ServingSide GetServingSide()
+    public Side GetServingSide()
     {
         int[] results = _currentSet.GetCurrentGameResults();
         if ((results[0] + results[1]) % 2 == 0)
         {
-            return ServingSide.RIGHT;
+            return Side.RIGHT;
         }
         else
         {
-            return ServingSide.LEFT;
+            return Side.LEFT;
         }
 
     }

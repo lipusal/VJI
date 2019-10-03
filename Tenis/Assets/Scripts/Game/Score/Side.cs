@@ -1,6 +1,6 @@
 ﻿namespace Game.Score
 {
-    public enum ServingSide : int
+    public enum Side : int
     {
         RIGHT			= 0,
         LEFT            = 1,

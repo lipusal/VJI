@@ -41,11 +41,11 @@ public class PlayerLogic : MonoBehaviour
     public float minHitForce = 18f;
 
     private ScoreManager _scoreManager;
-
+    private Side _ballSide;
     private bool _isServing;
     
     // Is true after hit button is pressed
-    private bool _isHitting;
+    private bool _isCharging;
 
     // Is true after hit button is released;
     private bool _finishHitting;
@@ -70,10 +70,11 @@ public class PlayerLogic : MonoBehaviour
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
-        _isHitting = false;
+        _isCharging = false;
         _finishHitting = false;
         moveLeftRightValue = 0;
         moveForwardBackwardValue = 0;
+        _ballSide = Side.RIGHT;
         _currentHitForce = minHitForce;
         PlayerAnimation.InitializePlayerAnimator(GetComponent<Animator>());
         _aimOffset = aimTarget.position - transform.position;
@@ -88,8 +89,8 @@ public class PlayerLogic : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
         float x, z; 
-        ServingSide servingSide = _scoreManager.GetServingSide();
-        if (servingSide == ServingSide.RIGHT)
+        Side servingSide = _scoreManager.GetServingSide();
+        if (servingSide == Side.RIGHT)
         {
             z = -5f;
         }
@@ -133,9 +134,9 @@ public class PlayerLogic : MonoBehaviour
     {
         ReadInput();
 
-        if (!_isHitting)
+        if (!_isCharging)
         {
-            PlayerAnimation.StopHittingAnimation();
+//            PlayerAnimation.StopHittingAnimation();
             UpdatePosition();
         }
         else
@@ -172,14 +173,13 @@ public class PlayerLogic : MonoBehaviour
 
         if (ActionMapper.GetHitPressed(hitButton))
         {
-            if (!_isHitting)
+            if (!_isCharging)
             {
                 _currentHitForce = minHitForce;
                 aimTarget.position = transform.position + _aimOffset;
-                PlayerAnimation.StartHittingAnimation();
             }
 
-            _isHitting = true;
+            _isCharging = true;
             _currentHitForce += _currentHitForce + deltaHitForce;
             _currentHitForce = Math.Min(_currentHitForce, maxHitForce);
 
@@ -187,8 +187,9 @@ public class PlayerLogic : MonoBehaviour
 
         if (ActionMapper.GetHitReleased(hitButton))
         {
-            _isHitting = false;
+            _isCharging = false;
             _finishHitting = true;
+            PlayerAnimation.StartHittingAnimation(_ballSide);
         }
     }
 
@@ -235,30 +236,37 @@ public class PlayerLogic : MonoBehaviour
             -aimTargetSpeed * moveLeftRightValue * Time.deltaTime));
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
+        // Positive = left
+        // Negative = right
+        Debug.Log("deltaPositionz: " + deltaPosition.z);
+        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
+        
+    }
 
     private void OnTriggerStay(Collider other)
     {
         if (_finishHitting && other.CompareTag("Ball"))
         {
-            DetectBallSide(other);
-            HitBall(other);
+            HitBall(other, _ballSide);
             
         }
     }
 
-    private void DetectBallSide(Collider other)
-    {
-        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
-    }
+//    private Side DetectBallSide(Collider other)
+//    {
+//       
+//    }
 
-    private void HitBall(Collider other)
+    private void HitBall(Collider other, Side? ballSide)
     {
         AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
         Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
         other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
         _currentHitForce = minHitForce;
         BallLogic.Instance.SetHittingPlayer(_id);
-        
     }
 
 
