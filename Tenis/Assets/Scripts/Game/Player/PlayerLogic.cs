@@ -111,8 +111,11 @@ public class PlayerLogic : MonoBehaviour
         {
             x = -27f;
         }
+
+        _characterController.enabled = false;
         Vector3 newPosition = new Vector3(x, currentPosition.y, z);
         transform.position = newPosition;
+        _characterController.enabled = true;
     }
 
     private void SetIsServing()
