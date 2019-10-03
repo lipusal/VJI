@@ -84,6 +84,10 @@ public class PlayerLogic : MonoBehaviour
         SetID();
         SetIsServing();
         SetInitialPosition();
+        if (_isServing)
+        {
+            ScoreManager.GetInstance().ActivateServingWalls(_id);
+        }
 
     }
 

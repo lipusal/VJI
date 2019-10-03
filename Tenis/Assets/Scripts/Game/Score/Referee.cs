@@ -13,14 +13,14 @@ public class Referee
     private Vector3 _northCourtSide;
     
     // service walls
-    private Vector3 _southServiceWall;
-    private Vector3 _southEastServiceWall;
-    private Vector3 _southWestServiceWall;
-    private Vector3 _southMiddleServiceWall;
-    private Vector3 _northServiceWall;
-    private Vector3 _northEastServiceWall;
-    private Vector3 _northWestServiceWall;
-    private Vector3 _northMiddleServiceWall;
+    private GameObject _southServiceWall;
+    private GameObject _southEastServiceWall;
+    private GameObject _southWestServiceWall;
+    private GameObject _southMiddleServiceWall;
+    private GameObject _northServiceWall;
+    private GameObject _northEastServiceWall;
+    private GameObject _northWestServiceWall;
+    private GameObject _northMiddleServiceWall;
 
     //service delimiters
     private Vector3 _southServiceDelimiter;
@@ -43,10 +43,10 @@ public class Referee
 
     public Referee(Vector3 eastCourtSide, Vector3 westCourtSide,
                     Vector3 southCourtSide, Vector3 northCourtSide,
-                    Vector3 southServiceWall, Vector3 southEastServiceWall,
-                    Vector3 southWestServiceWall, Vector3 southMiddleServiceWall,
-                    Vector3 northServiceWall, Vector3 northEastServiceWall,
-                    Vector3 northWestServiceWall,Vector3 northMiddleServiceWall,
+                    GameObject southServiceWall, GameObject southEastServiceWall,
+                    GameObject southWestServiceWall, GameObject southMiddleServiceWall,
+                    GameObject northServiceWall, GameObject northEastServiceWall,
+                    GameObject northWestServiceWall,GameObject northMiddleServiceWall,
                     Vector3 southServiceDelimiter, Vector3 eastServiceDelimiter,
                     Vector3 westServiceDelimiter, Vector3 northServiceDelimiter,
                     PlayerLogic player1, AIPlayer aiPlayer)
@@ -271,15 +271,22 @@ public class Referee
     public void SetServing(bool serving)
     {
         _isServing = serving;
-        if (ScoreManager.GetInstance().GetServingTeam() == 1)
+        int servingTeam = ScoreManager.GetInstance().GetServingTeam();
+        if (servingTeam == 1)
         {
             _player1.SetServing(serving);
         }
         else
         {
             _aiPlayer.SetServing(serving);
+            ActivateServingWalls(servingTeam);
+
         }
-        //TODO set player to serving or not
+        
+        if (!serving)
+        {
+            DeactivateServingWalls(servingTeam);
+        }
     }
 
     public bool GetIsServing()
@@ -290,6 +297,38 @@ public class Referee
     public void ActivateServingWalls(int id)
     {
        //TODO implement enable walls
+       if (id == 1) //south
+       {
+           _southServiceWall.GetComponent<Collider>().enabled = true;
+           _southEastServiceWall.GetComponent<Collider>().enabled = true;
+           _southWestServiceWall.GetComponent<Collider>().enabled = true;
+           _southMiddleServiceWall.GetComponent<Collider>().enabled = true;
+       }
+       else
+       {
+           _northServiceWall.GetComponent<Collider>().enabled = true;
+           _northEastServiceWall.GetComponent<Collider>().enabled = true;
+           _northWestServiceWall.GetComponent<Collider>().enabled = true;
+           _northMiddleServiceWall.GetComponent<Collider>().enabled = true;
+       }
+    }
+    public void DeactivateServingWalls(int id)
+    {
+        //TODO implement enable walls
+        if (id == 1) //south
+        {
+            _southServiceWall.GetComponent<Collider>().enabled = false;
+            _southEastServiceWall.GetComponent<Collider>().enabled = false;
+            _southWestServiceWall.GetComponent<Collider>().enabled = false;
+            _southMiddleServiceWall.GetComponent<Collider>().enabled = false;
+        }
+        else
+        {
+            _northServiceWall.GetComponent<Collider>().enabled = false;
+            _northEastServiceWall.GetComponent<Collider>().enabled = false;
+            _northWestServiceWall.GetComponent<Collider>().enabled = false;
+            _northMiddleServiceWall.GetComponent<Collider>().enabled = false;
+        }
     }
 
     public void MakePlayerServe(int hitterId)

@@ -41,11 +41,11 @@ public class ScoreManager
     }
 
     public void loadReferee(Vector3 eastCourtSide, Vector3 westCourtSide,
-        Vector3 southCourtSide, Vector3 northCourtSide, Vector3 southServiceWall,
-        Vector3 southEastServiceWall, Vector3 southWestServiceWall,
-        Vector3 southMiddleServiceWall, Vector3 northServiceWall,
-        Vector3 northEastServiceWall, Vector3 northWestServiceWall, 
-        Vector3 northMiddleServiceWall,  Vector3 southServiceDelimiter,
+        Vector3 southCourtSide, Vector3 northCourtSide, GameObject southServiceWall,
+        GameObject southEastServiceWall, GameObject southWestServiceWall,
+        GameObject southMiddleServiceWall, GameObject northServiceWall,
+        GameObject northEastServiceWall, GameObject northWestServiceWall, 
+        GameObject northMiddleServiceWall,  Vector3 southServiceDelimiter,
         Vector3 eastServiceDelimiter, Vector3 westServiceDelimiter,
         Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer player2)
     {
