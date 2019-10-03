@@ -250,7 +250,7 @@ public class PlayerLogic : MonoBehaviour
             
             if (_finishHitting)
             {
-                HitBall(other, _ballSide);
+                HitBall(other.gameObject);
             }
         }
     }
@@ -265,11 +265,11 @@ public class PlayerLogic : MonoBehaviour
        
     }
 
-    private void HitBall(Collider other, Side? ballSide)
+    private void HitBall(GameObject ball)
     {
-        AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
+        AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
         Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-        other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+        ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
         _currentHitForce = minHitForce;
         BallLogic.Instance.SetHittingPlayer(_id);
     }
