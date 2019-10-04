@@ -91,18 +91,19 @@ public class Referee
 
                 if (hittingSide == currentSide)
                 {
-                   // Debug.Log("bounce on same side as hitter");
+                    Debug.Log("bounce on same side as hitter");
                     returnValue = -1;
                 }
                 else
                 {
-                    //Debug.Log("bounced two times");
+                    Debug.Log("bounced two times" + "\n _lastBouncedSize: " + _lastBoucedSide + " currentSide: " + currentSide +
+                              " previousToLastHitter: " + _previousToLastHitter);
                     returnValue = 1;
                 }
             }
             else if (IsOut(bouncePosition))
             {
-//                Debug.Log("opponent point");
+                Debug.Log("out");
                 returnValue = -1;
             }
         

@@ -81,7 +81,6 @@ public class ScoreManager
 
     public void manageBounce(Vector3 bouncePosition, int hitterId)
     {
-        _referee.ResetHitters();
         int result = _referee.isPoint(bouncePosition, hitterId);
         if (result > 0)
         {
@@ -115,6 +114,8 @@ public class ScoreManager
         {
             _referee.SetServing(false);
         }
+        _referee.ResetHitters();
+
     }
 
     private void ShowPartialResults()

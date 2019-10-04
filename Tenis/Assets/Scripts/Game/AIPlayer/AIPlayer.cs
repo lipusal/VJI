@@ -89,7 +89,6 @@ public class AIPlayer : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
             _playerAnimation.StartHittingAnimation(Side.RIGHT);
         }
     }
