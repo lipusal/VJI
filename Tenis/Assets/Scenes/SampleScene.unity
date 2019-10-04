@@ -2006,7 +2006,7 @@ MonoBehaviour:
   aimTarget: {fileID: 1492476147}
   aimTargetSpeed: 15
   movementSpeed: 14
-  hitForce: 25
+  hitForce: 20
 --- !u!65 &299943508
 BoxCollider:
   m_ObjectHideFlags: 0
