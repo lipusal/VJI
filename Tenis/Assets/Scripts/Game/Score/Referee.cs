@@ -147,7 +147,7 @@ public class Referee
         return 2;
     }
 
-    private bool IsOut(Vector3 bouncePosition)
+    public bool IsOut(Vector3 bouncePosition)
     {
         if (_isServing)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using FrameLord;
 using Game.Score;
 using UnityEngine;
 
@@ -91,6 +92,10 @@ public class ScoreManager
         }
         else if (result < 0)
         {
+            if (_referee.IsOut(bouncePosition))
+            {
+                AudioManager.Instance.PlaySound((int) SoundId.SOUND_OUT);
+            }
             int opponentId = (hitterId % 2) + 1;
             if (OnPoint(opponentId))
             {
