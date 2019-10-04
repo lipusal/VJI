@@ -219,6 +219,10 @@ public class ScoreManager
 
     public bool CanPlayerHit(int playerId)
     {
+        if (GetServingTeam() == playerId)
+        {
+            return true;
+        }
         return !_referee.GetIsServing();
     }
 
