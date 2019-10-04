@@ -108,6 +108,7 @@ public class Referee
         
             if (returnValue == 0)
             {
+                SetServing(false);
                 _lastBoucedSide = currentSide;
             }
             else

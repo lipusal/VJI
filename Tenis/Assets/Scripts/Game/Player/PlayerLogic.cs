@@ -35,6 +35,7 @@ public class PlayerLogic : MonoBehaviour
 
     public float movementSpeed = 14f;
     public float maxHitForce = 40f;
+    private float _serveForce = 40f;
     private float _currentHitForce;
     private float _playerSpeed = 50f;
     private float deltaHitForce = 1;
@@ -88,6 +89,7 @@ public class PlayerLogic : MonoBehaviour
         {
             ScoreManager.GetInstance().ActivateServingWalls(_id);
         }
+        BallLogic.Instance.DesapearBall();
 
     }
 
@@ -199,7 +201,15 @@ public class PlayerLogic : MonoBehaviour
         {
             _isCharging = false;
             _finishHitting = true;
-            PlayerAnimation.StartHittingAnimation(_ballSide);
+            if (_isServing)
+            {
+                AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_SERVE);
+                PlayerAnimation.StartServeAnimation();
+            }
+            else
+            {
+                PlayerAnimation.StartHittingAnimation(_ballSide);
+            }
         }
     }
 
@@ -288,14 +298,13 @@ public class PlayerLogic : MonoBehaviour
 
     private void Serve()
     {
-        AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT); //TODO this when button to serve is pressed?
-        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-        float serveForce = 40f; //TODO use a private variable for serve force
+        Vector3 currentPosition = transform.position;
+        Vector3 aimDirection = (aimTarget.position - currentPosition).normalized;
+        //float serveForce = 40f; //TODO use a private variable for serve force
         BallLogic ball = BallLogic.Instance;
-        //set ball to height of service
-        // activate Ball renderer as it will be turned off when state is serving
-        _ball.GetComponent<Rigidbody>().velocity = aimDirection * serveForce + new Vector3(0, -3.2f, 0);
-        BallLogic.Instance.SetHittingPlayer(_id);
+        ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero );
+        ball.GetComponent<Rigidbody>().velocity = aimDirection * _serveForce + new Vector3(0, -1.2f, 0);
+        BallLogic.Instance.SetHittingPlayer(GetId());
     }
     private void DeleteBallReference()
     {
@@ -317,5 +326,10 @@ public class PlayerLogic : MonoBehaviour
     public void SetServing(bool serving)
     {
         _isServing = serving;
+    }
+
+    public int GetId()
+    {
+        return _id;
     }
 }

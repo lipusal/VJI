@@ -52,6 +52,13 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     {
         _hittingPlayer = playerId;
         ScoreManager.GetInstance().UpdateLastHitter(playerId);
+
+        if (!ScoreManager.GetInstance().CanPlayerHit(playerId))
+        {
+            int opponentId = (playerId % 2) + 1;
+            ScoreManager.GetInstance().AddPoint(opponentId);
+            //TODO check if match finished
+        }
     }
 
     public void ResetConfig()
@@ -60,4 +67,19 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         transform.position = initialPosition;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
+
+    public void DesapearBall()
+    {
+        GetComponent<Collider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    public void AppearBall(Vector3 position, Vector3 velocity)
+    {
+        transform.position = position;
+        GetComponent<Collider>().enabled = true;
+        GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<Rigidbody>().velocity = velocity;
+    }
+    
 }

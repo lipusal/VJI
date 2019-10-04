@@ -216,4 +216,14 @@ public class ScoreManager
     {
         _referee.ActivateServingWalls(id);
     }
+
+    public bool CanPlayerHit(int playerId)
+    {
+        return !_referee.GetIsServing();
+    }
+
+    public void AddPoint(int playerId)
+    {
+        OnPoint(playerId);
+    }
 }

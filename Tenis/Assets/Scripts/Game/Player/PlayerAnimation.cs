@@ -11,6 +11,7 @@ public class PlayerAnimation
     private static readonly int Hitting = Animator.StringToHash("hitting");
     private static readonly int BallSide = Animator.StringToHash("ballSide");
     private static readonly int Hit = Animator.StringToHash("hit");
+    private static readonly int Serve = Animator.StringToHash("serve");
 
     // Start is called before the first frame update
     
@@ -34,5 +35,9 @@ public class PlayerAnimation
         _animator.SetTrigger(Hit);
         _animator.SetInteger(BallSide,(int) side);
     }
-    
+
+    public static void StartServeAnimation()
+    {
+        _animator.SetTrigger(Serve);
+    }
 }
