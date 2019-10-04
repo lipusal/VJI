@@ -13,8 +13,11 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     // 1 for team one, 2 for team two
     private int _hittingPlayer;
 
+    private bool _isEnabled;
+
     private void Start()
     {
+        _isEnabled = true;
         _rigidbody = GetComponent<Rigidbody>();
         side = -1;
         _scoreManager = ScoreManager.GetInstance();
@@ -68,16 +71,22 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 
     public void DesapearBall()
     {
+        _isEnabled = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void AppearBall(Vector3 position, Vector3 velocity)
     {
+        _isEnabled = true;
         transform.position = position;
         GetComponent<Collider>().enabled = true;
         GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Rigidbody>().velocity = velocity;
     }
-    
+
+    public bool IsEnabled()
+    {
+        return _isEnabled;
+    }
 }

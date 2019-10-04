@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FrameLord;
 using Game.Player;
+using Game.Score;
 using UnityEngine;
 
 public class AIPlayer : MonoBehaviour
@@ -44,7 +45,10 @@ public class AIPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveToBall();
+        if (BallLogic.Instance.IsEnabled())
+        {
+            MoveToBall();
+        }
     }
 
     private void MoveToBall()
@@ -86,15 +90,21 @@ public class AIPlayer : MonoBehaviour
         {
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
             AudioManager.Instance.PlaySound(other.transform.position, (int) SoundId.SOUND_HIT);
-
-            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 7f, 0);
-            BallLogic.Instance.SetHittingPlayer(_id);
-
+            _playerAnimation.StartHittingAnimation(Side.RIGHT);
         }
     }
 
     public void SetServing(bool serving)
     {
         _isServing = serving;
+    }
+    
+    private void HitBall()
+    {
+        BallLogic ball = BallLogic.Instance;
+        AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
+        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+        ball.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 7f, 0);
+        ball.SetHittingPlayer(_id);
     }
 }
