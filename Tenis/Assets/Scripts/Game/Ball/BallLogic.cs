@@ -29,7 +29,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         if(collision.gameObject.CompareTag("Wall"))
         {
             _scoreManager.manageBounce(transform.position, _hittingPlayer);
-
+            AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_WALL);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             ResetConfig();
         }
