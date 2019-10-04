@@ -104,7 +104,12 @@ public class AIPlayer : MonoBehaviour
         BallLogic ball = BallLogic.Instance;
         AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
         Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 7f, 0);
+        ball.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 3.2f, 0);
         ball.SetHittingPlayer(_id);
+    }
+    
+    private void DeleteBallReference()
+    {
+        //TODO its here just to use same animation as player 1
     }
 }
