@@ -9,11 +9,7 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
-    private const int IDLE = 0;
-    private const int RIGHT = 1;
-    private const int UP = 2;
-    private const int LEFT = 3;
-    private const int DOWN = 4; //TODO all this should be an enum
+   
     
     // Button to move left
     public KeyCode leftButton = KeyCode.LeftArrow;
@@ -222,47 +218,19 @@ public class PlayerLogic : MonoBehaviour
     {
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
-        AnimateMovement(leftRightMove, forwardBackardMove);
+        _playerAnimation.AnimateMovement(leftRightMove, forwardBackardMove);
         //    _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
         var vec = new Vector3(forwardBackardMove, 0, -leftRightMove);
         _characterController.SimpleMove(vec * _playerSpeed);
        // AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);
     }
 
-    private void AnimateMovement(float leftRightMove, float forwardBackardMove)
-    {
-        if (leftRightMove > 0)
-        {
-            _playerAnimation.StartMoveAnimation(RIGHT);
-        }
-        else if(leftRightMove < 0)
-        {
-            _playerAnimation.StartMoveAnimation(LEFT);
-        }
-        else if(forwardBackardMove > 0)
-        {
-            _playerAnimation.StartMoveAnimation(UP);
-        }
-        else if(forwardBackardMove < 0)
-        {
-            _playerAnimation.StartMoveAnimation(DOWN);
-        }
-        else
-        {
-            _playerAnimation.StartMoveAnimation(IDLE);
-        }
-    }
+   
 
     private void UpdateAimTargetPosition()
     {
         aimTarget.Translate(new Vector3(aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime, 0,
             -aimTargetSpeed * moveLeftRightValue * Time.deltaTime));
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        
-        
     }
 
     private void OnTriggerStay(Collider other)

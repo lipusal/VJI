@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Game.Player;
 using Game.Score;
 using UnityEngine;
 
@@ -12,25 +13,46 @@ public class PlayerAnimation
     private static readonly int BallSide = Animator.StringToHash("ballSide");
     private static readonly int Hit = Animator.StringToHash("hit");
     private static readonly int Serve = Animator.StringToHash("serve");
+    
 
     // Start is called before the first frame update
 
     public PlayerAnimation(Animator animator)
     {
+        //validate _animator not null?
         _animator = animator;
     }
 
-    public void StartMoveAnimation(int direction)//TODO should receive enum of direction
+    public void AnimateMovement(float leftRightMove, float forwardBackardMove)
     {
-        //validate _animator not null?
-        _animator.SetInteger(Direction, direction);
+        if (leftRightMove > 0)
+        {
+            StartMoveAnimation(MovementDirection.RIGHT);
+        }
+        else if(leftRightMove < 0)
+        {
+            StartMoveAnimation(MovementDirection.LEFT);
+        }
+        else if(forwardBackardMove > 0)
+        {
+           StartMoveAnimation(MovementDirection.UP);
+        }
+        else if(forwardBackardMove < 0)
+        {
+            StartMoveAnimation(MovementDirection.DOWN);
+        }
+        else
+        {
+            StartMoveAnimation(MovementDirection.IDLE);
+        }
+    }
+    public void StartMoveAnimation(MovementDirection direction)//TODO should receive enum of direction
+    {
+        _animator.SetInteger(Direction, (int) direction);
     }
 
     public void StartHittingAnimation(Side side)
     {
-        //validate _animator not null?
-//        _animator.SetInteger(BallSide, (int) side);
-
         _animator.SetTrigger(Hit);
         _animator.SetInteger(BallSide,(int) side);
     }
@@ -44,8 +66,5 @@ public class PlayerAnimation
     {
         AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
         return (currentState.IsName("service") || currentState.IsName("drive") || currentState.IsName("backhand"));
-
-
-
     }
 }
