@@ -19,7 +19,7 @@ public class TenisGameSoundList : SoundList
         new SoundProp((int) SoundId.SOUND_HIT,         "HitSound",         2, 100),
         new SoundProp((int) SoundId.SOUND_SERVE,       "ServeSound",         2, 100),
         new SoundProp((int) SoundId.SOUND_STEPS,       "StepsSound",         1, 50),
-        new SoundProp((int) SoundId.SOUND_BOUNCE,       "BounceBallSound",         1, 50),
+        new SoundProp((int) SoundId.SOUND_BOUNCE,       "BallBounceSound",         1, 50),
         new SoundProp((int) SoundId.SOUND_BOUNCE,       "ClappingSound",         1, 50),
 
     };
