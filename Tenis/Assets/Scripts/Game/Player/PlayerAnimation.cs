@@ -40,4 +40,13 @@ public class PlayerAnimation
     {
         _animator.SetTrigger(Serve);
     }
+
+    public static bool IsPlayingHitAnimation()
+    {
+        AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
+        return (currentState.IsName("service") || currentState.IsName("drive") || currentState.IsName("backhand"));
+
+
+
+    }
 }

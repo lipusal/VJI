@@ -144,16 +144,19 @@ public class PlayerLogic : MonoBehaviour
 
     void Update()
     {
-        ReadInput();
+        if (!PlayerAnimation.IsPlayingHitAnimation())
+        {
+            ReadInput();
 
-        if (!_isCharging)
-        {
+            if (!_isCharging)
+            {
 //            PlayerAnimation.StopHittingAnimation();
-            UpdatePosition();
-        }
-        else
-        {
-            UpdateAimTargetPosition();
+                UpdatePosition();
+            }
+            else
+            {
+                UpdateAimTargetPosition();
+            }
         }
     }
 
