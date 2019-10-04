@@ -81,7 +81,7 @@ public class ScoreManager
 
     public void manageBounce(Vector3 bouncePosition, int hitterId)
     {
-
+        _referee.ResetHitters();
         int result = _referee.isPoint(bouncePosition, hitterId);
         if (result > 0)
         {
@@ -107,7 +107,6 @@ public class ScoreManager
         if (result != 0)
         {
             ShowPartialResults();
-            //_referee.SetServing(true);
             BallLogic.Instance.ResetConfig();
             _referee.MakePlayerServe(1); //TODO change to opponent when game
 

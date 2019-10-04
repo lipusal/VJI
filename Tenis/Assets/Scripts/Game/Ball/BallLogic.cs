@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BallLogic : MonoBehaviorSingleton<BallLogic>
 {
-    private Vector3 initialPosition;
     private Rigidbody _rigidbody;
     //-1 undefined, 0 lower than net, 1 greater than net
     private int side;
@@ -17,9 +16,9 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        initialPosition = transform.position;
         side = -1;
         _scoreManager = ScoreManager.GetInstance();
+        ResetConfig();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,8 +28,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
             _scoreManager.manageBounce(transform.position, _hittingPlayer);
 
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            transform.position = initialPosition;
-            _hittingPlayer = 0;
+            ResetConfig();
         }
         else if (collision.gameObject.CompareTag("Ground"))
         {
@@ -63,8 +61,8 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 
     public void ResetConfig()
     {
+        DesapearBall();
         _hittingPlayer = 0;
-        transform.position = initialPosition;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 

@@ -86,7 +86,7 @@ public class Referee
         {
             int currentSide = GetBouncingSide(bouncePosition);
             int hittingSide = GetHittingSide(hitter);
-            if (currentSide == _lastBoucedSide && _lastBoucedSide != 0 && hitter == _previousToLastHitter)
+            if (currentSide == _lastBoucedSide && _lastBoucedSide != 0 && _previousToLastHitter == 0)
             {
 
                 if (hittingSide == currentSide)
@@ -125,6 +125,12 @@ public class Referee
 //        Debug.Log(hitter);
         _previousToLastHitter = _lastHitter;
         _lastHitter = hitter;
+    }
+
+    public void ResetHitters()
+    {
+        _previousToLastHitter = 0;
+        _lastHitter = 0;
     }
 
     private int GetBouncingSide(Vector3 bouncePosition)
@@ -334,6 +340,7 @@ public class Referee
 
     public void MakePlayerServe(int hitterId)
     {
+        BallLogic.Instance.DesapearBall();
         SetServing(true);
         if (hitterId == 1)
         {
