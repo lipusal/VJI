@@ -85,6 +85,7 @@ public class Set
         
         if (_currentGame.AddPoint(playerId))
         {
+            
             if (AddGame(playerId))
             {
                 return true;

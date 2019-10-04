@@ -334,8 +334,10 @@ public class Referee
 
     public void MakePlayerServe(int hitterId)
     {
+        SetServing(true);
         if (hitterId == 1)
         {
+            _player1.SetServing(true);
             _player1.SetInitialPosition();
         }
     }

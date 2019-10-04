@@ -107,9 +107,9 @@ public class ScoreManager
         if (result != 0)
         {
             ShowPartialResults();
-            _referee.SetServing(true);
+            //_referee.SetServing(true);
             BallLogic.Instance.ResetConfig();
-            _referee.MakePlayerServe(hitterId); //TODO change to opponent when game
+            _referee.MakePlayerServe(1); //TODO change to opponent when game
 
         }
         else if(hitterId != 0)
