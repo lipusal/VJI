@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using FrameLord;
+using Game.Player;
 using UnityEngine;
 
 public class AIPlayer : MonoBehaviour
@@ -15,6 +16,8 @@ public class AIPlayer : MonoBehaviour
 
     private CharacterController _characterController;
 
+    private PlayerAnimation _playerAnimation;
+
     private bool _isServing;
     
     /* player id according to court side,
@@ -27,6 +30,7 @@ public class AIPlayer : MonoBehaviour
     {
         _isServing = false;
         _characterController = GetComponent<CharacterController>();
+        _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
         if (transform.position.x < 0)
         {
             _id = 1;
@@ -45,11 +49,37 @@ public class AIPlayer : MonoBehaviour
 
     private void MoveToBall()
     {
-        Vector3 movingDirection = new Vector3(transform.position.x,transform.position.y, ballPosition.position.z) - transform.position;
+        Vector3 movingDirection = new Vector3(transform.position.x, transform.position.y, ballPosition.position.z) - transform.position;
         _characterController.Move(movingDirection * speed * Time.deltaTime);
+        _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
 //        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);
     }
-    
+
+    private MovementDirection GetMovementDirection(Vector3 movingDirection)
+    {
+        //prioritize LEFT and RIGHT over UP and DOWN because it looks better on animation
+        if (ballPosition.position.z - transform.position.z < 0)
+        {
+            return MovementDirection.LEFT;
+        }
+        else if (ballPosition.position.z - transform.position.z > 0)
+        {
+            return MovementDirection.RIGHT;
+        }
+        else if ((ballPosition.position.x - transform.position.x < 0))
+        {
+            return MovementDirection.UP;
+        }
+        else if (ballPosition.position.z - transform.position.z > 0)
+        {
+            return MovementDirection.DOWN;
+        }
+        else
+        {
+            return MovementDirection.IDLE;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ball"))

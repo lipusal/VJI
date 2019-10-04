@@ -14,9 +14,6 @@ public class PlayerAnimation
     private static readonly int Hit = Animator.StringToHash("hit");
     private static readonly int Serve = Animator.StringToHash("serve");
     
-
-    // Start is called before the first frame update
-
     public PlayerAnimation(Animator animator)
     {
         //validate _animator not null?
@@ -46,7 +43,7 @@ public class PlayerAnimation
             StartMoveAnimation(MovementDirection.IDLE);
         }
     }
-    public void StartMoveAnimation(MovementDirection direction)//TODO should receive enum of direction
+    public void StartMoveAnimation(MovementDirection direction)
     {
         _animator.SetInteger(Direction, (int) direction);
     }
