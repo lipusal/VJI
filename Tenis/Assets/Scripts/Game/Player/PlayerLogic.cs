@@ -70,6 +70,8 @@ public class PlayerLogic : MonoBehaviour
 
     private GameObject _ball;
 
+    private PlayerAnimation _playerAnimation;
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
@@ -79,7 +81,7 @@ public class PlayerLogic : MonoBehaviour
         moveForwardBackwardValue = 0;
         _ballSide = Side.RIGHT;
         _currentHitForce = minHitForce;
-        PlayerAnimation.InitializePlayerAnimator(GetComponent<Animator>());
+        _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
         _aimOffset = aimTarget.position - transform.position;
         _scoreManager = ScoreManager.GetInstance();
         SetID();
@@ -144,7 +146,7 @@ public class PlayerLogic : MonoBehaviour
 
     void Update()
     {
-        if (!PlayerAnimation.IsPlayingHitAnimation())
+        if (!_playerAnimation.IsPlayingHitAnimation())
         {
             ReadInput();
 
@@ -207,11 +209,11 @@ public class PlayerLogic : MonoBehaviour
             if (_isServing)
             {
                 AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_SERVE);
-                PlayerAnimation.StartServeAnimation();
+                _playerAnimation.StartServeAnimation();
             }
             else
             {
-                PlayerAnimation.StartHittingAnimation(_ballSide);
+                _playerAnimation.StartHittingAnimation(_ballSide);
             }
         }
     }
@@ -231,26 +233,24 @@ public class PlayerLogic : MonoBehaviour
     {
         if (leftRightMove > 0)
         {
-            PlayerAnimation.StartMoveAnimation(RIGHT);
+            _playerAnimation.StartMoveAnimation(RIGHT);
         }
         else if(leftRightMove < 0)
         {
-            PlayerAnimation.StartMoveAnimation(LEFT);
+            _playerAnimation.StartMoveAnimation(LEFT);
         }
         else if(forwardBackardMove > 0)
         {
-            PlayerAnimation.StartMoveAnimation(UP);
+            _playerAnimation.StartMoveAnimation(UP);
         }
         else if(forwardBackardMove < 0)
         {
-            PlayerAnimation.StartMoveAnimation(DOWN);
+            _playerAnimation.StartMoveAnimation(DOWN);
         }
         else
         {
-            PlayerAnimation.StartMoveAnimation(IDLE);
+            _playerAnimation.StartMoveAnimation(IDLE);
         }
-        //TODO consider diagonal movement
-        
     }
 
     private void UpdateAimTargetPosition()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerAnimation
 {
-    private static Animator _animator;
+    private Animator _animator;
 
     private static readonly int Direction = Animator.StringToHash("direction");
     private static readonly int Hitting = Animator.StringToHash("hitting");
@@ -14,20 +14,19 @@ public class PlayerAnimation
     private static readonly int Serve = Animator.StringToHash("serve");
 
     // Start is called before the first frame update
-    
 
-    public static void InitializePlayerAnimator(Animator animator)
+    public PlayerAnimation(Animator animator)
     {
         _animator = animator;
     }
-    
-    public static void StartMoveAnimation(int direction)//TODO should receive enum of direction
+
+    public void StartMoveAnimation(int direction)//TODO should receive enum of direction
     {
         //validate _animator not null?
         _animator.SetInteger(Direction, direction);
     }
 
-    public static void StartHittingAnimation(Side side)
+    public void StartHittingAnimation(Side side)
     {
         //validate _animator not null?
 //        _animator.SetInteger(BallSide, (int) side);
@@ -36,12 +35,12 @@ public class PlayerAnimation
         _animator.SetInteger(BallSide,(int) side);
     }
 
-    public static void StartServeAnimation()
+    public void StartServeAnimation()
     {
         _animator.SetTrigger(Serve);
     }
 
-    public static bool IsPlayingHitAnimation()
+    public bool IsPlayingHitAnimation()
     {
         AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
         return (currentState.IsName("service") || currentState.IsName("drive") || currentState.IsName("backhand"));
