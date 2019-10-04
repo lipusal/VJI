@@ -304,7 +304,7 @@ public class PlayerLogic : MonoBehaviour
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero );
         ball.GetComponent<Rigidbody>().velocity = aimDirection * _serveForce + new Vector3(0, -1.2f, 0);
-        BallLogic.Instance.SetHittingPlayer(GetId());
+        BallLogic.Instance.SetHittingPlayer(_id);
     }
     private void DeleteBallReference()
     {
