@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FrameLord;
 using Game.Score;
 using UnityEngine;
@@ -224,10 +224,5 @@ public class ScoreManager
             return true;
         }
         return !_referee.GetIsServing();
-    }
-
-    public void AddPoint(int playerId)
-    {
-        OnPoint(playerId);
     }
 }

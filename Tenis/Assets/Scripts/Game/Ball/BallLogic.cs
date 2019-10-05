@@ -58,7 +58,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         if (!ScoreManager.GetInstance().CanPlayerHit(playerId))
         {
             int opponentId = (playerId % 2) + 1;
-            ScoreManager.GetInstance().AddPoint(opponentId);
+            ScoreManager.GetInstance().OnPoint(opponentId);
             //TODO check if match finished
         }
     }
