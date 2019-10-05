@@ -1,13 +1,11 @@
-using System;
+﻿using System;
 using FrameLord;
 using Game.Score;
 using UnityEngine;
 
 public class ScoreManager
 {
-    private const int ADVANTAGE = Int32.MaxValue;
     private const int NUM_SETS = 2;
-    private static readonly string[] ScoreStrings = {"0", "15", "30", "40", "Ad"};
 
     private Set[] _sets;
     private Set _currentSet;
@@ -69,14 +67,35 @@ public class ScoreManager
             _results[teamNumber - 1]++;
             if (_results[teamNumber - 1] == NUM_SETS)
             {
+                AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
                 return true;
             }
             _currentSet = new Set();
             _setNumber++;
             _sets[_setNumber] = _currentSet;
         }
+        else
+        {
+            int[] points = _currentSet.GetCurrentGameResults();
+            SayScore(points[0], points[1]);
+        }
 
         return false;
+    }
+
+    /// <summary>
+    /// Play audio of score corresponding to the given points.
+    /// </summary>
+    private void SayScore(int team1Points, int team2Points)
+    {
+        if (team1Points == TenisGame.AdvantageIndex || team2Points == TenisGame.AdvantageIndex)
+        {
+            AudioManager.Instance.PlaySound((int) SoundId.SOUND_ADVANTAGE);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team1Points, team2Points));
+        }
     }
 
     public void manageBounce(Vector3 bouncePosition, int hitterId)

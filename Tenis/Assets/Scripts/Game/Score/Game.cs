@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TenisGame  {
+    public static readonly string[] PointStrings = {"0", "15", "30", "40", "Ad"};
+    public const int AdvantageIndex = 4;
+    // TODO NOW rename this file
+
     private int[] _points;
-    private string[] _resultsString = {"0", "15", "30", "40", "Ad"};    
-    
+
     // 0 if no one has won the game yet, 1 if player 1 won and 2 if player 2 won.
     private int _winner;
 
@@ -74,11 +77,11 @@ public class TenisGame  {
 
     public string GetTeam1Points()
     {
-        return _resultsString[_points[0]];
+        return PointStrings[_points[0]];
     }
     public string GetTeam2Points()
     {
-        return _resultsString[_points[1]];
+        return PointStrings[_points[1]];
     }
     
 }
