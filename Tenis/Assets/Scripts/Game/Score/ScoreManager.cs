@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using FrameLord;
 using Game.Score;
 using UnityEngine;
@@ -147,9 +147,9 @@ public class ScoreManager
         int games2 = _currentSet.GetCurrentSetResults()[1];
         int sets1 = GetSetsResults()[0];
         int sets2 = GetSetsResults()[1];
-        
 
-        Debug.Log("player1: " + sets1 + " " + games1 + " " + points1 + "\n" + "player2 " + sets2 + " " + games2 + " " + points2 + "\n" );
+        Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points");
+        Debug.Log($"Player 2: {sets2} sets {games2} games {points2} points");
     }
 
     private int[] GetSetsResults()
