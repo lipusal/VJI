@@ -101,7 +101,7 @@ public class ScoreManager
         {
             AudioManager.Instance.PlaySound((int) SoundId.SOUND_ADVANTAGE);
         }
-        else
+        else if (team1Points != 0 || team2Points != 0) // No callout for 0-0
         {
             AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team1Points, team2Points));
         }
