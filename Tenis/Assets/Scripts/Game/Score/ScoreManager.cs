@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using FrameLord;
 using Game.Score;
 using UnityEngine;
@@ -69,6 +69,9 @@ public class ScoreManager
                 // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WOW_CLAP);
+                ShowPartialResults();
+                BallLogic.Instance.ResetConfig();
+                
                 return true;
             }
             // Advance to next set
