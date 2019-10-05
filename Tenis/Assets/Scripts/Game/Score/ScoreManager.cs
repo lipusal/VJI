@@ -70,6 +70,7 @@ public class ScoreManager
             {
                 // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
+                AudioManager.Instance.PlaySound((int) SoundId.SOUND_WOW_CLAP);
                 return true;
             }
             // Advance to next set
@@ -83,6 +84,8 @@ public class ScoreManager
             int[] points = _currentSet.GetCurrentGameResults();
             SayScore(points[0], points[1]);
             ShowPartialResults();
+            
+            AudioManager.Instance.PlaySound((int) SoundId.SOUND_CLAP);
             
             // Reset ball and server
             BallLogic.Instance.ResetConfig();

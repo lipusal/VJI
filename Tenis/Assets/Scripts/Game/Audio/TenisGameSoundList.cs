@@ -18,6 +18,7 @@ public enum SoundId : int
     SOUND_WIN = 8,
     SOUND_NET_1 = 9,  // Net on first service
     SOUND_NET_2 = 10, // Net on second service
+    SOUND_WOW_CLAP = 11,
 }
 
 /// <summary>
@@ -31,7 +32,8 @@ public class TenisGameSoundList : SoundList
         new SoundProp((int) SoundId.SOUND_SERVE, "ServeSound", 2, 100),
         new SoundProp((int) SoundId.SOUND_STEPS, "StepsSound", 1, 50),
         new SoundProp((int) SoundId.SOUND_BOUNCE, "BallBounceSound", 1, 100),
-        new SoundProp((int) SoundId.SOUND_CLAP, "ClappingSound", 1, 50),
+        new SoundProp((int) SoundId.SOUND_CLAP, "Clap", 1, 50),
+        new SoundProp((int) SoundId.SOUND_WOW_CLAP, "WowClap", 1, 50),
         new SoundProp((int) SoundId.SOUND_OUT, "Out", 1, 100),
         new SoundProp((int) SoundId.SOUND_WALL, "WallSound", 1, 100),
         new SoundProp((int) SoundId.SOUND_NET, "NetSound", 1, 100),
