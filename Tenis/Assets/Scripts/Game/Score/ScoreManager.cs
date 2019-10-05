@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FrameLord;
 using Game.Score;
 using UnityEngine;
@@ -64,20 +64,29 @@ public class ScoreManager
     {
         if (_currentSet.AddPoint(teamNumber))
         {
+            // Won set
             _results[teamNumber - 1]++;
             if (_results[teamNumber - 1] == NUM_SETS)
             {
+                // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
                 return true;
             }
+            // Advance to next set
             _currentSet = new Set();
             _setNumber++;
             _sets[_setNumber] = _currentSet;
         }
         else
         {
+            // Won point, show score
             int[] points = _currentSet.GetCurrentGameResults();
             SayScore(points[0], points[1]);
+            ShowPartialResults();
+            
+            // Reset ball and server
+            BallLogic.Instance.ResetConfig();
+            _referee.MakePlayerServe(1); //TODO change to opponent when game
         }
 
         return false;
@@ -122,14 +131,7 @@ public class ScoreManager
             }
         }
 
-        if (result != 0)
-        {
-            ShowPartialResults();
-            BallLogic.Instance.ResetConfig();
-            _referee.MakePlayerServe(1); //TODO change to opponent when game
-
-        }
-        else if(hitterId != 0)
+        if(result == 0 && hitterId != 0)
         {
             _referee.SetServing(false);
         }
