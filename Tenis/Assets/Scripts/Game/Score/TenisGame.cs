@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class TenisGame  {
@@ -32,12 +31,12 @@ public class TenisGame  {
     {
         if (_winner != 0)
         {
-            Debug.Log("El game ya termino");//TODO make exception
+            throw new Exception("El juego ya terminó");
    
         }
         else if (playerId != 1 && playerId != 2)
         {
-            Debug.Log("No existe el id del jugador para agregar punto");//TODO make exception
+            throw new Exception("No existe el ID del jugador para agregar punto");
         }
         else
         {
