@@ -204,7 +204,6 @@ public class PlayerLogic : MonoBehaviour
             _finishHitting = true;
             if (_isServing)
             {
-                AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_SERVE);
                 _playerAnimation.StartServeAnimation();
             }
             else
@@ -303,5 +302,10 @@ public class PlayerLogic : MonoBehaviour
     public int GetId()
     {
         return _id;
+    }
+
+    private void PlayServeSound()
+    {
+        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_SERVE);
     }
 }

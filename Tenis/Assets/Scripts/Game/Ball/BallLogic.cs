@@ -6,6 +6,7 @@ using UnityEngine;
 public class BallLogic : MonoBehaviorSingleton<BallLogic>
 {
     private Rigidbody _rigidbody;
+    
     //-1 undefined, 0 lower than net, 1 greater than net
     private int side;
 

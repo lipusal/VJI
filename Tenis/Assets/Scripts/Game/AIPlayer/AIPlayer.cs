@@ -107,6 +107,11 @@ public class AIPlayer : MonoBehaviour
         ball.SetHittingPlayer(_id);
     }
     
+    private void PlayServeSound()
+    {
+        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_SERVE);
+    }
+    
     private void DeleteBallReference()
     {
         //TODO its here just to use same animation as player 1
