@@ -81,7 +81,7 @@ public class ScoreManager
 
     public void manageBounce(Vector3 bouncePosition, int hitterId)
     {
-        int result = _referee.isPoint(bouncePosition, hitterId);
+        int result = _referee.IsPoint(bouncePosition, hitterId);
         if (result > 0)
         {
             if (OnPoint(hitterId))

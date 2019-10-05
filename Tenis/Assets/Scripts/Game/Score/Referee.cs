@@ -81,7 +81,7 @@ public class Referee
     }
 
     // Returns -1 if is point for opponent, 1 if is point for hitting team or zero if it is not point
-    public int isPoint(Vector3 bouncePosition, int hitter)
+    public int IsPoint(Vector3 bouncePosition, int hitter)
     {
         int returnValue = 0;
         if (hitter != 0)
