@@ -1,30 +1,28 @@
-﻿using System;
+using System;
 using FrameLord;
 using Game.Score;
 using UnityEngine;
 
 public class ScoreManager
 {
-    private const int NUM_SETS = 2;
+    /// <summary>
+    /// Maximum number of sets to play. Best of MAX_SETS wins, ie. it is enough to win (MAX_SETS/2) + 1 sets (integer division).
+    /// E.g. If MAX_SETS is 3, 2 consecutive sets is enough to win. 3 sets would be played if each player has won 1 set.
+    /// </summary>
+    private const int MAX_SETS = 3;
 
     private Set[] _sets;
     private Set _currentSet;
     private int _setNumber;
     private int[] _results;
     private Referee _referee;
-
     
-//    private int[] _wonPoints = { 0, 0 };        // One per team, for current game
-//    private int[] _wonGames = { 0, 0 };         // One per team, for current set
-//    private int[] _wonSets = { 0, 0 };          // Best of NUM_SETS sets wins
-//    private int[,] gameHistory = new int[NUM_SETS, 2]; // One per set, per team (NUM_SETS x 2)
-
     private static ScoreManager _instance;
 
     private ScoreManager()
     {
         _results = new int[2];
-        _sets = new Set[NUM_SETS + NUM_SETS - 1];
+        _sets = new Set[MAX_SETS];
         _setNumber = 0;
         _currentSet = new Set();
         _sets[_setNumber] = _currentSet;
@@ -66,7 +64,7 @@ public class ScoreManager
         {
             // Won set
             _results[teamNumber - 1]++;
-            if (_results[teamNumber - 1] == NUM_SETS)
+            if (_results[teamNumber - 1] > MAX_SETS/2)
             {
                 // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
