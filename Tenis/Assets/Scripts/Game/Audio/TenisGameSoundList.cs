@@ -6,19 +6,19 @@ using FrameLord;
 
 public enum SoundId : int
 {
-    SOUND_HIT = 0,
-    SOUND_SERVE = 1,
-    SOUND_STEPS = 2,
-    SOUND_BOUNCE = 3,
-    SOUND_CLAP = 4,
-    SOUND_OUT = 5,
-    SOUND_WALL = 6,
-    SOUND_NET = 7,
-    SOUND_ADVANTAGE = 7,
-    SOUND_WIN = 8,
-    SOUND_NET_1 = 9,  // Net on first service
-    SOUND_NET_2 = 10, // Net on second service
-    SOUND_WOW_CLAP = 11,
+    SOUND_HIT,
+    SOUND_SERVE,
+    SOUND_STEPS,
+    SOUND_BOUNCE,
+    SOUND_CLAP,
+    SOUND_WOW_CLAP,
+    SOUND_OUT,
+    SOUND_WALL,
+    SOUND_NET,
+    SOUND_ADVANTAGE,
+    SOUND_WIN,
+    SOUND_NET_1,  // Net on first service
+    SOUND_NET_2,  // Net on second service
 }
 
 /// <summary>
