@@ -5,7 +5,6 @@ using UnityEngine;
 public class TenisGame  {
     public static readonly string[] PointStrings = {"0", "15", "30", "40", "Ad"};
     public const int AdvantageIndex = 4;
-    // TODO NOW rename this file
 
     private int[] _points;
 
