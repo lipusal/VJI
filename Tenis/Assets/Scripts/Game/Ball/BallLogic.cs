@@ -41,7 +41,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         }
         else if (collision.gameObject.CompareTag("Net"))
         {
-           //TODO play net sound
+           AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_NET);
         }
         else
         {

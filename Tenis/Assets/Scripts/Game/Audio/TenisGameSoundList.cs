@@ -11,6 +11,7 @@ public enum SoundId : int
     SOUND_CLAP = 4,
     SOUND_OUT = 5,
     SOUND_WALL = 6,
+    SOUND_NET = 7,
 }
 
 /// <summary>
@@ -27,7 +28,7 @@ public class TenisGameSoundList : SoundList
         new SoundProp((int) SoundId.SOUND_CLAP,       "ClappingSound",         1, 50),
         new SoundProp((int) SoundId.SOUND_OUT,       "Out",         1, 100),
         new SoundProp((int) SoundId.SOUND_WALL,       "WallSound",         1, 100),
-
+        new SoundProp((int) SoundId.SOUND_NET,       "NetSound",         1, 100),
     };
 
     new void Start()
