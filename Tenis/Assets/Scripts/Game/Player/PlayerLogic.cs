@@ -107,7 +107,6 @@ public class PlayerLogic : MonoBehaviour
 
         if (_isServing)
         {
-            //TODO activate mesh of serving walls
             ScoreManager.GetInstance().ActivateServingWalls(_id);
             x = -32f;
         }
@@ -208,6 +207,7 @@ public class PlayerLogic : MonoBehaviour
             }
             else
             {
+                //DetectBallSide();
                 _playerAnimation.StartHittingAnimation(_ballSide);
             }
         }
@@ -237,7 +237,7 @@ public class PlayerLogic : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            DetectBallSide(other);
+            //DetectBallSide(other);
             
             if (_finishHitting)
             {
@@ -251,10 +251,17 @@ public class PlayerLogic : MonoBehaviour
         Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
         // Positive = left
         // Negative = right
+        Debug.Log(deltaPosition.z <= 0 ? "RIGHT" : "LEFT");
         _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
-       
     }
-
+//    private void DetectBallSide()
+//    {
+//        Vector3 bsllPosition = BallLogic.Instance.transform.position;
+//        Vector3 deltaPosition = bsllPosition - transform.position;
+//        // Positive = left
+//        // Negative = right
+//        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
+//    }
     private void HitBall()
     {
         if (_ball != null)

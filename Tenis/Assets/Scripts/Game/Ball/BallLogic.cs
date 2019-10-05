@@ -68,7 +68,10 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         DesapearBall();
         _hittingPlayer = 0;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<ParticleSystem>().Pause();
+//        GetComponent<ParticleSystem>().Pause();
+        ParticleSystem.EmissionModule emissionModule = GetComponent<ParticleSystem>().emission;
+        emissionModule.enabled = false;
+
     }
 
     public void DesapearBall()
@@ -85,7 +88,9 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         GetComponent<Collider>().enabled = true;
         GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Rigidbody>().velocity = velocity;
-        GetComponent<ParticleSystem>().Play();
+//        GetComponent<ParticleSystem>().Play();
+        ParticleSystem.EmissionModule emissionModule = GetComponent<ParticleSystem>().emission;
+        emissionModule.enabled = true;
 
     }
 

@@ -37,6 +37,7 @@ public class Referee
     private AIPlayer _aiPlayer;
 
     private bool _isServing;
+    private int _serviceTimes;
     
     
 
@@ -59,6 +60,7 @@ public class Referee
         _lastHitter = 0;
         _previousToLastHitter = 0;
         _isServing = true;
+        _serviceTimes = 1;
 
         _southServiceWall = southServiceWall;
         _southEastServiceWall = southEastServiceWall;
@@ -159,7 +161,7 @@ public class Referee
     {
         if (_isServing)
         {
-            return CheckServiceLimits(bouncePosition);
+          return CheckServiceLimits(bouncePosition);
         }
 
         if (bouncePosition.x < _southCourtSide.x || bouncePosition.x > _northCourtSide.x)
@@ -279,6 +281,7 @@ public class Referee
     public void SetServing(bool serving)
     {
         _isServing = serving;
+        _serviceTimes = 1;
        // int servingTeam = ScoreManager.GetInstance().GetServingTeam();
        int servingTeam = 1; //TODO next version should use comented line and switch service between games
        if (servingTeam == 1)
