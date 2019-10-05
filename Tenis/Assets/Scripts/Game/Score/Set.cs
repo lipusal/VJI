@@ -58,8 +58,8 @@ public class Set
                 _winner = playerId;
                 return true;
             }
-
-            _servingTeam = (_servingTeam  % 2) + 1;
+            
+            //_servingTeam = (_servingTeam  % 2) + 1; TODO use this line in next version
         }
 
         return false;

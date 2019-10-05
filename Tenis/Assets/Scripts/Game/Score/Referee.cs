@@ -279,8 +279,9 @@ public class Referee
     public void SetServing(bool serving)
     {
         _isServing = serving;
-        int servingTeam = ScoreManager.GetInstance().GetServingTeam();
-        if (servingTeam == 1)
+       // int servingTeam = ScoreManager.GetInstance().GetServingTeam();
+       int servingTeam = 1; //TODO next version should use comented line and switch service between games
+       if (servingTeam == 1)
         {
             _player1.SetServing(serving);
         }
