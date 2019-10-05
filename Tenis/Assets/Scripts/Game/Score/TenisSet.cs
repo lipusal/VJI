@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Set
+public class TenisSet
 {
     private const int MAX_GAMES_PER_SET = 7;
     private readonly TenisGame[] _games;
@@ -16,7 +16,7 @@ public class Set
     // 0 if no one has won the game yet, 1 if player one won and 2 if player two won.
     private int _winner;
 
-    public Set()
+    public TenisSet()
     {
         _games = new TenisGame[MAX_GAMES_PER_SET + MAX_GAMES_PER_SET - 1];
         _results = new int[2];

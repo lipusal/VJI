@@ -11,8 +11,8 @@ public class ScoreManager
     /// </summary>
     private const int MAX_SETS = 3;
 
-    private Set[] _sets;
-    private Set _currentSet;
+    private TenisSet[] _sets;
+    private TenisSet _currentSet;
     private int _setNumber;
     private int[] _results;
     private Referee _referee;
@@ -22,9 +22,9 @@ public class ScoreManager
     private ScoreManager()
     {
         _results = new int[2];
-        _sets = new Set[MAX_SETS];
+        _sets = new TenisSet[MAX_SETS];
         _setNumber = 0;
-        _currentSet = new Set();
+        _currentSet = new TenisSet();
         _sets[_setNumber] = _currentSet;
     }
 
@@ -75,7 +75,7 @@ public class ScoreManager
                 return true;
             }
             // Advance to next set
-            _currentSet = new Set();
+            _currentSet = new TenisSet();
             _setNumber++;
             _sets[_setNumber] = _currentSet;
         }
