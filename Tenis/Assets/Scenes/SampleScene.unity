@@ -998,7 +998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.82
+      value: -1.93
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3437,7 +3437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundClips:
   - {fileID: 8300000, guid: 05fa943fa2a2542cd88aa07356723559, type: 3}
-  - {fileID: 8300000, guid: 22ee69a8e02a14161bf08297f0060f51, type: 3}
+  - {fileID: 8300000, guid: c30a57ac3e8a19b439dbbf16e19a8bb4, type: 3}
   - {fileID: 8300000, guid: 4ea4e90067694415988ee24c63e96278, type: 3}
   - {fileID: 8300000, guid: 32bca27d6c504504d8e8b356b74c3f3a, type: 3}
   - {fileID: 8300000, guid: 1b93475bbf36a4e139a5f757e31f8436, type: 3}
