@@ -33,9 +33,11 @@ public class Referee
     private int _lastHitter;
     private int _previousToLastHitter;
 
+    // players
     private PlayerLogic _player1;
     private AIPlayer _aiPlayer;
 
+    // service related
     private bool _isServing;
     private int _serviceTimes;
     
@@ -105,6 +107,13 @@ public class Referee
             }
             else if (IsOut(bouncePosition))
             {
+//                if (_serviceTimes == 1)
+//                {
+//                    Debug.Log("First service Out");
+//                    _serviceTimes = 2;
+//                    MakePlayerServe(hitter);
+//                    return 0;
+//                } TODO when check for second service enabled
                 Debug.Log("out");
                 returnValue = -1;
             }

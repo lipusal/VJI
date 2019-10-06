@@ -147,7 +147,6 @@ public class PlayerLogic : MonoBehaviour
 
             if (!_isCharging)
             {
-//            PlayerAnimation.StopHittingAnimation();
                 UpdatePosition();
             }
             else
@@ -218,7 +217,6 @@ public class PlayerLogic : MonoBehaviour
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
         _playerAnimation.AnimateMovement(leftRightMove, forwardBackardMove);
-        //    _characterController.Move(new Vector3(forwardBackardMove, 0, -leftRightMove));
         var vec = new Vector3(forwardBackardMove, 0, -leftRightMove);
         _characterController.SimpleMove(vec * _playerSpeed);
         //TODO steps sound as animation event
@@ -254,6 +252,7 @@ public class PlayerLogic : MonoBehaviour
         Debug.Log(deltaPosition.z <= 0 ? "RIGHT" : "LEFT");
         _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
     }
+    
 //    private void DetectBallSide()
 //    {
 //        Vector3 bsllPosition = BallLogic.Instance.transform.position;
@@ -262,6 +261,7 @@ public class PlayerLogic : MonoBehaviour
 //        // Negative = right
 //        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
 //    }
+
     private void HitBall()
     {
         if (_ball != null)

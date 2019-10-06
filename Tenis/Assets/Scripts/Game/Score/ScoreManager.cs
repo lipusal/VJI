@@ -143,7 +143,7 @@ public class ScoreManager
 
     }
 
-    private void ShowPartialResults()
+    public String[] ShowPartialResults()
     {
         string points1 = _currentSet.GetCurrentGameStringResults()[0];
         string points2 = _currentSet.GetCurrentGameStringResults()[1];
@@ -151,8 +151,11 @@ public class ScoreManager
         int games2 = _currentSet.GetCurrentSetResults()[1];
         int sets1 = GetSetsResults()[0];
         int sets2 = GetSetsResults()[1];
-
-        Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
+        String[] results = new string[2];
+        results[0] = $"Player 1: {sets1}  sets {games1} games {points1} points";
+        results[1] = $"Player 2: {sets2}  sets {games2} games {points2} points";
+      //  Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
+        return results;
     }
 
     private int[] GetSetsResults()

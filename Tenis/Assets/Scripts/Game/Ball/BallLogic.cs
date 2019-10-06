@@ -7,9 +7,6 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 {
     private Rigidbody _rigidbody;
     
-    //-1 undefined, 0 lower than net, 1 greater than net
-    private int side;
-
     private ScoreManager _scoreManager;
     // 1 for team one, 2 for team two
     private int _hittingPlayer;
@@ -20,7 +17,6 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     {
         _isEnabled = true;
         _rigidbody = GetComponent<Rigidbody>();
-        side = -1;
         _scoreManager = ScoreManager.GetInstance();
         ResetConfig();
     }
