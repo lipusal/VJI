@@ -37,6 +37,8 @@ public class PlayerLogic : MonoBehaviour
     private float deltaHitForce = 1;
     public float minHitForce = 18f;
 
+    public float _minimumOffSetToHitBall = -3.0f;
+
     private ScoreManager _scoreManager;
     private Side _ballSide;
     private bool _isServing;
@@ -262,9 +264,14 @@ public class PlayerLogic : MonoBehaviour
 //        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
 //    }
 
+    private bool IsValidBallPositionToHit(GameObject ballToHit)
+    {
+        return (ballToHit.transform.position - transform.position).x >= _minimumOffSetToHitBall;
+    }
+
     private void HitBall()
     {
-        if (_ball != null)
+        if (_ball != null && IsValidBallPositionToHit(_ball))
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
