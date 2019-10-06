@@ -152,8 +152,7 @@ public class ScoreManager
         int sets1 = GetSetsResults()[0];
         int sets2 = GetSetsResults()[1];
 
-        Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points");
-        Debug.Log($"Player 2: {sets2} sets {games2} games {points2} points");
+        Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
     }
 
     private int[] GetSetsResults()

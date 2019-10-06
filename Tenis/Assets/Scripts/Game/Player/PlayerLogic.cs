@@ -237,7 +237,7 @@ public class PlayerLogic : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            //DetectBallSide(other);
+            DetectBallSide(other);
             
             if (_finishHitting)
             {
