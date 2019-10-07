@@ -10,8 +10,8 @@ public class ScoreManager
     /// Maximum number of sets to play. Best of MAX_SETS wins, ie. it is enough to win (MAX_SETS/2) + 1 sets (integer division).
     /// E.g. If MAX_SETS is 3, 2 consecutive sets is enough to win. 3 sets would be played if each player has won 1 set.
     /// </summary>
-//    private const int MAX_SETS = 3;
-    private const int MAX_SETS = 2;
+    private const int MAX_SETS = 3;
+//    private const int MAX_SETS = 2;
 
     private TenisSet[] _sets;
     private TenisSet _currentSet;
