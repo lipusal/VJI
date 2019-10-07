@@ -92,11 +92,10 @@ public class ScoreManager
             ShowPartialResults();
             
             AudioManager.Instance.PlaySound((int) SoundId.SOUND_CLAP);
-            
-            // Reset ball and server
-            BallLogic.Instance.ResetConfig();
-            _referee.MakePlayerServe(1); //TODO change to opponent when game
         }
+        // Reset ball and server
+        BallLogic.Instance.ResetConfig();
+        _referee.MakePlayerServe(1); //TODO change to opponent when game
 
         return false;
     }
