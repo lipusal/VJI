@@ -19,8 +19,11 @@ public class ScoreBoard : MonoBehaviour
 
     void Update()
     {
-        string[] results = ScoreManager.GetInstance().ShowPartialResults();
-        player1Points.text = results[0];
-        player2Points.text = results[1];
+        if (ScoreManager.GetInstance().GetWinnerId() == 0)
+        {
+            string[] results = ScoreManager.GetInstance().ShowPartialResults();
+            player1Points.text = results[0];
+            player2Points.text = results[1];
+        }
     }
 }

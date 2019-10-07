@@ -10,8 +10,8 @@ public class ScoreManager
     /// Maximum number of sets to play. Best of MAX_SETS wins, ie. it is enough to win (MAX_SETS/2) + 1 sets (integer division).
     /// E.g. If MAX_SETS is 3, 2 consecutive sets is enough to win. 3 sets would be played if each player has won 1 set.
     /// </summary>
-    private const int MAX_SETS = 3;
-//  private const int MAX_SETS = 2;
+//    private const int MAX_SETS = 3;
+  private const int MAX_SETS = 2;
 
     private TenisSet[] _sets;
     private TenisSet _currentSet;
@@ -22,6 +22,8 @@ public class ScoreManager
     private static ScoreManager _instance;
     private GameManagerLogic _gameManagerLogic;
 
+    private int _winnerId;
+
     private ScoreManager()
     {
         _results = new int[2];
@@ -29,6 +31,7 @@ public class ScoreManager
         _setNumber = 0;
         _currentSet = new TenisSet();
         _sets[_setNumber] = _currentSet;
+        _winnerId = 0;
     }
 
     public static ScoreManager GetInstance()
@@ -74,8 +77,8 @@ public class ScoreManager
                 // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WOW_CLAP);
-                ShowPartialResults();
                 BallLogic.Instance.ResetConfig();
+                _winnerId = teamNumber;
                 
                 return true;
             }
@@ -93,6 +96,7 @@ public class ScoreManager
             
             AudioManager.Instance.PlaySound((int) SoundId.SOUND_CLAP);
         }
+        
         // Reset ball and server
         BallLogic.Instance.ResetConfig();
         _referee.MakePlayerServe(1); //TODO change to opponent when game
@@ -122,8 +126,16 @@ public class ScoreManager
         {
             if (OnPoint(hitterId))
             {
-                Debug.Log("You win");
-                _gameManagerLogic.EndGame(true);
+                if (hitterId == 1)
+                {
+                    Debug.Log("You win");
+                    _gameManagerLogic.EndGame(true);
+                }
+                else
+                {
+                    Debug.Log("You lose");
+                    _gameManagerLogic.EndGame(false);
+                }
             }
         }
         else if (result < 0)
@@ -135,8 +147,16 @@ public class ScoreManager
             int opponentId = (hitterId % 2) + 1;
             if (OnPoint(opponentId))
             {
-                Debug.Log("You Lose");
-                _gameManagerLogic.EndGame(false);
+                if (opponentId == 1)
+                {
+                    Debug.Log("You win");
+                    _gameManagerLogic.EndGame(true);
+                }
+                else
+                {
+                    Debug.Log("You lose");
+                    _gameManagerLogic.EndGame(false);
+                }
             }
         }
 
@@ -256,5 +276,10 @@ public class ScoreManager
             return true;
         }
         return !_referee.GetIsServing();
+    }
+
+    public int GetWinnerId()
+    {
+        return _winnerId;
     }
 }
