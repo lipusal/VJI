@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameManager;
 using Game.Score;
 using UnityEngine;
 
@@ -40,7 +41,7 @@ public class Referee
     // service related
     private bool _isServing;
     private int _serviceTimes;
-    
+
     
 
 

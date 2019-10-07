@@ -25,7 +25,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     {
         if(collision.gameObject.CompareTag("Wall"))
         {
-            _scoreManager.manageBounce(transform.position, _hittingPlayer);
+            _scoreManager.ManageBounce(transform.position, _hittingPlayer);
             AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_WALL);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             ResetConfig();
@@ -33,7 +33,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         else if (collision.gameObject.CompareTag("Ground"))
         {
             AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_BOUNCE);
-            _scoreManager.manageBounce(transform.position, _hittingPlayer);
+            _scoreManager.ManageBounce(transform.position, _hittingPlayer);
         }
         else if (collision.gameObject.CompareTag("Net"))
         {

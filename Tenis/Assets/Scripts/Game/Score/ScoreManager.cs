@@ -1,5 +1,6 @@
 ﻿using System;
 using FrameLord;
+using Game.GameManager;
 using Game.Score;
 using UnityEngine;
 
@@ -9,7 +10,8 @@ public class ScoreManager
     /// Maximum number of sets to play. Best of MAX_SETS wins, ie. it is enough to win (MAX_SETS/2) + 1 sets (integer division).
     /// E.g. If MAX_SETS is 3, 2 consecutive sets is enough to win. 3 sets would be played if each player has won 1 set.
     /// </summary>
-    private const int MAX_SETS = 3;
+//    private const int MAX_SETS = 3;
+    private const int MAX_SETS = 2;
 
     private TenisSet[] _sets;
     private TenisSet _currentSet;
@@ -18,6 +20,7 @@ public class ScoreManager
     private Referee _referee;
     
     private static ScoreManager _instance;
+    private GameManagerLogic _gameManagerLogic;
 
     private ScoreManager()
     {
@@ -37,15 +40,17 @@ public class ScoreManager
         return _instance;
     }
 
-    public void loadReferee(Vector3 eastCourtSide, Vector3 westCourtSide,
+    public void LoadReferee(Vector3 eastCourtSide, Vector3 westCourtSide,
         Vector3 southCourtSide, Vector3 northCourtSide, GameObject southServiceWall,
         GameObject southEastServiceWall, GameObject southWestServiceWall,
         GameObject southMiddleServiceWall, GameObject northServiceWall,
         GameObject northEastServiceWall, GameObject northWestServiceWall, 
         GameObject northMiddleServiceWall,  Vector3 southServiceDelimiter,
         Vector3 eastServiceDelimiter, Vector3 westServiceDelimiter,
-        Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer player2)
+        Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer player2,
+        GameManagerLogic gameManagerLogic)
     {
+        _gameManagerLogic = gameManagerLogic;
         _referee = new Referee(eastCourtSide, westCourtSide, southCourtSide, northCourtSide,
                                 southServiceWall, southEastServiceWall, southWestServiceWall,
                                 southMiddleServiceWall, northServiceWall, northEastServiceWall,
@@ -111,14 +116,15 @@ public class ScoreManager
         }
     }
 
-    public void manageBounce(Vector3 bouncePosition, int hitterId)
+    public void ManageBounce(Vector3 bouncePosition, int hitterId)
     {
         int result = _referee.IsPoint(bouncePosition, hitterId);
         if (result > 0)
         {
             if (OnPoint(hitterId))
             {
-                //TODO match finished
+                Debug.Log("You win");
+                _gameManagerLogic.EndGame(true);
             }
         }
         else if (result < 0)
@@ -130,8 +136,8 @@ public class ScoreManager
             int opponentId = (hitterId % 2) + 1;
             if (OnPoint(opponentId))
             {
-                //TODO match finished
-
+                Debug.Log("You Lose");
+                _gameManagerLogic.EndGame(false);
             }
         }
 

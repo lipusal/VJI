@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Game.GameManager;
 using UnityEngine;
 
 public class BoundLoader : MonoBehaviour
@@ -31,14 +32,14 @@ public class BoundLoader : MonoBehaviour
     public AIPlayer player2;
     void Start()
     {
-        ScoreManager.GetInstance().loadReferee(eastCourtSide.position, westCourtSide.position,
+        ScoreManager.GetInstance().LoadReferee(eastCourtSide.position, westCourtSide.position,
                                             southCourtSide.position, northCourtSide.position,
                                             southServiceWall, southEastServiceWall, southWestServiceWall,
                                             southMiddleServiceWall, northServiceWall, northEastServiceWall,
                                             northWestServiceWall, northMiddleServiceWall, 
                                             southServiceDelimiter.position, eastServiceDelimiter.position,
                                             westServiceDelimiter.position, northServiceDelimiter.position,
-                                            player1, player2);
+                                            player1, player2, FindObjectOfType<GameManagerLogic>());
         Debug.Log("creating referee");
     }
     
