@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FrameLord;
 using Game.GameManager;
 using Game.Score;
@@ -92,7 +94,7 @@ public class ScoreManager
             // Won point, show score
             int[] points = _currentSet.GetCurrentGameResults();
             SayScore(points[0], points[1]);
-            ShowPartialResults();
+            GetSummarizedScore();
             
             AudioManager.Instance.PlaySound((int) SoundId.SOUND_CLAP);
         }
@@ -168,18 +170,45 @@ public class ScoreManager
 
     }
 
-    public String[] ShowPartialResults()
+    public String[] GetSummarizedScore()
     {
         string points1 = _currentSet.GetCurrentGameStringResults()[0];
         string points2 = _currentSet.GetCurrentGameStringResults()[1];
-        int games1 = _currentSet.GetCurrentSetResults()[0];
-        int games2 = _currentSet.GetCurrentSetResults()[1];
+        int games1 = _currentSet.GetResults()[0];
+        int games2 = _currentSet.GetResults()[1];
         int sets1 = GetSetsResults()[0];
         int sets2 = GetSetsResults()[1];
         String[] results = new string[2];
         results[0] = $"Player 1: {sets1}  sets {games1} games {points1} points";
         results[1] = $"Player 2: {sets2}  sets {games2} games {points2} points";
       //  Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
+        return results;
+    }
+
+    public int[] GetCurrentGamescore()
+    {
+        return _currentSet.GetCurrentGameResults();
+    }
+    
+    public List<string>[] GetScore()
+    {
+        var currentGamePoints = _currentSet.GetCurrentGameStringResults();
+        List<string>[] results = { new List<string>(), new List<string>() };
+        results[0].Add(currentGamePoints[0]);
+        results[1].Add(currentGamePoints[1]);
+
+        for (int i = 0; i <= _setNumber; i++)
+        {
+            var set = _sets[i];
+            results[0].Add(set.GetResults()[0].ToString());
+            results[1].Add(set.GetResults()[1].ToString());
+        }
+        // Fill remaining sets with zeroes
+        for (int i = _setNumber+1; i < MAX_SETS; i++)
+        {
+            results[0].Add("0");
+            results[1].Add("0");
+        }
         return results;
     }
 
