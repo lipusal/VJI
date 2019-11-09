@@ -13,7 +13,8 @@ public class PlayerAnimation
     private static readonly int BallSide = Animator.StringToHash("ballSide");
     private static readonly int Hit = Animator.StringToHash("hit");
     private static readonly int Serve = Animator.StringToHash("serve");
-    
+    private static readonly int EndHit = Animator.StringToHash("endHit");
+
     public PlayerAnimation(Animator animator)
     {
         //validate _animator not null?
@@ -50,8 +51,14 @@ public class PlayerAnimation
 
     public void StartHittingAnimation(Side side)
     {
+        _animator.SetBool(EndHit, false);
         _animator.SetTrigger(Hit);
         _animator.SetInteger(BallSide,(int) side);
+    }
+
+    public void EndHittingAnimation()
+    {
+        _animator.SetBool(EndHit, true);
     }
 
     public void StartServeAnimation()

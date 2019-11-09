@@ -290,12 +290,17 @@ public class PlayerLogic : MonoBehaviour
 //    }
     private void HitBall()
     {
-        AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
-        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-        _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-        _currentHitForce = minHitForce;
-        BallLogic.Instance.SetHittingPlayer(_id);
+        if (_ball != null)
+        {
+            AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
+            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            _currentHitForce = minHitForce;
+            BallLogic.Instance.SetHittingPlayer(_id);
+        }
+
         _finishHitting = true;
+        _isCharging = false;
     }
 
     private void Serve()
@@ -317,13 +322,17 @@ public class PlayerLogic : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.CompareTag("Ball"))
         {
-            _ball = other.gameObject;
+            _ball = null;
+            _playerAnimation.EndHittingAnimation();
             float distance = BallLogic.Instance.GetDistance(transform.position);
+
             if (distance <= _maxReach && _isCharging)
             {
-                //todo animation of hit
+                _ball = other.gameObject;
+                //todo animation of hit activate value
                 HitBall();
             }
         }
