@@ -9,8 +9,6 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
-   
-    
     // Button to move left
     public KeyCode leftButton = KeyCode.LeftArrow;
 
