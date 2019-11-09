@@ -57,8 +57,8 @@ public class PlayerLogic : MonoBehaviour
     
     private CharacterController _characterController;
 
-    // Position of aim target
-    private Vector3 _aimOffset;
+    // Start position of aim target
+    private Vector3 _aimStartPosition;
 
     /* player id according to court side,
      * 1 if player is on team one or
@@ -80,7 +80,7 @@ public class PlayerLogic : MonoBehaviour
         _ballSide = Side.RIGHT;
         _currentHitForce = minHitForce;
         _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
-        _aimOffset = aimTarget.position - transform.position;
+        _aimStartPosition = aimTarget.position;
         _scoreManager = ScoreManager.GetInstance();
         SetID();
         SetIsServing();
@@ -189,7 +189,7 @@ public class PlayerLogic : MonoBehaviour
             if (!_isCharging)
             {
                 _currentHitForce = minHitForce;
-                aimTarget.position = transform.position + _aimOffset;
+                aimTarget.position = _aimStartPosition;
             }
 
             _isCharging = true;

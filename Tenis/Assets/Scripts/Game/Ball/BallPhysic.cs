@@ -38,4 +38,34 @@ public class BallPhysic : MonoBehaviour
         float vzi = (zf - zi) / timeToBounce;
         return new Vector3(vxi, vyi, vzi);
     }
+
+    public float GetZPositionAtFutureX(float x)
+    {
+        Rigidbody ballRigidbody = BallLogic.Instance.GetComponent<Rigidbody>();
+        Vector3 ballVelocity = ballRigidbody.velocity;
+        Vector3 position = ballRigidbody.position;
+        if (IsBallDirecting(x, position.x, ballVelocity.x))
+        {
+            float time = (x - position.x) / ballVelocity.x;
+            float zf = position.z + ballVelocity.z * time;
+            return zf;
+        }
+        else
+        {
+            return 4; //TODO check the reason is to do by default drive
+        }
+    }
+
+    private bool IsBallDirecting(float targetPos, float currentPos, float velocity)
+    {
+        if ((currentPos <= targetPos && velocity > 0) ||
+            currentPos >= targetPos && velocity < 0) 
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
