@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using FrameLord;
+using Game.Ball;
+using Game.Score;
 using UnityEngine;
 
 public class BallLogic : MonoBehaviorSingleton<BallLogic>
@@ -12,12 +14,14 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     private int _hittingPlayer;
 
     private bool _isEnabled;
+    private BallPhysic _ballPhysic;
 
     private void Start()
     {
         _isEnabled = true;
         _rigidbody = GetComponent<Rigidbody>();
         _scoreManager = ScoreManager.GetInstance();
+        _ballPhysic = new BallPhysic();
         ResetConfig();
     }
 
@@ -93,5 +97,15 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     public bool IsEnabled()
     {
         return _isEnabled;
+    }
+
+    public Side GetSide(Vector3 playerPosition)
+    {
+        return _ballPhysic.GetZPositionAtFutureX(playerPosition.x, playerPosition.z, transform.position, _rigidbody.velocity);
+    }
+
+    public float GetDistance(Vector3 position)
+    {
+        return (transform.position - position).magnitude;
     }
 }
