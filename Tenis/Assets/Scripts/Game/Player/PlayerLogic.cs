@@ -294,7 +294,9 @@ public class PlayerLogic : MonoBehaviour
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
+//            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            _ball.GetComponent<Rigidbody>().velocity = velocity;
             _currentHitForce = minHitForce;
             BallLogic.Instance.SetHittingPlayer(_id);
         }

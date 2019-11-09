@@ -108,4 +108,11 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     {
         return (transform.position - position).magnitude;
     }
+
+    
+
+    public Vector3 GetVelocity(Vector3 targetPosition, float timeToBounce)
+    {
+        return _ballPhysic.GetVelocity(transform.position, targetPosition, timeToBounce);
+    }
 }
