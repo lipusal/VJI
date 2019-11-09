@@ -4981,7 +4981,6 @@ GameObject:
   - component: {fileID: 655430685}
   - component: {fileID: 655430684}
   - component: {fileID: 655430683}
-  - component: {fileID: 655430682}
   m_Layer: 8
   m_Name: TennisBall2
   m_TagString: Ball
@@ -4989,19 +4988,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &655430682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655430681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51cfde8787e2e49d19b46dc333a17b26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 598947288}
 --- !u!199 &655430683
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -20610,8 +20596,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5.391521
-  m_Center: {x: -0.05447769, y: 3, z: 2.3915215}
+  m_Radius: 3.9894629
+  m_Center: {x: 0.4657507, y: 3, z: 2.3915215}
 --- !u!82 &1417308009
 AudioSource:
   m_ObjectHideFlags: 0
@@ -20708,6 +20694,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &1417308010
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417308002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 58.551746, y: 52.115078, z: 1}
+  m_Center: {x: 0.17186546, y: 25.557539, z: -6.659987e-16}
 --- !u!1 &1421632865
 GameObject:
   m_ObjectHideFlags: 0
