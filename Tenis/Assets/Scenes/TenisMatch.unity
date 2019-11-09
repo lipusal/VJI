@@ -20567,7 +20567,7 @@ MonoBehaviour:
   bacwardButton: 274
   hitButton: 108
   aimTarget: {fileID: 598947288}
-  aimTargetSpeed: 18
+  aimTargetSpeed: 28
   movementSpeed: 14
   maxHitForce: 40
   minHitForce: 18
