@@ -51,7 +51,6 @@ public class PauseMenuScript : MonoBehaviour
     private void PauseGame()
     {
         pauseMenu.SetActive(true);
-        pauseMenu.GetComponent<Animation>().Play(); // TODO make this work
         Time.timeScale = 0;
         _isPaused = true;
     }
