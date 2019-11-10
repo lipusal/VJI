@@ -28,14 +28,12 @@ public class PlayerLogic : MonoBehaviour
     public float aimTargetSpeed = 18;
 
     public float movementSpeed = 14f;
-    public float maxHitForce = 40f;
-    private float _serveForce = 40f;
     private float _currentHitForce;
     private float _playerSpeed = 50f;
     private float _maxReach;
-    private float deltaHitForce = 1;
     public float minHitForce = 18f;
-    
+    public float deltaHitForce = 20.0f; // How much force is added per second while charging
+     public float maxHitForce = 40f;
 
     public float _minimumOffSetToHitBall = -3.0f;
 
@@ -198,11 +196,15 @@ public class PlayerLogic : MonoBehaviour
                     _playerAnimation.StartHittingAnimation(_ballSide);
                 }
 
+                _isCharging = true;
+            }
+            else
+            {
+                _currentHitForce += deltaHitForce * Time.deltaTime;
+                _currentHitForce = Math.Min(_currentHitForce, maxHitForce);
             }
 
-            _isCharging = true;
-            _currentHitForce += _currentHitForce + deltaHitForce;
-            _currentHitForce = Math.Min(_currentHitForce, maxHitForce);
+            Debug.Log("Current hit force: " + _currentHitForce);
         }
 
         if (ActionMapper.GetHitReleased(hitButton))
@@ -213,12 +215,13 @@ public class PlayerLogic : MonoBehaviour
             {
                 _isCharging = false;
                 _playerAnimation.StartServeAnimation();
+               // ball.PlayServingAnimationCurve();
             }
-//            else
-//            {
-//                //DetectBallSide();
-//                _playerAnimation.StartHittingAnimation(_ballSide);
-//            }
+            //            else
+            //            {
+            //                //DetectBallSide();
+            //                _playerAnimation.StartHittingAnimation(_ballSide);
+            //            }
         }
     }
 
@@ -294,9 +297,9 @@ public class PlayerLogic : MonoBehaviour
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
-//            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-            _ball.GetComponent<Rigidbody>().velocity = velocity;
+           // Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
+            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            //_ball.GetComponent<Rigidbody>().velocity = velocity;
             _currentHitForce = minHitForce;
             BallLogic.Instance.SetHittingPlayer(_id);
         }
@@ -311,9 +314,10 @@ public class PlayerLogic : MonoBehaviour
         Vector3 aimDirection = (aimTarget.position - currentPosition).normalized;
         //float serveForce = 40f; //TODO use a private variable for serve force
         BallLogic ball = BallLogic.Instance;
-        ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero );
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * _serveForce + new Vector3(0, -1.2f, 0);
+        ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero);
+        ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, -1.2f, 0);
         BallLogic.Instance.SetHittingPlayer(_id);
+        //ball.StopServingAnimationCurve();
     }
     
 //    private void DeleteBallReference()
@@ -353,5 +357,20 @@ public class PlayerLogic : MonoBehaviour
     private void PlayServeSound()
     {
         AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_SERVE);
+    }
+
+    public float GetCurrentHitForce()
+    {
+        return _currentHitForce;
+    }
+
+    public bool IsChargingHit()
+    {
+        return _isCharging;
+    }
+
+    public bool IsServing()
+    {
+        return _isServing;
     }
 }
