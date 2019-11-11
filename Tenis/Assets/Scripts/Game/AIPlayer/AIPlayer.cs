@@ -41,7 +41,7 @@ public class AIPlayer : MonoBehaviour
         _AIStrategy = new AIStrategy();
         _characterController = GetComponent<CharacterController>();
         _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
-        _basePositionFromBall = new Vector3(4.705f,0f,0.633f);
+        _basePositionFromBall = new Vector3(7.705f,0f,0.633f);
         _newPosition = true;
         
         if (transform.position.x < 0)
@@ -133,10 +133,10 @@ public class AIPlayer : MonoBehaviour
     private void HitBall()
     {
         BallLogic ball = BallLogic.Instance;
-        Vector3 aimDirection = _AIStrategy.GenerateRandomPosition();
-        Vector3 velocity = BallLogic.Instance.GetVelocity(aimDirection, 1.8f);//change time in function of currentHitForce
-        AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
+        Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
+       AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
 //        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+        Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.8f);//change time in function of currentHitForce
 //         ball.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 3.2f, 0);
         ball.GetComponent<Rigidbody>().velocity = velocity;
         ball.SetHittingPlayer(_id);

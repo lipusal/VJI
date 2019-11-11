@@ -106,7 +106,10 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 
     public float GetDistance(Vector3 position)
     {
-        return (transform.position - position).magnitude;
+        float resultx = transform.position.x - position.x;
+        float resultz = transform.position.z - position.z;
+
+        return new Vector3(resultx, 0, resultz).magnitude;
     }
 
     
@@ -124,5 +127,10 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     public Vector3 GetBouncePosition()
     {
         return _ballPhysic.GetNextBouncingPosition(transform.position, _rigidbody.velocity);
+    }
+
+    public float GetHeight()
+    {
+        return transform.position.y;
     }
 }

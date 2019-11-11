@@ -331,7 +331,7 @@ public class PlayerLogic : MonoBehaviour
             _playerAnimation.EndHittingAnimation();
             float distance = BallLogic.Instance.GetDistance(transform.position);
 
-            if (distance <= _maxReach && _isCharging)
+            if (distance <= _maxReach && _isCharging && BallLogic.Instance.GetHeight() < 3.85f)
             {
                 _ball = other.gameObject;
                 //todo animation of hit activate value
