@@ -25,6 +25,7 @@ public class AIPlayer : MonoBehaviour
     private PlayerAnimation _playerAnimation;
     private Vector3 _basePositionFromBall;
     private Vector3 _desiredPosition;
+    private ScoreManager _scoreManager;
     private bool _newPosition;
 
     private bool _isServing;
@@ -43,6 +44,7 @@ public class AIPlayer : MonoBehaviour
         _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
         _basePositionFromBall = new Vector3(7.705f,0f,0.633f);
         _newPosition = true;
+        _scoreManager = ScoreManager.GetInstance();
         
         if (transform.position.x < 0)
         {
@@ -161,8 +163,37 @@ public class AIPlayer : MonoBehaviour
         //TODO its here just to use same animation as player 1
     }
 
-    public void ResetConfig()
+    public void Setinitialposition()
     {
         _newPosition = true;
+        Vector3 currentPosition = transform.position;
+
+        float x, z; 
+        Side servingSide = _scoreManager.GetServingSide();
+        if (servingSide == Side.RIGHT)
+        {
+            z = 6.57f;
+        }
+        else
+        {
+            z = -6.24f;
+        }
+
+        if (_isServing)
+        {
+            ScoreManager.GetInstance().ActivateServingWalls(_id);
+            x = 32f;
+        }
+        else
+        {
+            x = 26.0f;
+        }
+
+        _characterController.enabled = false;
+        Vector3 newPosition = new Vector3(x, currentPosition.y, z);
+        transform.position = newPosition;
+        _characterController.enabled = true;
+
     }
+    
 }

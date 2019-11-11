@@ -361,7 +361,15 @@ public class Referee
         {
             _player1.SetServing(true);
             _player1.SetInitialPosition();
+            _aiPlayer.SetServing(false);
+            _aiPlayer.Setinitialposition();
         }
-        _aiPlayer.ResetConfig();
+        else if(hitterId == 2)
+        {
+            _player1.SetServing(false);
+            _player1.SetInitialPosition();
+            _aiPlayer.SetServing(true);
+            _aiPlayer.Setinitialposition();
+        }
     }
 }
