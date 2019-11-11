@@ -1078,6 +1078,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
+--- !u!4 &134716723 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf,
+    type: 3}
+  m_PrefabInstance: {fileID: 134716722}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &152458032
 GameObject:
   m_ObjectHideFlags: 0
@@ -2052,7 +2058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPosition: {fileID: 1061059253}
   aimTarget: {fileID: 1492476147}
-  otherPlayer: {fileID: 0}
+  otherPlayer: {fileID: 134716723}
 --- !u!1 &318359963
 GameObject:
   m_ObjectHideFlags: 0
