@@ -15,9 +15,9 @@ public class AIStrategy
     public AIStrategy()
     {
         _widthBase = -10.118f;
-        _lengthBase = -51.022f;
+        _lengthBase = -31.23f;
         _width = 12.132f - (-10.118f);
-        _length = -3.87f - (-51.022f);
+        _length = -3.87f - (-31.23f);
         _height = -3.032f;
     }
 
