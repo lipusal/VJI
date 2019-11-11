@@ -58,7 +58,8 @@ public class AIPlayer : MonoBehaviour
     void Update()
     {
         BallLogic ballLogic = BallLogic.Instance;
-        if (ballLogic.IsEnabled() && ballLogic.GetHittingPlayer() != _id)
+        if (ballLogic.IsEnabled() && ballLogic.GetHittingPlayer() != _id
+            && ballLogic.GetHittingPlayer() != 0)
         {
             MoveToBall();
         }
@@ -133,8 +134,8 @@ public class AIPlayer : MonoBehaviour
     private void HitBall()
     {
         BallLogic ball = BallLogic.Instance; 
-//        Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
-        Vector3 aimPosition = _AIStrategy.GenerateAwayFromPlayerPosition();
+        Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
+//        Vector3 aimPosition = _AIStrategy.GenerateAwayFromPlayerPosition();
 
         AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
         Vector3 velocity = BallLogic.Instance.GetVelocity(aimPosition, 1.8f);//change time in function of currentHitForce
