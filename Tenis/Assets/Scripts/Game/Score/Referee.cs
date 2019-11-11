@@ -362,5 +362,6 @@ public class Referee
             _player1.SetServing(true);
             _player1.SetInitialPosition();
         }
+        _aiPlayer.ResetConfig();
     }
 }

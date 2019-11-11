@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using FrameLord;
 using Game.Player;
@@ -15,9 +16,16 @@ public class AIPlayer : MonoBehaviour
 
     public Transform aimTarget;
 
+    public Transform otherPlayer;
+
+    private AIStrategy _AIStrategy;
+    
     private CharacterController _characterController;
 
     private PlayerAnimation _playerAnimation;
+    private Vector3 _basePositionFromBall;
+    private Vector3 _desiredPosition;
+    private bool _newPosition;
 
     private bool _isServing;
     
@@ -30,8 +38,12 @@ public class AIPlayer : MonoBehaviour
     void Start()
     {
         _isServing = false;
+        _AIStrategy = new AIStrategy();
         _characterController = GetComponent<CharacterController>();
         _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
+        _basePositionFromBall = new Vector3(4.705f,0f,0.633f);
+        _newPosition = true;
+        
         if (transform.position.x < 0)
         {
             _id = 1;
@@ -45,7 +57,8 @@ public class AIPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BallLogic.Instance.IsEnabled())
+        BallLogic ballLogic = BallLogic.Instance;
+        if (ballLogic.IsEnabled() && ballLogic.GetHittingPlayer() != _id)
         {
             MoveToBall();
         }
@@ -53,10 +66,29 @@ public class AIPlayer : MonoBehaviour
 
     private void MoveToBall()
     {
-        Vector3 movingDirection = new Vector3(transform.position.x, transform.position.y, ballPosition.position.z) - transform.position;
-        _characterController.Move(movingDirection * speed * Time.deltaTime);
-        _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
-//        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);
+        if (_newPosition)
+        {
+            _desiredPosition = BallLogic.Instance.GetBouncePosition();
+            _desiredPosition = _desiredPosition + _basePositionFromBall;
+            _newPosition = false;
+        }
+
+        if (_desiredPosition.x < 0)
+        {
+            return;
+        }
+        
+        if (Math.Abs(transform.position.x - _desiredPosition.x) > 0.05 ||
+            Math.Abs(transform.position.z - _desiredPosition.z) > 0.05)
+        {
+            float xDirection = _desiredPosition.x - transform.position.x;
+            float zDirection = _desiredPosition.z - transform.position.z;
+            Vector3 movingDirection = new Vector3(xDirection, transform.position.y, zDirection).normalized;
+            _characterController.Move(Time.deltaTime * speed * movingDirection);
+            _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
+//        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);     
+        }
+       
     }
 
     private MovementDirection GetMovementDirection(Vector3 movingDirection)
@@ -101,10 +133,14 @@ public class AIPlayer : MonoBehaviour
     private void HitBall()
     {
         BallLogic ball = BallLogic.Instance;
+        Vector3 aimDirection = _AIStrategy.GenerateRandomPosition();
+        Vector3 velocity = BallLogic.Instance.GetVelocity(aimDirection, 1.8f);//change time in function of currentHitForce
         AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
-        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 3.2f, 0);
+//        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+//         ball.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 3.2f, 0);
+        ball.GetComponent<Rigidbody>().velocity = velocity;
         ball.SetHittingPlayer(_id);
+        _newPosition = true;
     }
     
     private void PlayServeSound()
@@ -115,5 +151,10 @@ public class AIPlayer : MonoBehaviour
     private void DeleteBallReference()
     {
         //TODO its here just to use same animation as player 1
+    }
+
+    public void ResetConfig()
+    {
+        _newPosition = true;
     }
 }
