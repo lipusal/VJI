@@ -58,14 +58,20 @@ public class AIPlayer : MonoBehaviour
     void Update()
     {
         BallLogic ballLogic = BallLogic.Instance;
+        bool hasMoved = false;
         if (ballLogic.IsEnabled() && ballLogic.GetHittingPlayer() != _id
             && ballLogic.GetHittingPlayer() != 0)
         {
-            MoveToBall();
+            hasMoved = MoveToBall();
+        }
+        
+        if(!hasMoved) 
+        {
+            _playerAnimation.StartMoveAnimation(MovementDirection.IDLE);
         }
     }
 
-    private void MoveToBall()
+    private bool MoveToBall()
     {
         if (_newPosition)
         {
@@ -76,7 +82,7 @@ public class AIPlayer : MonoBehaviour
 
         if (_desiredPosition.x < 0)
         {
-            return;
+            return false ;
         }
         
         if (Math.Abs(transform.position.x - _desiredPosition.x) > 0.05 ||
@@ -87,9 +93,11 @@ public class AIPlayer : MonoBehaviour
             Vector3 movingDirection = new Vector3(xDirection, transform.position.y, zDirection).normalized;
             _characterController.Move(Time.deltaTime * speed * movingDirection);
             _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
+            return true;
 //        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);     
         }
-       
+
+        return false;
     }
 
     private MovementDirection GetMovementDirection(Vector3 movingDirection)
@@ -136,11 +144,8 @@ public class AIPlayer : MonoBehaviour
         BallLogic ball = BallLogic.Instance; 
         Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
 //        Vector3 aimPosition = _AIStrategy.GenerateAwayFromPlayerPosition();
-
         AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
         Vector3 velocity = BallLogic.Instance.GetVelocity(aimPosition, 1.8f);//change time in function of currentHitForce
-
-//        Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.8f);//change time in function of currentHitForce
         ball.GetComponent<Rigidbody>().velocity = velocity;
         ball.SetHittingPlayer(_id);
         _newPosition = true;
