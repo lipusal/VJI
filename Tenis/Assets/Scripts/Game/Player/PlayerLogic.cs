@@ -312,7 +312,7 @@ public class PlayerLogic : MonoBehaviour
         //float serveForce = 40f; //TODO use a private variable for serve force
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero );
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * _serveForce + new Vector3(0, -1.2f, 0);
+        ball.GetComponent<Rigidbody>().velocity = aimDirection * _serveForce + new Vector3(0, -1.2f, 0);//TODO update with physics
         BallLogic.Instance.SetHittingPlayer(_id);
     }
     
