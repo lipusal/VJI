@@ -92,8 +92,6 @@ public class ScoreManager
             // Won point, show score
             int[] points = _currentSet.GetCurrentGameResults();
             SayScore(points[0], points[1]);
-            ShowPartialResults();
-            
             AudioManager.Instance.PlaySound((int) SoundId.SOUND_CLAP);
         }
         
@@ -168,7 +166,7 @@ public class ScoreManager
 
     }
 
-    public String[] ShowPartialResults()
+    public string[] GetPartialResults()
     {
         string points1 = _currentSet.GetCurrentGameStringResults()[0];
         string points2 = _currentSet.GetCurrentGameStringResults()[1];
@@ -181,6 +179,36 @@ public class ScoreManager
         results[1] = $"Player 2: {sets2}  sets {games2} games {points2} points";
       //  Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
         return results;
+    }
+    
+    public int[,] GetFullResults()
+    {
+        int[,] result = new int[MAX_SETS,2];
+        int index;
+        for (index = 0; index < _setNumber; index++)
+        {
+            result[index] = _sets[index].GetResult();
+        }
+        for (int i = 0; i < MAX_SETS; i++)
+        {
+            
+        }
+        string points1 = _currentSet.GetCurrentGameStringResults()[0];
+        string points2 = _currentSet.GetCurrentGameStringResults()[1];
+        int games1 = _currentSet.GetCurrentSetResults()[0];
+        int games2 = _currentSet.GetCurrentSetResults()[1];
+        int sets1 = GetSetsResults()[0];
+        int sets2 = GetSetsResults()[1];
+        String[] results = new string[2];
+        results[0] = $"Player 1: {sets1}  sets {games1} games {points1} points";
+        results[1] = $"Player 2: {sets2}  sets {games2} games {points2} points";
+        //  Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
+        return results;
+    }
+
+    public string[] GetCurrentGameResults()
+    {
+        return _currentSet.GetCurrentGameStringResults();
     }
 
     private int[] GetSetsResults()

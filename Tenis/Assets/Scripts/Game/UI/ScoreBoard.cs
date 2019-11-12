@@ -6,24 +6,27 @@ using UnityEngine.UI;
 
 public class ScoreBoard : MonoBehaviour
 {
-    public TextMeshProUGUI player1Points;
-
-    public TextMeshProUGUI player2Points;
+    public TextMeshProUGUI player1CurrentGamePoints;
+    public TextMeshProUGUI player2CurrentGamePoints;
+    public TextMeshProUGUI player1FullPoints;
+    public TextMeshProUGUI player2FullPoints;
     
     void Start()
     {
-        string[] results = ScoreManager.GetInstance().ShowPartialResults();
-        player1Points.text = results[0];
-        player2Points.text = results[1];
+        Update();
     }
 
     void Update()
     {
         if (ScoreManager.GetInstance().GetWinnerId() == 0)
         {
-            string[] results = ScoreManager.GetInstance().ShowPartialResults();
-            player1Points.text = results[0];
-            player2Points.text = results[1];
+            string[] results = ScoreManager.GetInstance().GetCurrentGameResults();
+            player1CurrentGamePoints.text = results[0];
+            player2CurrentGamePoints.text = results[1];
+            
+            string[] fullResults = ScoreManager.GetInstance().GetPartialResults();
+            player1CurrentGamePoints.text = results[0];
+            player2CurrentGamePoints.text = results[1];
         }
     }
 }
