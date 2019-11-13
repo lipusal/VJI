@@ -5,8 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-    public void OnPlayClick()
+    public void OnPlayClick(bool play2Players)
     {
+        if (play2Players)
+        {
+            // Do nothing until implemented
+            return;
+        }
+        // Initialize some stuff
+        
         SceneManager.LoadScene("TenisMatch");
     }
 
