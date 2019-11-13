@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
+    public GameObject mainScreen, settingsScreen;
+    
     public void OnPlayClick(bool play2Players)
     {
         if (play2Players)
@@ -16,10 +18,32 @@ public class MainMenuScript : MonoBehaviour
         
         SceneManager.LoadScene("TenisMatch");
     }
+    
+    public void OnSettingsClick()
+    {
+        GoToSettings();
+    }
+    
+    public void OnBackClick()
+    {
+        GoToMainScreen();
+    }
 
     public void OnQuitClick()
     {
         Debug.Log("Quitting game");
         Application.Quit();
+    }
+
+    private void GoToSettings()
+    {
+        settingsScreen.SetActive(true);
+        mainScreen.SetActive(false);
+    }
+    
+    private void GoToMainScreen()
+    {
+        settingsScreen.SetActive(false);
+        mainScreen.SetActive(true);
     }
 }
