@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class ScoreBoard : MonoBehaviour
 {
-    public TextMeshProUGUI player1CurrentGamePoints;
-    public TextMeshProUGUI player2CurrentGamePoints;
-    public TextMeshProUGUI player1FullPoints;
-    public TextMeshProUGUI player2FullPoints;
+    public TextMeshProUGUI[] player1CurrentGamePoints;
+    public TextMeshProUGUI[] player2CurrentGamePoints;
+    public TextMeshProUGUI[] player1FullPoints;
+    public TextMeshProUGUI[] player2FullPoints;
     
     void Start()
     {
@@ -18,15 +18,24 @@ public class ScoreBoard : MonoBehaviour
 
     void Update()
     {
-        if (ScoreManager.GetInstance().GetWinnerId() == 0)
+        string[] results = ScoreManager.GetInstance().GetCurrentGameResults();
+        foreach (var textField in player1CurrentGamePoints)
         {
-            string[] results = ScoreManager.GetInstance().GetCurrentGameResults();
-            player1CurrentGamePoints.text = results[0];
-            player2CurrentGamePoints.text = results[1];
+            textField.text = results[0];
+        }
+        foreach (var textField in player2CurrentGamePoints)
+        {
+            textField.text = results[1];
+        }
             
-            string[] fullResults = ScoreManager.GetInstance().GetPartialResults();
-            player1CurrentGamePoints.text = results[0];
-            player2CurrentGamePoints.text = results[1];
+        results = ScoreManager.GetInstance().GetFullResults();
+        foreach (var textField in player1FullPoints)
+        {
+            textField.text = results[0];
+        }
+        foreach (var textField in player2FullPoints)
+        {
+            textField.text = results[1];
         }
     }
 }

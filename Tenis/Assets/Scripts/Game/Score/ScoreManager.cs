@@ -181,29 +181,21 @@ public class ScoreManager
         return results;
     }
     
-    public int[,] GetFullResults()
+    public string[] GetFullResults()
     {
-        int[,] result = new int[MAX_SETS,2];
-        int index;
-        for (index = 0; index < _setNumber; index++)
-        {
-            result[index] = _sets[index].GetResult();
-        }
+        var player1Result = new int[MAX_SETS];
+        var player2Result = new int[MAX_SETS];
         for (int i = 0; i < MAX_SETS; i++)
         {
-            
+            var set = _sets[i];
+            player1Result[i] = set?.GetResult()[0] ?? 0;
+            player2Result[i] = set?.GetResult()[1] ?? 0;
         }
-        string points1 = _currentSet.GetCurrentGameStringResults()[0];
-        string points2 = _currentSet.GetCurrentGameStringResults()[1];
-        int games1 = _currentSet.GetCurrentSetResults()[0];
-        int games2 = _currentSet.GetCurrentSetResults()[1];
-        int sets1 = GetSetsResults()[0];
-        int sets2 = GetSetsResults()[1];
-        String[] results = new string[2];
-        results[0] = $"Player 1: {sets1}  sets {games1} games {points1} points";
-        results[1] = $"Player 2: {sets2}  sets {games2} games {points2} points";
-        //  Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
-        return results;
+
+        return new[] {
+            string.Join(" ", player1Result),
+            string.Join(" ", player2Result)
+        };
     }
 
     public string[] GetCurrentGameResults()
