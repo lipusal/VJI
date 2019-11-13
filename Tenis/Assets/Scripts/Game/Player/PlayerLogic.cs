@@ -9,8 +9,6 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
-   
-    
     // Button to move left
     public KeyCode leftButton = KeyCode.LeftArrow;
 
@@ -34,8 +32,10 @@ public class PlayerLogic : MonoBehaviour
     private float _serveForce = 40f;
     private float _currentHitForce;
     private float _playerSpeed = 50f;
+    private float _maxReach;
     private float deltaHitForce = 1;
     public float minHitForce = 18f;
+    
 
     public float _minimumOffSetToHitBall = -3.0f;
 
@@ -57,8 +57,8 @@ public class PlayerLogic : MonoBehaviour
     
     private CharacterController _characterController;
 
-    // Position of aim target
-    private Vector3 _aimOffset;
+    // Start position of aim target
+    private Vector3 _aimStartPosition;
 
     /* player id according to court side,
      * 1 if player is on team one or
@@ -80,7 +80,8 @@ public class PlayerLogic : MonoBehaviour
         _ballSide = Side.RIGHT;
         _currentHitForce = minHitForce;
         _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
-        _aimOffset = aimTarget.position - transform.position;
+        _aimStartPosition = aimTarget.position;
+        _maxReach = 5f;//TODO update later with sphere collider radius
         _scoreManager = ScoreManager.GetInstance();
         SetID();
         SetIsServing();
@@ -96,6 +97,7 @@ public class PlayerLogic : MonoBehaviour
     public void SetInitialPosition()
     {
         Vector3 currentPosition = transform.position;
+        _isCharging = false;
         float x, z; 
         Side servingSide = _scoreManager.GetServingSide();
         if (servingSide == Side.RIGHT)
@@ -189,28 +191,34 @@ public class PlayerLogic : MonoBehaviour
             if (!_isCharging)
             {
                 _currentHitForce = minHitForce;
-                aimTarget.position = transform.position + _aimOffset;
+                aimTarget.position = _aimStartPosition;
+                if (!_isServing)
+                {
+                    _ballSide = BallLogic.Instance.GetSide(transform.position);
+                    _playerAnimation.StartHittingAnimation(_ballSide);
+                }
+
             }
 
             _isCharging = true;
             _currentHitForce += _currentHitForce + deltaHitForce;
             _currentHitForce = Math.Min(_currentHitForce, maxHitForce);
-
         }
 
         if (ActionMapper.GetHitReleased(hitButton))
         {
-            _isCharging = false;
-            _finishHitting = true;
+//            _isCharging = false;
+//            _finishHitting = true;
             if (_isServing)
             {
+                _isCharging = false;
                 _playerAnimation.StartServeAnimation();
             }
-            else
-            {
-                //DetectBallSide();
-                _playerAnimation.StartHittingAnimation(_ballSide);
-            }
+//            else
+//            {
+//                //DetectBallSide();
+//                _playerAnimation.StartHittingAnimation(_ballSide);
+//            }
         }
     }
 
@@ -233,27 +241,27 @@ public class PlayerLogic : MonoBehaviour
             -aimTargetSpeed * moveLeftRightValue * Time.deltaTime));
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Ball"))
-        {
-            DetectBallSide(other);
-            
-            if (_finishHitting)
-            {
-                _ball = other.gameObject;
-            }
-        }
-    }
+//    private void OnTriggerStay(Collider other)
+//    {
+//        if (other.CompareTag("Ball"))
+//        {
+//            DetectBallSide(other);
+//            
+//            if (_finishHitting)
+//            {
+//                _ball = other.gameObject;
+//            }
+//        }
+//    }
 
-    private void DetectBallSide(Collider other)
-    {
-        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
-        // Positive = left
-        // Negative = right
-        Debug.Log(deltaPosition.z <= 0 ? "RIGHT" : "LEFT");
-        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
-    }
+//    private void DetectBallSide(Collider other)
+//    {
+//        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
+//        // Positive = left
+//        // Negative = right
+//        Debug.Log(deltaPosition.z <= 0 ? "RIGHT" : "LEFT");
+//        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
+//    }
     
 //    private void DetectBallSide()
 //    {
@@ -269,16 +277,32 @@ public class PlayerLogic : MonoBehaviour
         return (ballToHit.transform.position - transform.position).x >= _minimumOffSetToHitBall;
     }
 
+//    private void HitBall()
+//    {
+//        if (_ball != null && IsValidBallPositionToHit(_ball))
+//        {
+//            AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
+//            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
+//            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+//            _currentHitForce = minHitForce;
+//            BallLogic.Instance.SetHittingPlayer(_id);
+//        }
+//    }
     private void HitBall()
     {
-        if (_ball != null && IsValidBallPositionToHit(_ball))
+        if (_ball != null)
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
+//            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            _ball.GetComponent<Rigidbody>().velocity = velocity;
             _currentHitForce = minHitForce;
             BallLogic.Instance.SetHittingPlayer(_id);
         }
+
+        _finishHitting = true;
+        _isCharging = false;
     }
 
     private void Serve()
@@ -288,26 +312,34 @@ public class PlayerLogic : MonoBehaviour
         //float serveForce = 40f; //TODO use a private variable for serve force
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero );
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * _serveForce + new Vector3(0, -1.2f, 0);
+        ball.GetComponent<Rigidbody>().velocity = aimDirection * _serveForce + new Vector3(0, -1.2f, 0);//TODO update with physics
         BallLogic.Instance.SetHittingPlayer(_id);
     }
-    private void DeleteBallReference()
-    {
-        _ball = null;
-    }
-
-
-//    private void OnTriggerEnter(Collider other)
+    
+//    private void DeleteBallReference()
 //    {
-//        if (other.CompareTag("Ball"))
-//        {
-//            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-//
-//            other.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-//            _currentHitForce = minHitForce;
-//
-//        }
+//        _ball = null;
 //    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.CompareTag("Ball"))
+        {
+            _ball = null;
+            _playerAnimation.EndHittingAnimation();
+            float distance = BallLogic.Instance.GetDistance(transform.position);
+
+            if (distance <= _maxReach && _isCharging && BallLogic.Instance.GetHeight() < 3.85f)
+            {
+                _ball = other.gameObject;
+                //todo animation of hit activate value
+                HitBall();
+            }
+        }
+    }
+    
     public void SetServing(bool serving)
     {
         _isServing = serving;

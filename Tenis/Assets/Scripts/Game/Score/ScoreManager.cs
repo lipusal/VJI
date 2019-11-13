@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FrameLord;
 using Game.GameManager;
 using Game.Score;
@@ -169,8 +171,8 @@ public class ScoreManager
     {
         string points1 = _currentSet.GetCurrentGameStringResults()[0];
         string points2 = _currentSet.GetCurrentGameStringResults()[1];
-        int games1 = _currentSet.GetCurrentSetResults()[0];
-        int games2 = _currentSet.GetCurrentSetResults()[1];
+        int games1 = _currentSet.GetResults()[0];
+        int games2 = _currentSet.GetResults()[1];
         int sets1 = GetSetsResults()[0];
         int sets2 = GetSetsResults()[1];
         String[] results = new string[2];

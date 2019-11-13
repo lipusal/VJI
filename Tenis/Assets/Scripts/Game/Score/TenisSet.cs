@@ -99,10 +99,11 @@ public class TenisSet
         return false;
     }
 
-    public int[] GetCurrentSetResults()
+    public int[] GetResults()
     {
         return _results;
     }
+    
     public int[] GetCurrentGameResults()
     {
         return _currentGame.GetResults();

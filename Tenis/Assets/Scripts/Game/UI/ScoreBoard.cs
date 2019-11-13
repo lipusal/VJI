@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ScoreBoard : MonoBehaviour
 {
@@ -10,11 +7,6 @@ public class ScoreBoard : MonoBehaviour
     public TextMeshProUGUI[] player2CurrentGamePoints;
     public TextMeshProUGUI[] player1FullPoints;
     public TextMeshProUGUI[] player2FullPoints;
-    
-    void Start()
-    {
-        Update();
-    }
 
     void Update()
     {

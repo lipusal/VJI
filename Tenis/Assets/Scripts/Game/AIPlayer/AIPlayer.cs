@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using FrameLord;
 using Game.Player;
@@ -9,15 +10,23 @@ public class AIPlayer : MonoBehaviour
 {
     public Transform ballPosition;
 
-    private float speed = 15;
+    private float speed = 10;
 
     private float hitForce = 28;
 
     public Transform aimTarget;
 
+    public Transform otherPlayer;
+
+    private AIStrategy _AIStrategy;
+    
     private CharacterController _characterController;
 
     private PlayerAnimation _playerAnimation;
+    private Vector3 _basePositionFromBall;
+    private Vector3 _desiredPosition;
+    private ScoreManager _scoreManager;
+    private bool _newPosition;
 
     private bool _isServing;
     
@@ -30,8 +39,13 @@ public class AIPlayer : MonoBehaviour
     void Start()
     {
         _isServing = false;
+        _AIStrategy = new AIStrategy(otherPlayer);
         _characterController = GetComponent<CharacterController>();
         _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
+        _basePositionFromBall = new Vector3(7.705f,0f,0.633f);
+        _newPosition = true;
+        _scoreManager = ScoreManager.GetInstance();
+        
         if (transform.position.x < 0)
         {
             _id = 1;
@@ -45,18 +59,47 @@ public class AIPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BallLogic.Instance.IsEnabled())
+        BallLogic ballLogic = BallLogic.Instance;
+        bool hasMoved = false;
+        if (ballLogic.IsEnabled() && ballLogic.GetHittingPlayer() != _id
+            && ballLogic.GetHittingPlayer() != 0)
         {
-            MoveToBall();
+            hasMoved = MoveToBall();
+        }
+        
+        if(!hasMoved) 
+        {
+            _playerAnimation.StartMoveAnimation(MovementDirection.IDLE);
         }
     }
 
-    private void MoveToBall()
+    private bool MoveToBall()
     {
-        Vector3 movingDirection = new Vector3(transform.position.x, transform.position.y, ballPosition.position.z) - transform.position;
-        _characterController.Move(movingDirection * speed * Time.deltaTime);
-        _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
-//        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);
+        if (_newPosition)
+        {
+            _desiredPosition = BallLogic.Instance.GetBouncePosition();
+            _desiredPosition = _desiredPosition + _basePositionFromBall;
+            _newPosition = false;
+        }
+
+        if (_desiredPosition.x < 0)
+        {
+            return false ;
+        }
+        
+        if (Math.Abs(transform.position.x - _desiredPosition.x) > 0.05 ||
+            Math.Abs(transform.position.z - _desiredPosition.z) > 0.05)
+        {
+            float xDirection = _desiredPosition.x - transform.position.x;
+            float zDirection = _desiredPosition.z - transform.position.z;
+            Vector3 movingDirection = new Vector3(xDirection, transform.position.y, zDirection).normalized;
+            _characterController.Move(Time.deltaTime * speed * movingDirection);
+            _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
+            return true;
+//        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);     
+        }
+
+        return false;
     }
 
     private MovementDirection GetMovementDirection(Vector3 movingDirection)
@@ -100,11 +143,14 @@ public class AIPlayer : MonoBehaviour
     
     private void HitBall()
     {
-        BallLogic ball = BallLogic.Instance;
+        BallLogic ball = BallLogic.Instance; 
+        Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
+//        Vector3 aimPosition = _AIStrategy.GenerateAwayFromPlayerPosition();
         AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
-        Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 3.2f, 0);
+        Vector3 velocity = BallLogic.Instance.GetVelocity(aimPosition, 1.8f);//change time in function of currentHitForce
+        ball.GetComponent<Rigidbody>().velocity = velocity;
         ball.SetHittingPlayer(_id);
+        _newPosition = true;
     }
     
     private void PlayServeSound()
@@ -116,4 +162,38 @@ public class AIPlayer : MonoBehaviour
     {
         //TODO its here just to use same animation as player 1
     }
+
+    public void Setinitialposition()
+    {
+        _newPosition = true;
+        Vector3 currentPosition = transform.position;
+
+        float x, z; 
+        Side servingSide = _scoreManager.GetServingSide();
+        if (servingSide == Side.RIGHT)
+        {
+            z = 6.57f;
+        }
+        else
+        {
+            z = -6.24f;
+        }
+
+        if (_isServing)
+        {
+            ScoreManager.GetInstance().ActivateServingWalls(_id);
+            x = 32f;
+        }
+        else
+        {
+            x = 26.0f;
+        }
+
+        _characterController.enabled = false;
+        Vector3 newPosition = new Vector3(x, currentPosition.y, z);
+        transform.position = newPosition;
+        _characterController.enabled = true;
+
+    }
+    
 }
