@@ -8,6 +8,7 @@ public class PauseMenuScript : MonoBehaviour
 {
     public KeyCode pauseKey = KeyCode.Escape;
     public GameObject pauseMenu;
+    public GameObject scoreboard;
     private bool _isPaused;
 
     private void Start()
@@ -51,6 +52,7 @@ public class PauseMenuScript : MonoBehaviour
     private void PauseGame()
     {
         pauseMenu.SetActive(true);
+        scoreboard.SetActive(false);
         Time.timeScale = 0;
         _isPaused = true;
     }
@@ -58,6 +60,7 @@ public class PauseMenuScript : MonoBehaviour
     private void ResumeGame()
     {
         pauseMenu.SetActive(false);
+        scoreboard.SetActive(true);
         Time.timeScale = 1;
         _isPaused = false;
     }
