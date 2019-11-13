@@ -1,5 +1,6 @@
 ﻿using System;
 using FrameLord;
+using Game.Events;
 using Game.GameManager;
 using Game.Score;
 using UnityEngine;
@@ -92,14 +93,14 @@ public class ScoreManager
             // Won point, show score
             int[] points = _currentSet.GetCurrentGameResults();
             SayScore(points[0], points[1]);
-            ShowPartialResults();
-            
             AudioManager.Instance.PlaySound((int) SoundId.SOUND_CLAP);
         }
         
         // Reset ball and server
         BallLogic.Instance.ResetConfig();
         _referee.MakePlayerServe(1); //TODO change to opponent when game
+        
+        GameEventDispatcher.Instance.Dispatch(this, new PointEvent(GetCurrentGameResults(), GetFullResults()));
 
         return false;
     }
@@ -168,7 +169,7 @@ public class ScoreManager
 
     }
 
-    public String[] ShowPartialResults()
+    public string[] GetPartialResults()
     {
         string points1 = _currentSet.GetCurrentGameStringResults()[0];
         string points2 = _currentSet.GetCurrentGameStringResults()[1];
@@ -181,6 +182,28 @@ public class ScoreManager
         results[1] = $"Player 2: {sets2}  sets {games2} games {points2} points";
       //  Debug.Log($"Player 1: {sets1} sets {games1} games {points1} points" + "\n" + $"Player 2: {sets2} sets {games2} games {points2} points");
         return results;
+    }
+    
+    public string[] GetFullResults()
+    {
+        var player1Result = new int[MAX_SETS];
+        var player2Result = new int[MAX_SETS];
+        for (int i = 0; i < MAX_SETS; i++)
+        {
+            var set = _sets[i];
+            player1Result[i] = set?.GetResult()[0] ?? 0;
+            player2Result[i] = set?.GetResult()[1] ?? 0;
+        }
+
+        return new[] {
+            string.Join(" ", player1Result),
+            string.Join(" ", player2Result)
+        };
+    }
+
+    public string[] GetCurrentGameResults()
+    {
+        return _currentSet.GetCurrentGameStringResults();
     }
 
     private int[] GetSetsResults()

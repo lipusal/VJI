@@ -1,29 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FrameLord;
+using Game.Events;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ScoreBoard : MonoBehaviour
 {
-    public TextMeshProUGUI player1Points;
+    public TextMeshProUGUI player1CurrentGamePoints;
+    public TextMeshProUGUI player2CurrentGamePoints;
 
-    public TextMeshProUGUI player2Points;
-    
     void Start()
     {
-        string[] results = ScoreManager.GetInstance().ShowPartialResults();
-        player1Points.text = results[0];
-        player2Points.text = results[1];
+        GameEventDispatcher.Instance.AddListener(PointEvent.NAME, Callback);
     }
 
-    void Update()
+    private void Callback(object sender, GameEvent e)
     {
-        if (ScoreManager.GetInstance().GetWinnerId() == 0)
-        {
-            string[] results = ScoreManager.GetInstance().ShowPartialResults();
-            player1Points.text = results[0];
-            player2Points.text = results[1];
-        }
+        PointEvent pe = (PointEvent) e;
+        player1CurrentGamePoints.text = pe.NewCurrentGamePoints[0];
+        player2CurrentGamePoints.text = pe.NewCurrentGamePoints[1];
     }
 }

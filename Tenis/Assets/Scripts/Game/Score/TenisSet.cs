@@ -29,7 +29,7 @@ public class TenisSet
 
     }
 
-    public int[] GetCurrentResult()
+    public int[] GetResult()
     {
         return _results;
     }
