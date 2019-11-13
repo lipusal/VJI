@@ -10,8 +10,7 @@ public class ScoreManager
     /// Maximum number of sets to play. Best of MAX_SETS wins, ie. it is enough to win (MAX_SETS/2) + 1 sets (integer division).
     /// E.g. If MAX_SETS is 3, 2 consecutive sets is enough to win. 3 sets would be played if each player has won 1 set.
     /// </summary>
-    private const int MAX_SETS = 3;
-//  private const int MAX_SETS = 2;
+    private int maxSets = 3;
 
     private TenisSet[] _sets;
     private TenisSet _currentSet;
@@ -27,7 +26,7 @@ public class ScoreManager
     private ScoreManager()
     {
         _results = new int[2];
-        _sets = new TenisSet[MAX_SETS];
+        _sets = new TenisSet[maxSets];
         _setNumber = 0;
         _currentSet = new TenisSet();
         _sets[_setNumber] = _currentSet;
@@ -72,7 +71,7 @@ public class ScoreManager
         {
             // Won set
             _results[teamNumber - 1]++;
-            if (_results[teamNumber - 1] > MAX_SETS/2)
+            if (_results[teamNumber - 1] > maxSets/2)
             {
                 // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
@@ -183,9 +182,9 @@ public class ScoreManager
     
     public string[] GetFullResults()
     {
-        var player1Result = new int[MAX_SETS];
-        var player2Result = new int[MAX_SETS];
-        for (int i = 0; i < MAX_SETS; i++)
+        var player1Result = new int[maxSets];
+        var player2Result = new int[maxSets];
+        for (int i = 0; i < maxSets; i++)
         {
             var set = _sets[i];
             player1Result[i] = set?.GetResult()[0] ?? 0;
@@ -301,5 +300,10 @@ public class ScoreManager
     public int GetWinnerId()
     {
         return _winnerId;
+    }
+    public int MaxSets
+    {
+        get => maxSets;
+        set => maxSets = value;
     }
 }
