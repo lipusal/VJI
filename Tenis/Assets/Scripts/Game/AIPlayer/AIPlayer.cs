@@ -25,6 +25,7 @@ public class AIPlayer : MonoBehaviour
     private PlayerAnimation _playerAnimation;
     private Vector3 _basePositionFromBall;
     private Vector3 _desiredPosition;
+    private Vector3 _serveTarget;
     private ScoreManager _scoreManager;
     private bool _newPosition;
     private bool _isServing;
@@ -69,7 +70,7 @@ public class AIPlayer : MonoBehaviour
             _elapsedTime = _elapsedTime + Time.deltaTime;
             if (_elapsedTime >= _timeToServe)
             {
-                Serve();
+                AimServe();
                 _elapsedTime = 0;
                 _timeToServe = 0;
                 SetServing(false);
@@ -92,12 +93,22 @@ public class AIPlayer : MonoBehaviour
         }
     }
 
-    private void Serve()
+    private void AimServe()
     {
         Side servingSide = _scoreManager.GetServingSide();
-        Vector3 target = _AIStrategy.GetServeTarget(servingSide);
+        _serveTarget = _AIStrategy.GetServeTarget(servingSide);
+        _playerAnimation.StartServeAnimation();
     }
 
+    public void Serve()
+    {
+        Vector3 currentPosition = transform.position;
+        BallLogic ball = BallLogic.Instance;
+        ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero );
+        Vector3 ballVelocity = ball.GetVelocity(_serveTarget, 1.5f);
+        ball.GetComponent<Rigidbody>().velocity = ballVelocity;
+        BallLogic.Instance.SetHittingPlayer(_id);
+    }
     private bool MoveToBall()
     {
         if (_newPosition)
