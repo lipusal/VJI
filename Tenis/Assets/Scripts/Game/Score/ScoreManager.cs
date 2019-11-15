@@ -101,9 +101,8 @@ public class ScoreManager
         
         // Reset ball and server
         BallLogic.Instance.ResetConfig();
-        int hitter = GetServingTeam();
-        hitter = (hitter % 2) + 1;
-        _referee.MakePlayerServe(1); //TODO change to opponent when game
+       
+        _referee.MakePlayerServe(GetServingTeam()); //TODO change to opponent when game
 
         return false;
     }
@@ -246,11 +245,11 @@ public class ScoreManager
         
         if ((results[0] + results[1]) % 2 == 0)
         {
-            resultSide = servingTeam == 1 ? Side.RIGHT : Side.LEFT;
+            resultSide =  Side.RIGHT;
         }
         else
         {
-            resultSide = servingTeam == 1 ? Side.LEFT : Side.RIGHT;
+            resultSide = Side.LEFT;
         }
 
         return resultSide;

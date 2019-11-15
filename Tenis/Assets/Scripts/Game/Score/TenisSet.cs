@@ -60,7 +60,7 @@ public class TenisSet
                 return true;
             }
             
-            //_servingTeam = (_servingTeam  % 2) + 1; TODO use this line in next version
+            _servingTeam = (_servingTeam  % 2) + 1;
         }
 
         return false;
