@@ -101,6 +101,8 @@ public class ScoreManager
         
         // Reset ball and server
         BallLogic.Instance.ResetConfig();
+        int hitter = GetServingTeam();
+        hitter = (hitter % 2) + 1;
         _referee.MakePlayerServe(1); //TODO change to opponent when game
 
         return false;
