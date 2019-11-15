@@ -3,6 +3,8 @@ using FrameLord;
 using Game.Player;
 using Game.Score;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 public class AIPlayer : MonoBehaviour
 {
@@ -25,9 +27,9 @@ public class AIPlayer : MonoBehaviour
     private Vector3 _desiredPosition;
     private ScoreManager _scoreManager;
     private bool _newPosition;
-
     private bool _isServing;
-    
+    private float _elapsedTime;
+    private float _timeToServe;
     /* player id according to court side,
     * 1 if player is on team one or
     * 2 if player is on team two
@@ -43,6 +45,7 @@ public class AIPlayer : MonoBehaviour
         _basePositionFromBall = new Vector3(7.705f,0f,0.633f);
         _newPosition = true;
         _scoreManager = ScoreManager.GetInstance();
+        _timeToServe = 0;
         
         if (transform.position.x < 0)
         {
@@ -57,18 +60,42 @@ public class AIPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BallLogic ballLogic = BallLogic.Instance;
-        bool hasMoved = false;
-        if (ballLogic.IsEnabled() && ballLogic.GetHittingPlayer() != _id
-            && ballLogic.GetHittingPlayer() != 0)
+        if (_isServing)
         {
-            hasMoved = MoveToBall();
+            if(Math.Abs(_timeToServe) < 0.01) {
+                _timeToServe = Random.Range(0.0f, 1.0f) + 1.0f;
+            }
+
+            _elapsedTime = _elapsedTime + Time.deltaTime;
+            if (_elapsedTime >= _timeToServe)
+            {
+                Serve();
+                _elapsedTime = 0;
+                _timeToServe = 0;
+                SetServing(false);
+            }
         }
-        
-        if(!hasMoved) 
+        else
         {
-            _playerAnimation.StartMoveAnimation(MovementDirection.IDLE);
+            BallLogic ballLogic = BallLogic.Instance;
+            bool hasMoved = false;
+            if (ballLogic.IsEnabled() && ballLogic.GetHittingPlayer() != _id
+                                      && ballLogic.GetHittingPlayer() != 0)
+            {
+                hasMoved = MoveToBall();
+            }
+
+            if (!hasMoved)
+            {
+                _playerAnimation.StartMoveAnimation(MovementDirection.IDLE);
+            }
         }
+    }
+
+    private void Serve()
+    {
+        Side servingSide = _scoreManager.GetServingSide();
+        Vector3 target = _AIStrategy.GetServeTarget(servingSide);
     }
 
     private bool MoveToBall()
@@ -137,6 +164,7 @@ public class AIPlayer : MonoBehaviour
     public void SetServing(bool serving)
     {
         _isServing = serving;
+        
     }
     
     private void HitBall()

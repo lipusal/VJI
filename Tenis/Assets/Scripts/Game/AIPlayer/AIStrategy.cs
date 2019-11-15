@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Score;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +12,11 @@ public class AIStrategy
     private float _width;
     private float _length;
     private float _height;
+    private float _widthMiddle;
+    private float _baseServeLength;
+    private float _maxServeLength;
+    private float _rightWidth;
+    private float _leftWidth;
     private Transform _otherPlayer;
 
     public AIStrategy(Transform otherPlayer)
@@ -21,6 +27,11 @@ public class AIStrategy
         _length = -3.87f - (-31.23f);
         _height = -3.032f;
         _otherPlayer = otherPlayer;
+        _widthMiddle = 0;
+        _rightWidth = -11.0f;
+        _leftWidth = 10.8f;
+        _baseServeLength = -5.0f;
+        _maxServeLength = -16.8f;
     }
 
     public Vector3 GenerateRandomPosition()
@@ -52,5 +63,21 @@ public class AIStrategy
             return GenerateRandomPosition();
         }
     }
-    
+
+    public Vector3 GetServeTarget(Side servingSide)
+    {
+        Vector3 target = Vector3.zero;
+        float x, z;
+        x = Random.Range(_baseServeLength, _maxServeLength);
+        if (servingSide == Side.RIGHT)
+        {
+            z = Random.Range(_rightWidth, _widthMiddle);
+        }
+        else
+        {
+            z =Random.Range(_widthMiddle, _leftWidth);
+        }
+        target = new Vector3(x, _height, z);
+        return target;
+    }
 }
