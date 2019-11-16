@@ -19387,7 +19387,8 @@ MonoBehaviour:
   westServiceDelimiter: {fileID: 1588399683}
   northServiceDelimiter: {fileID: 1930548327}
   player1: {fileID: 1417308004}
-  player2: {fileID: 299943511}
+  aiPlayer: {fileID: 299943511}
+  player2: {fileID: 2056827522}
 --- !u!4 &1256441315
 Transform:
   m_ObjectHideFlags: 0

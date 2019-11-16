@@ -165,6 +165,8 @@ public class Player2Logic : MonoBehaviour
         moveLeftRightValue = 0;
         moveForwardBackwardValue = 0;
         _finishHitting = false;
+        BallLogic ball = BallLogic.Instance;
+
 
         if (ActionMapper.GetMoveLeft(leftButton))
         {
@@ -186,7 +188,7 @@ public class Player2Logic : MonoBehaviour
             moveForwardBackwardValue += -1;
         }
 
-        if (ActionMapper.GetHitPressed(hitButton))
+        if (ActionMapper.GetHitPressed(hitButton) && ball.GetHittingPlayer() != _id)
         {
             if (!_isCharging)
             {
@@ -209,7 +211,7 @@ public class Player2Logic : MonoBehaviour
         {
 //            _isCharging = false;
 //            _finishHitting = true;
-            if (_isServing)
+            if (_isServing && ball.GetHittingPlayer() == 0)
             {
                 _isCharging = false;
                 _playerAnimation.StartServeAnimation();
@@ -221,7 +223,7 @@ public class Player2Logic : MonoBehaviour
 //            }
         }
     }
-
+    
     private void UpdatePosition()
     {
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
