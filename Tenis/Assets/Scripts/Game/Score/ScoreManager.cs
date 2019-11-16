@@ -52,8 +52,8 @@ public class ScoreManager
         GameObject northEastServiceWall, GameObject northWestServiceWall, 
         GameObject northMiddleServiceWall,  Vector3 southServiceDelimiter,
         Vector3 eastServiceDelimiter, Vector3 westServiceDelimiter,
-        Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer player2,
-        GameManagerLogic gameManagerLogic)
+        Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer Aiplayer,
+        Player2Logic player2, GameManagerLogic gameManagerLogic)
     {
         _gameManagerLogic = gameManagerLogic;
         _referee = new Referee(eastCourtSide, westCourtSide, southCourtSide, northCourtSide,
@@ -61,7 +61,7 @@ public class ScoreManager
                                 southMiddleServiceWall, northServiceWall, northEastServiceWall,
                                 northWestServiceWall, northMiddleServiceWall, southServiceDelimiter,
                                 eastServiceDelimiter, westServiceDelimiter, northServiceDelimiter,
-                                player1, player2);
+                                player1, Aiplayer, player2);
     }
     
     /**

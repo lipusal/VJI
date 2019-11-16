@@ -37,10 +37,14 @@ public class Referee
     // players
     private PlayerLogic _player1;
     private AIPlayer _aiPlayer;
-
+    private Player2Logic _player2;
+    
     // service related
     private bool _isServing;
     private int _serviceTimes;
+    
+    // game mode
+    private bool _twoPlayers;
 
     
 
@@ -53,7 +57,7 @@ public class Referee
                     GameObject northWestServiceWall,GameObject northMiddleServiceWall,
                     Vector3 southServiceDelimiter, Vector3 eastServiceDelimiter,
                     Vector3 westServiceDelimiter, Vector3 northServiceDelimiter,
-                    PlayerLogic player1, AIPlayer aiPlayer)
+                    PlayerLogic player1, AIPlayer aiPlayer, Player2Logic player2)
     {
         _eastCourtSide = eastCourtSide;
         _westCourtSide = westCourtSide;
@@ -64,6 +68,7 @@ public class Referee
         _previousToLastHitter = 0;
         _isServing = true;
         _serviceTimes = 0;
+        _twoPlayers = true;//TODO update on creator and receive it as parameter
 
         _southServiceWall = southServiceWall;
         _southEastServiceWall = southEastServiceWall;
@@ -81,6 +86,7 @@ public class Referee
 
         _player1 = player1;
         _aiPlayer = aiPlayer;
+        _player2 = player2;
     }
 
     // Returns -1 if is point for opponent, 1 if is point for hitting team or zero if it is not point
@@ -365,15 +371,31 @@ public class Referee
         {
             _player1.SetServing(true);
             _player1.SetInitialPosition();
-            _aiPlayer.SetServing(false);
-            _aiPlayer.Setinitialposition();
+            if (!_twoPlayers)
+            {
+                _aiPlayer.SetServing(false);
+                _aiPlayer.Setinitialposition();
+            }
+            else
+            {
+                _player2.SetServing(false);
+                _player2.SetInitialPosition();
+            }
         }
         else if(hitterId == 2)
         {
             _player1.SetServing(false);
             _player1.SetInitialPosition();
-            _aiPlayer.SetServing(true);
-            _aiPlayer.Setinitialposition();
+            if (!_twoPlayers)
+            {
+                _aiPlayer.SetServing(true);
+                _aiPlayer.Setinitialposition();
+            }
+            else
+            {
+                _player2.SetServing(true);
+                _player2.SetInitialPosition();
+            }
         }
     }
 
