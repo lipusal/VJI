@@ -70,9 +70,14 @@ public class ScoreManager
      */
     public bool OnPoint(int teamNumber)
     {
-        if (_currentSet.AddPoint(teamNumber))
+        if (_referee.GetIsServing() && _referee.GetServiceTimes() == 0)
+        {
+            _referee.IncreaseServiceTimes();
+        }
+        else if (_currentSet.AddPoint(teamNumber))
         {
             // Won set
+            _referee.ResetServiceTimes();
             _results[teamNumber - 1]++;
             if (_results[teamNumber - 1] > MAX_SETS/2)
             {
@@ -92,6 +97,7 @@ public class ScoreManager
         else
         {
             // Won point, show score
+            _referee.ResetServiceTimes();
             int[] points = _currentSet.GetCurrentGameResults();
             SayScore(points[0], points[1]);
             GetSummarizedScore();
@@ -127,6 +133,7 @@ public class ScoreManager
         int result = _referee.IsPoint(bouncePosition, hitterId);
         if (result > 0)
         {
+            BallLogic.Instance.DeactivateCollisions();
             if (OnPoint(hitterId))
             {
                 if (hitterId == 1)
@@ -143,10 +150,12 @@ public class ScoreManager
         }
         else if (result < 0)
         {
+            BallLogic.Instance.DeactivateCollisions();
             if (_referee.IsOut(bouncePosition))
             {
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_OUT);
             }
+          
             int opponentId = (hitterId % 2) + 1;
             if (OnPoint(opponentId))
             {
@@ -161,6 +170,7 @@ public class ScoreManager
                     _gameManagerLogic.EndGame(false);
                 }
             }
+            
         }
 
         if(result == 0 && hitterId != 0)
@@ -168,7 +178,6 @@ public class ScoreManager
             _referee.SetServing(false);
         }
         _referee.ResetHitters();
-
     }
 
     public String[] GetSummarizedScore()
