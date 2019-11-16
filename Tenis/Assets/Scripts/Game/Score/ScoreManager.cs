@@ -124,7 +124,15 @@ public class ScoreManager
         }
         else if (team1Points != 0 || team2Points != 0) // No callout for 0-0
         {
-            AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team1Points, team2Points));
+            if (GetServingTeam() == 1)
+            {
+                AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team1Points, team2Points));
+            }
+            else
+            {
+                AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team2Points, team1Points));
+
+            }
         }
     }
 
