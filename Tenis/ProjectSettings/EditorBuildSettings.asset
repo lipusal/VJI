@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TenisMatch.unity
     guid: a6d8e968909587e4b8b920e5aba3d42a
   - enabled: 1
-    path: Assets/Scenes/GameEndedScene.unity
+    path: Assets/Scenes/GameEndScene.unity
     guid: f3fa607c7e0b8472d8c931e7640099e4
   m_configObjects: {}
