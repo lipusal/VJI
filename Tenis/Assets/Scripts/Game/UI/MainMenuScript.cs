@@ -35,6 +35,7 @@ public class MainMenuScript : MonoBehaviour
         {
 //            ScoreManager.SetDifficulty(1); implemented on master
         }
+        ScoreManager.Reset();
         SceneManager.LoadScene("TenisMatch");
     }
     

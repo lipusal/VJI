@@ -308,4 +308,9 @@ public class ScoreManager
         get => maxSets;
         set => maxSets = value;
     }
+
+    public static void Reset()
+    {
+        _instance = new ScoreManager();
+    }
 }
