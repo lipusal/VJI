@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class BallLogic : MonoBehaviorSingleton<BallLogic>
 {
+    public delegate void BallHitDelegate(int hittingPlayerId);
+    public BallHitDelegate ballHitDelegate;
+
     private Rigidbody _rigidbody;
     
     private ScoreManager _scoreManager;
@@ -16,6 +19,11 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     private bool _isEnabled;
     private BallPhysic _ballPhysic;
     private bool _collide;
+
+    public AnimationCurve servingAnimationCurve;
+    private float animationCurveTimeElapsed;
+    private bool animationCurveStarted;
+    private Vector3 animationStartPosition;
 
     private void Start()
     {
@@ -31,6 +39,8 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     {
         if (_collide)
         {
+            ballHitDelegate(_hittingPlayer);
+
             if (collision.gameObject.CompareTag("Wall"))
             {
                 _scoreManager.ManageBounce(transform.position, _hittingPlayer);
@@ -145,5 +155,29 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         GetComponent<Collider>().enabled = false;
 
         _collide = false;
+    }
+
+    public void PlayServingAnimationCurve()
+    {
+        animationCurveStarted = true;
+        animationCurveTimeElapsed = 0.0f;
+        animationStartPosition = transform.position;
+    }
+
+    public void StopServingAnimationCurve()
+    {
+        animationCurveStarted = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if(animationCurveStarted)
+        {
+            animationCurveTimeElapsed += Time.deltaTime;
+            GetComponent<Rigidbody>().MovePosition(
+                new Vector3(animationStartPosition.x,
+                animationStartPosition.y + servingAnimationCurve.Evaluate(animationCurveTimeElapsed),
+                animationStartPosition.z));
+        }
     }
 }
