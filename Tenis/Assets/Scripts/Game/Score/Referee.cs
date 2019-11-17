@@ -68,7 +68,7 @@ public class Referee
         _previousToLastHitter = 0;
         _isServing = true;
         _serviceTimes = 0;
-        _twoPlayers = true;//TODO update on creator and receive it as parameter
+        _twoPlayers = false;//TODO update on creator and receive it as parameter
 
         _southServiceWall = southServiceWall;
         _southEastServiceWall = southEastServiceWall;
@@ -87,6 +87,21 @@ public class Referee
         _player1 = player1;
         _aiPlayer = aiPlayer;
         _player2 = player2;
+        DisableExtraPlayer();
+    }
+
+    private void DisableExtraPlayer()
+    {
+        if (_twoPlayers)
+        {
+            _aiPlayer.gameObject.SetActive(false);
+            _aiPlayer.GetComponent<Collider>().enabled = false;
+        }
+        else
+        {
+            _player2.gameObject.SetActive(false);
+            _player2.GetComponent<Collider>().enabled = false;
+        }
     }
 
     // Returns -1 if is point for opponent, 1 if is point for hitting team or zero if it is not point
