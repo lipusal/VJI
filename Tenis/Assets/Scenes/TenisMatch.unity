@@ -2067,30 +2067,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 851577799}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &299943506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299943505}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6a6f2fbc82d4cafb073ddd160ec030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftButton: 115
-  rightButton: 119
-  forwardButton: 97
-  bacwardButton: 100
-  hitButton: 102
-  aimTarget: {fileID: 1492476147}
-  aimTargetSpeed: 15
-  movementSpeed: 14
-  minHitForce: 18
-  deltaHitForce: 1
-  maxHitForce: 40
-  _minimumOffSetToHitBall: -3
 --- !u!65 &299943508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12157,7 +12133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 19fdf76f18fd0b849b501c18a87fbbdf, type: 3}
       propertyPath: m_LocalPosition.x
