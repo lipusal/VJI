@@ -98,6 +98,7 @@ public class PlayerLogic : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
         _isCharging = false;
+        ResetToIdle();
         float x, z; 
         Side servingSide = _scoreManager.GetServingSide();
         if (servingSide == Side.RIGHT)
@@ -355,5 +356,13 @@ public class PlayerLogic : MonoBehaviour
     private void PlayServeSound()
     {
         AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_SERVE);
+    }
+
+    public void ResetToIdle()
+    {
+        if (_playerAnimation.IsStuckOnHitAnimation())
+        {
+            _playerAnimation.EndHittingAnimation();
+        } 
     }
 }

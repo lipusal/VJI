@@ -69,6 +69,12 @@ public class PlayerAnimation
     public bool IsPlayingHitAnimation()
     {
         AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
-        return (currentState.IsName("service") || currentState.IsName("drive") || currentState.IsName("backhand"));
+        return currentState.IsName("service");
+//        return (currentState.IsName("service") || currentState.IsName("drive") || currentState.IsName("backhand"));
+    }
+    public bool IsStuckOnHitAnimation()
+    {
+        AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
+        return (currentState.IsName("drive_start") || currentState.IsName("backhand"));
     }
 }
