@@ -148,7 +148,57 @@ public class Referee
             }
         }
 
+        if (returnValue > 0)
+        {
+            MakeCelebrateAndAngry(hitter, true);
+            int opponentId = (hitter % 2) + 1;
+            MakeCelebrateAndAngry(opponentId, false);
+            
+        }
+        else if (returnValue < 0)
+        {
+            MakeCelebrateAndAngry(hitter, false);
+            int opponentId = (hitter % 2) + 1;
+            MakeCelebrateAndAngry(opponentId, true);
+        }
         return returnValue;
+    }
+
+    private void MakeCelebrateAndAngry(int hitter, bool celebrate)
+    {
+        if (hitter == 1)
+        {
+            if (celebrate)
+            {
+                _player1.Celebrate();
+            }
+            else
+            {
+                _player1.Angry();                
+            }
+        }
+//        else if (_twoPlayers)
+//        {
+//            if (celebrate)
+//            {
+//                _player2.Celebrate();
+//            }
+//            else
+//            {
+//                _player2.Angry();
+//            }
+//        }
+//        else
+//        {
+//            if (celebrate)
+//            {
+//                _aiPlayer.Celebrate();
+//            }
+//            else
+//            {
+//                _aiPlayer.Angry();
+//            }
+//        }
     }
 
     public void UpdateLastHitter(int hitter)

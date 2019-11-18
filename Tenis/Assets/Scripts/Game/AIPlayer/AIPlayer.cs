@@ -237,5 +237,15 @@ public class AIPlayer : MonoBehaviour
         _characterController.enabled = true;
 
     }
+
+    public void Celebrate()
+    {
+        _playerAnimation.StartCelebrateAnimation();
+    }
+
+    public void Angry()
+    {
+        _playerAnimation.StartAngryAnimation();
+    }
     
 }

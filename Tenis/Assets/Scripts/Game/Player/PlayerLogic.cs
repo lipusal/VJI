@@ -399,4 +399,15 @@ public class PlayerLogic : MonoBehaviour
             _playerAnimation.EndHittingAnimation();
         } 
     }
+
+    public void Celebrate()
+    {
+        _playerAnimation.StartCelebrateAnimation();
+    }
+    
+    
+    public void Angry()
+    {
+        _playerAnimation.StartAngryAnimation();
+    }
 }

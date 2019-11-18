@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Game.Player;
 using Game.Score;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerAnimation
 {
@@ -14,6 +16,10 @@ public class PlayerAnimation
     private static readonly int Hit = Animator.StringToHash("hit");
     private static readonly int Serve = Animator.StringToHash("serve");
     private static readonly int EndHit = Animator.StringToHash("endHit");
+    private static readonly int Celebbrate = Animator.StringToHash("celebrate");
+    private static readonly int Angry = Animator.StringToHash("angry");
+    private static readonly int CelebrationNumber = Animator.StringToHash("celebrationNumber");
+    private static readonly int AngryNumber = Animator.StringToHash("angryNumber");
 
     public PlayerAnimation(Animator animator)
     {
@@ -65,7 +71,20 @@ public class PlayerAnimation
     {
         _animator.SetTrigger(Serve);
     }
+    
+    public void StartCelebrateAnimation()
+    {
+        int celebrationNumber = (int) Math.Round(Random.Range(1.0f, 3.99f));
+        _animator.SetTrigger(Celebbrate);
+        _animator.SetInteger(CelebrationNumber, celebrationNumber);
+    }
 
+    public void StartAngryAnimation()
+    {
+        int angryNumber = (int) Math.Round(Random.Range(1.0f, 2.99f));
+        _animator.SetTrigger(Angry);
+        _animator.SetInteger(AngryNumber, angryNumber);
+    }
     public bool IsPlayingHitAnimation()
     {
         AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
