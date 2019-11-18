@@ -2115,6 +2115,7 @@ MonoBehaviour:
     type: 3}
   aimTarget: {fileID: 1492476147}
   otherPlayer: {fileID: 134716723}
+  difficulty: 1
 --- !u!1 &306484302
 GameObject:
   m_ObjectHideFlags: 0
@@ -21547,6 +21548,7 @@ MonoBehaviour:
     type: 3}
   aimTarget: {fileID: 598947288}
   aimTargetSpeed: 28
+  aimTargetRenderer: {fileID: 598947286}
   movementSpeed: 14
   minHitForce: 18
   deltaHitForce: 30
@@ -27059,6 +27061,7 @@ MonoBehaviour:
     type: 3}
   aimTarget: {fileID: 1492476147}
   aimTargetSpeed: 28
+  aimTargetRenderer: {fileID: 1492476145}
   movementSpeed: 14
   minHitForce: 18
   deltaHitForce: 30

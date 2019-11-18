@@ -29,7 +29,7 @@ public class PlayerLogic : MonoBehaviour
 
     public Transform aimTarget;
     public float aimTargetSpeed = 18;
-
+    public MeshRenderer aimTargetRenderer;
     public float movementSpeed = 14f;
     private float _currentHitForce;
     private float _playerSpeed = 50f;
@@ -72,6 +72,7 @@ public class PlayerLogic : MonoBehaviour
     private PlayerAnimation _playerAnimation;
 
     private GameObject _animatedServingBall;
+    private bool _twoPlayers = false;
 
     void Start()
     {
@@ -102,6 +103,10 @@ public class PlayerLogic : MonoBehaviour
         Vector3 currentPosition = transform.position;
         _isCharging = false;
         ResetToIdle();
+        if (_twoPlayers)
+        {
+            DisableTarget();
+        }
         float x, z; 
         Side servingSide = _scoreManager.GetServingSide();
         if (servingSide == Side.RIGHT)
@@ -121,6 +126,7 @@ public class PlayerLogic : MonoBehaviour
         }
         else
         {
+
             x = -27f;
         }
 
@@ -385,5 +391,24 @@ public class PlayerLogic : MonoBehaviour
     public void Angry()
     {
         _playerAnimation.StartAngryAnimation();
+    }
+
+    public void DisableTarget()
+    {
+        aimTargetRenderer.enabled = false;
+    }
+    public void EnableTarget()
+    {
+        aimTargetRenderer.enabled = true;
+    }
+
+    public void SetGameMode(bool twoPlayers)
+    {
+        _twoPlayers = twoPlayers;
+    }
+
+    public bool IsTwoPlayers()
+    {
+        return _twoPlayers;
     }
 }

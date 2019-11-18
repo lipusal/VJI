@@ -16,6 +16,11 @@ public class Player2Logic : PlayerLogic
         ResetToIdle();
         float x, z;
         Side servingSide = _scoreManager.GetServingSide();
+        if (IsTwoPlayers())
+        {
+            DisableTarget();
+        }
+        
         if (servingSide == Side.RIGHT)
         {
             z = 6.57f;
@@ -41,7 +46,7 @@ public class Player2Logic : PlayerLogic
         transform.position = newPosition;
         _characterController.enabled = true;
     }
-    
+
     public override void SetAimPosition(Side servingSide)
     {
         float x = -12.5f, z;

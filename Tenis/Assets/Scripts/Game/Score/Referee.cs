@@ -87,7 +87,17 @@ public class Referee
         _player1 = player1;
         _aiPlayer = aiPlayer;
         _player2 = player2;
+        SetGameMode();
         DisableExtraPlayer();
+    }
+
+    private void SetGameMode()
+    {
+        _player1.SetGameMode(_twoPlayers);
+        if (_twoPlayers)
+        {
+            _player2.SetGameMode(_twoPlayers);
+        }
     }
 
     private void DisableExtraPlayer()
