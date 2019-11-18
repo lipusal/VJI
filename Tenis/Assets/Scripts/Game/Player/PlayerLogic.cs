@@ -210,7 +210,7 @@ public class PlayerLogic : MonoBehaviour
 
         if (ActionMapper.GetHitReleased(hitButton))
         {
-              _isCharging = false;
+//              _isCharging = false;
 //            _finishHitting = true;
             if (_isServing && ball.GetHittingPlayer() == 0)
             {
