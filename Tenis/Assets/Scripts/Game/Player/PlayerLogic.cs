@@ -298,7 +298,7 @@ public class PlayerLogic : MonoBehaviour
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            float time = GetTimeToBounce();
+            float time = GetTimeToBounce(1.0f, 2.5f);
 //           Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
            Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);//change time in function of currentHitForce
 
@@ -313,24 +313,26 @@ public class PlayerLogic : MonoBehaviour
         _isCharging = false;
     }
 
-    private float GetTimeToBounce()
+    private float GetTimeToBounce(float minTime, float maxTime)
     {
-        float maxTime = 2.5f;
-        float minTime = 1.0f;
+        float difference = maxTime - minTime;
         float value = _currentHitForce - minHitForce;
         float totalForce = maxHitForce - minHitForce;
-        float percentage = (value / totalForce);
-        return 1.5f * percentage + minTime;
+        float percentage = 1.0f - (value / totalForce);
+        return difference * percentage + minTime;
     }
 
     private void Serve()
     {
         Vector3 currentPosition = transform.position;
-        Vector3 aimDirection = (aimTarget.position - currentPosition).normalized;
+//        Vector3 aimDirection = (aimTarget.position - currentPosition).normalized;
         //float serveForce = 40f; //TODO use a private variable for serve force
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero);
-        ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, -1.2f, 0);
+        float time = GetTimeToBounce(0.8f, 2.0f);
+        Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
+        ball.GetComponent<Rigidbody>().velocity = velocity;
+//        ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, -1.2f, 0);
         BallLogic.Instance.SetHittingPlayer(_id);
         //ball.StopServingAnimationCurve();
     }
