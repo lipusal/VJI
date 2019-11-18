@@ -60,6 +60,7 @@ public class AIPlayer : MonoBehaviour
         {
             _id = 2;
         }
+        Setinitialposition();
     }
 
     // Update is called once per frame
