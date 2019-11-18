@@ -151,4 +151,9 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 
         _collide = false;
     }
+
+    public Vector3 GetCurrentVelocity()
+    {
+        return _rigidbody.velocity;
+    }
 }

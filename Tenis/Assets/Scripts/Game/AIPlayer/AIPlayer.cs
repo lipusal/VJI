@@ -122,6 +122,10 @@ public class AIPlayer : MonoBehaviour
         {
             _desiredPosition = BallLogic.Instance.GetBouncePosition();
             _desiredPosition = _desiredPosition + _basePositionFromBall;
+            if (BallLogic.Instance.GetCurrentVelocity().z < 0)
+            {
+                _desiredPosition = _desiredPosition + new Vector3(0, 0, -1.5f);
+            }
             _newPosition = false;
         }
 
