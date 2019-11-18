@@ -177,28 +177,28 @@ public class Referee
                 _player1.Angry();                
             }
         }
-//        else if (_twoPlayers)
-//        {
-//            if (celebrate)
-//            {
-//                _player2.Celebrate();
-//            }
-//            else
-//            {
-//                _player2.Angry();
-//            }
-//        }
-//        else
-//        {
-//            if (celebrate)
-//            {
-//                _aiPlayer.Celebrate();
-//            }
-//            else
-//            {
-//                _aiPlayer.Angry();
-//            }
-//        }
+        else if (_twoPlayers)
+        {
+            if (celebrate)
+            {
+                _player2.Celebrate();
+            }
+            else
+            {
+                _player2.Angry();
+            }
+        }
+        else
+        {
+            if (celebrate)
+            {
+                _aiPlayer.Celebrate();
+            }
+            else
+            {
+                _aiPlayer.Angry();
+            }
+        }
     }
 
     public void UpdateLastHitter(int hitter)
