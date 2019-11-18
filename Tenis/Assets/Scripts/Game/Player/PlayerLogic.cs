@@ -96,6 +96,7 @@ public class PlayerLogic : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
         _isCharging = false;
+        ResetToIdle();
         float x, z; 
         Side servingSide = _scoreManager.GetServingSide();
         if (servingSide == Side.RIGHT)
@@ -374,5 +375,13 @@ public class PlayerLogic : MonoBehaviour
     public bool IsServing()
     {
         return _isServing;
+    }
+
+    public void ResetToIdle()
+    {
+        if (_playerAnimation.IsStuckOnHitAnimation())
+        {
+            _playerAnimation.EndHittingAnimation();
+        } 
     }
 }

@@ -99,8 +99,12 @@ public class Referee
         }
         else
         {
+            foreach(var collider in _player2.GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
             _player2.gameObject.SetActive(false);
-            _player2.GetComponent<Collider>().enabled = false;
+
         }
     }
 

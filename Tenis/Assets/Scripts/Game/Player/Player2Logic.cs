@@ -13,7 +13,8 @@ public class Player2Logic : PlayerLogic
     {
         Vector3 currentPosition = transform.position;
         _isCharging = false;
-        float x, z; 
+        ResetToIdle();
+        float x, z;
         Side servingSide = _scoreManager.GetServingSide();
         if (servingSide == Side.RIGHT)
         {
