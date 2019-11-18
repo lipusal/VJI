@@ -24,6 +24,9 @@ public class PlayerLogic : MonoBehaviour
     // Button to hit
     public KeyCode hitButton = KeyCode.A;
 
+    //Ball to be animated on serve
+    public GameObject animatableServeBallPrefab;
+
     public Transform aimTarget;
     public float aimTargetSpeed = 18;
 
@@ -67,6 +70,8 @@ public class PlayerLogic : MonoBehaviour
     private GameObject _ball;
 
     private PlayerAnimation _playerAnimation;
+
+    private GameObject _animatedServingBall;
 
     void Start()
     {
@@ -216,6 +221,8 @@ public class PlayerLogic : MonoBehaviour
             {
                 _isCharging = false;
                 _playerAnimation.StartServeAnimation();
+
+                _animatedServingBall = Instantiate(animatableServeBallPrefab, transform.position + Vector3.up*animatableServeBallPrefab.GetComponent<BallServeAnimation>().verticalAppearOffset, Quaternion.identity);
                // ball.PlayServingAnimationCurve();
             }
             //            else
@@ -334,6 +341,7 @@ public class PlayerLogic : MonoBehaviour
         ball.GetComponent<Rigidbody>().velocity = velocity;
 //        ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, -1.2f, 0);
         BallLogic.Instance.SetHittingPlayer(_id);
+        Destroy(_animatedServingBall);
         //ball.StopServingAnimationCurve();
     }
     

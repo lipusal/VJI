@@ -2111,6 +2111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballPosition: {fileID: 1061059253}
+  animatableServeBallPrefab: {fileID: 7074531575897229647, guid: 839011c8677016b4481c644e92696f94,
+    type: 3}
   aimTarget: {fileID: 1492476147}
   otherPlayer: {fileID: 134716723}
 --- !u!1 &306484302
@@ -13538,39 +13540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48150ed06d569a4fa05cb9152d48d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  servingAnimationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1.3333334
-      outSlope: 1.3333334
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.75
-      value: 1
-      inSlope: -0.3333333
-      outSlope: -0.3333333
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.5
-      value: -0.5
-      inSlope: -2
-      outSlope: -2
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!199 &1061059255
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -21574,6 +21543,8 @@ MonoBehaviour:
   forwardButton: 273
   bacwardButton: 274
   hitButton: 108
+  animatableServeBallPrefab: {fileID: 7074531575897229647, guid: 839011c8677016b4481c644e92696f94,
+    type: 3}
   aimTarget: {fileID: 598947288}
   aimTargetSpeed: 28
   movementSpeed: 14
@@ -27084,6 +27055,8 @@ MonoBehaviour:
   forwardButton: 119
   bacwardButton: 115
   hitButton: 99
+  animatableServeBallPrefab: {fileID: 7074531575897229647, guid: 839011c8677016b4481c644e92696f94,
+    type: 3}
   aimTarget: {fileID: 1492476147}
   aimTargetSpeed: 28
   movementSpeed: 14

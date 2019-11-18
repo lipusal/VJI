@@ -10,6 +10,9 @@ public class AIPlayer : MonoBehaviour
 {
     public Transform ballPosition;
 
+    //Ball to be animated on serve
+    public GameObject animatableServeBallPrefab;
+
     private float speed = 10;
 
     private float hitForce = 28;
@@ -31,6 +34,7 @@ public class AIPlayer : MonoBehaviour
     private bool _isServing;
     private float _elapsedTime;
     private float _timeToServe;
+    private GameObject _animatedServingBall;
     /* player id according to court side,
     * 1 if player is on team one or
     * 2 if player is on team two
@@ -98,6 +102,7 @@ public class AIPlayer : MonoBehaviour
         Side servingSide = _scoreManager.GetServingSide();
         _serveTarget = _AIStrategy.GetServeTarget(servingSide);
         _playerAnimation.StartServeAnimation();
+        _animatedServingBall = Instantiate(animatableServeBallPrefab, transform.position + Vector3.up * animatableServeBallPrefab.GetComponent<BallServeAnimation>().verticalAppearOffset, Quaternion.identity);
     }
 
     public void Serve()
@@ -108,6 +113,7 @@ public class AIPlayer : MonoBehaviour
         Vector3 ballVelocity = ball.GetVelocity(_serveTarget, 1.5f);
         ball.GetComponent<Rigidbody>().velocity = ballVelocity;
         BallLogic.Instance.SetHittingPlayer(_id);
+        Destroy(_animatedServingBall);
     }
     private bool MoveToBall()
     {
