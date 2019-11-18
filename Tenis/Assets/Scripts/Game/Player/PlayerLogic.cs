@@ -298,9 +298,12 @@ public class PlayerLogic : MonoBehaviour
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-           // Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
-            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-            //_ball.GetComponent<Rigidbody>().velocity = velocity;
+            float time = GetTimeToBounce();
+//           Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
+           Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);//change time in function of currentHitForce
+
+           //            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
+            _ball.GetComponent<Rigidbody>().velocity = velocity;
             _currentHitForce = minHitForce;
             BallLogic.Instance.SetHittingPlayer(_id);
             BallLogic.Instance.ballHitDelegate(_id);
@@ -308,6 +311,16 @@ public class PlayerLogic : MonoBehaviour
 
         _finishHitting = true;
         _isCharging = false;
+    }
+
+    private float GetTimeToBounce()
+    {
+        float maxTime = 2.5f;
+        float minTime = 1.0f;
+        float value = _currentHitForce - minHitForce;
+        float totalForce = maxHitForce - minHitForce;
+        float percentage = (value / totalForce);
+        return 1.5f * percentage + minTime;
     }
 
     private void Serve()
