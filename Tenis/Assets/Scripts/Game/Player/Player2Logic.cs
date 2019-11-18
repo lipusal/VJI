@@ -27,6 +27,7 @@ public class Player2Logic : PlayerLogic
 
         if (_isServing)
         {
+            SetAimPosition(servingSide);
             ScoreManager.GetInstance().ActivateServingWalls(_id);
             x = 32f;
         }
@@ -39,5 +40,19 @@ public class Player2Logic : PlayerLogic
         Vector3 newPosition = new Vector3(x, currentPosition.y, z);
         transform.position = newPosition;
         _characterController.enabled = true;
+    }
+    
+    public override void SetAimPosition(Side servingSide)
+    {
+        float x = -12.5f, z;
+        if (servingSide == Side.RIGHT)
+        {
+            z = -5.6f;
+        }
+        else
+        {
+            z = 5.6f;
+        }
+        aimTarget.position = new Vector3(x, aimTarget.position.y, z);
     }
 }

@@ -115,6 +115,7 @@ public class PlayerLogic : MonoBehaviour
 
         if (_isServing)
         {
+            SetAimPosition(servingSide);
             ScoreManager.GetInstance().ActivateServingWalls(_id);
             x = -32f;
         }
@@ -127,6 +128,20 @@ public class PlayerLogic : MonoBehaviour
         Vector3 newPosition = new Vector3(x, currentPosition.y, z);
         transform.position = newPosition;
         _characterController.enabled = true;
+    }
+
+    public virtual void SetAimPosition(Side servingSide)
+    {
+        float x = 12.0f, z;
+        if (servingSide == Side.RIGHT)
+        {
+            z = 7.1f;
+        }
+        else
+        {
+            z = -5.1f;
+        }
+        aimTarget.position = new Vector3(x, aimTarget.position.y, z);
     }
 
     private void SetIsServing()
@@ -197,9 +212,9 @@ public class PlayerLogic : MonoBehaviour
             if (!_isCharging)
             {
                 _currentHitForce = minHitForce;
-                aimTarget.position = _aimStartPosition;
                 if (!_isServing)
                 {
+                    aimTarget.position = _aimStartPosition;
                     _ballSide = BallLogic.Instance.GetSide(transform.position);
                     _playerAnimation.StartHittingAnimation(_ballSide);
                 }
