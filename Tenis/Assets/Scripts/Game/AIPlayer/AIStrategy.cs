@@ -51,7 +51,7 @@ public class AIStrategy
         return new Vector3(_lengthBase + length, _height, width);
     }
 
-    public Vector3 mixedStrategy()
+    public Vector3 MixedStrategy()
     {
         float randomNumber = Random.Range(0.0f, 1.0f);
         if (randomNumber > 0.6)
@@ -79,5 +79,20 @@ public class AIStrategy
         }
         target = new Vector3(x, _height, z);
         return target;
+    }
+
+    public Vector3 GeneratePositionBasedOnDifficulty(int difficulty)
+    {
+        Vector3 resultPosition;
+        if (difficulty == 3)
+        {
+            resultPosition = MixedStrategy();
+        }
+        else
+        {
+            resultPosition = GenerateRandomPosition();
+        }
+
+        return resultPosition;
     }
 }

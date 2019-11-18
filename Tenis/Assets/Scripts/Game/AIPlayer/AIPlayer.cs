@@ -13,14 +13,12 @@ public class AIPlayer : MonoBehaviour
     //Ball to be animated on serve
     public GameObject animatableServeBallPrefab;
 
-    private float speed = 10;
-
-    private float hitForce = 28;
-
+    private float _speed = 10;
+    
     public Transform aimTarget;
 
     public Transform otherPlayer;
-
+    public int difficulty;
     private AIStrategy _AIStrategy;
     
     private CharacterController _characterController;
@@ -34,6 +32,7 @@ public class AIPlayer : MonoBehaviour
     private bool _isServing;
     private float _elapsedTime;
     private float _timeToServe;
+    private float _timeToBounce = 1.8f;
     private GameObject _animatedServingBall;
     /* player id according to court side,
     * 1 if player is on team one or
@@ -51,6 +50,9 @@ public class AIPlayer : MonoBehaviour
         _newPosition = true;
         _scoreManager = ScoreManager.GetInstance();
         _timeToServe = 0;
+        difficulty = difficulty > 3 ? 3 : difficulty;
+        difficulty = difficulty < 1 ? 1 : difficulty;
+        
         
         if (transform.position.x < 0)
         {
@@ -61,6 +63,8 @@ public class AIPlayer : MonoBehaviour
             _id = 2;
         }
         Setinitialposition();
+        SetSpeed();
+        SetTimeToBounce();
     }
 
     // Update is called once per frame
@@ -122,7 +126,7 @@ public class AIPlayer : MonoBehaviour
         {
             _desiredPosition = BallLogic.Instance.GetBouncePosition();
             _desiredPosition = _desiredPosition + _basePositionFromBall;
-            if (BallLogic.Instance.GetCurrentVelocity().z < 0)
+            if (difficulty > 1 && BallLogic.Instance.GetCurrentVelocity().z < 0)
             {
                 _desiredPosition = _desiredPosition + new Vector3(0, 0, -1.5f);
             }
@@ -140,7 +144,7 @@ public class AIPlayer : MonoBehaviour
             float xDirection = _desiredPosition.x - transform.position.x;
             float zDirection = _desiredPosition.z - transform.position.z;
             Vector3 movingDirection = new Vector3(xDirection, transform.position.y, zDirection).normalized;
-            _characterController.Move(Time.deltaTime * speed * movingDirection);
+            _characterController.Move(Time.deltaTime * _speed * movingDirection);
             _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
             return true;
 //        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);     
@@ -196,10 +200,11 @@ public class AIPlayer : MonoBehaviour
     }
     private void HitBall()
     {
-        BallLogic ball = BallLogic.Instance; 
-        Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
+        BallLogic ball = BallLogic.Instance;
+        Vector3 aimPosition = _AIStrategy.GeneratePositionBasedOnDifficulty(difficulty);
+//        Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
 //        Vector3 aimPosition = _AIStrategy.GenerateAwayFromPlayerPosition();
-        Vector3 velocity = BallLogic.Instance.GetVelocity(aimPosition, 1.8f);//change time in function of currentHitForce
+        Vector3 velocity = BallLogic.Instance.GetVelocity(aimPosition, _timeToBounce);//change time in function of currentHitForce
         AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
         ball.GetComponent<Rigidbody>().velocity = velocity;
         ball.SetHittingPlayer(_id);
@@ -259,4 +264,36 @@ public class AIPlayer : MonoBehaviour
         _playerAnimation.StartAngryAnimation();
     }
     
+    
+    private void SetSpeed()
+    {
+        switch (difficulty)
+        {
+            case 1:
+                _speed = 6f;
+                break;
+            case 2:
+                _speed = 8f;
+                break;
+            case 3:
+                _speed = 10f;
+                break;
+        }
+    }
+
+    private void SetTimeToBounce()
+    {
+        switch (difficulty)
+        {
+            case 1:
+                _timeToBounce = 2.5f;
+                break;
+            case 2:
+                _timeToBounce = 2.0f;
+                break;
+            case 3:
+                _timeToBounce = 1.8f;
+                break;
+        }
+    }
 }
