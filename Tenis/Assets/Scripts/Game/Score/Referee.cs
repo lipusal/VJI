@@ -147,20 +147,7 @@ public class Referee
                 _lastBoucedSide = 0;
             }
         }
-
-//        if (returnValue > 0)
-//        {
-//            MakeCelebrateAndAngry(hitter, true);
-//            int opponentId = (hitter % 2) + 1;
-//            MakeCelebrateAndAngry(opponentId, false);
-//            
-//        }
-//        else if (returnValue < 0)
-//        {
-//            MakeCelebrateAndAngry(hitter, false);
-//            int opponentId = (hitter % 2) + 1;
-//            MakeCelebrateAndAngry(opponentId, true);
-//        }
+        
         return returnValue;
     }
 

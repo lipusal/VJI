@@ -251,54 +251,12 @@ public class PlayerLogic : MonoBehaviour
         aimTarget.Translate(new Vector3(aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime, 0,
             -aimTargetSpeed * moveLeftRightValue * Time.deltaTime));
     }
-
-//    private void OnTriggerStay(Collider other)
-//    {
-//        if (other.CompareTag("Ball"))
-//        {
-//            DetectBallSide(other);
-//            
-//            if (_finishHitting)
-//            {
-//                _ball = other.gameObject;
-//            }
-//        }
-//    }
-
-//    private void DetectBallSide(Collider other)
-//    {
-//        Vector3 deltaPosition = other.gameObject.transform.position - transform.position;
-//        // Positive = left
-//        // Negative = right
-//        Debug.Log(deltaPosition.z <= 0 ? "RIGHT" : "LEFT");
-//        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
-//    }
     
-//    private void DetectBallSide()
-//    {
-//        Vector3 bsllPosition = BallLogic.Instance.transform.position;
-//        Vector3 deltaPosition = bsllPosition - transform.position;
-//        // Positive = left
-//        // Negative = right
-//        _ballSide = deltaPosition.z <= 0 ? Side.RIGHT : Side.LEFT;
-//    }
-
     private bool IsValidBallPositionToHit(GameObject ballToHit)
     {
         return (ballToHit.transform.position - transform.position).x >= _minimumOffSetToHitBall;
     }
-
-//    private void HitBall()
-//    {
-//        if (_ball != null && IsValidBallPositionToHit(_ball))
-//        {
-//            AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
-//            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-//            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-//            _currentHitForce = minHitForce;
-//            BallLogic.Instance.SetHittingPlayer(_id);
-//        }
-//    }
+    
     private void HitBall()
     {
         if (_ball != null && _isCharging)
@@ -344,11 +302,6 @@ public class PlayerLogic : MonoBehaviour
         Destroy(_animatedServingBall);
         //ball.StopServingAnimationCurve();
     }
-    
-//    private void DeleteBallReference()
-//    {
-//        _ball = null;
-//    }
 
 
     private void OnTriggerEnter(Collider other)
