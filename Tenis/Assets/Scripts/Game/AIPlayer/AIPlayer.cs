@@ -72,7 +72,9 @@ public class AIPlayer : MonoBehaviour
     {
         if (_isServing)
         {
-            if(Math.Abs(_timeToServe) < 0.01) {
+            
+            if (Math.Abs(_timeToServe) < 0.01)
+            {
                 _timeToServe = Random.Range(0.0f, 1.0f) + 1.0f;
             }
 
@@ -84,6 +86,7 @@ public class AIPlayer : MonoBehaviour
                 _timeToServe = 0;
                 SetServing(false);
             }
+            
         }
         else
         {
