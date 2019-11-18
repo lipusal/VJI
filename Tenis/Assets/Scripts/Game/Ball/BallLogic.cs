@@ -20,11 +20,6 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     private BallPhysic _ballPhysic;
     private bool _collide;
 
-    public AnimationCurve servingAnimationCurve;
-    private float animationCurveTimeElapsed;
-    private bool animationCurveStarted;
-    private Vector3 animationStartPosition;
-
     private void Start()
     {
         _isEnabled = true;
@@ -155,29 +150,5 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         GetComponent<Collider>().enabled = false;
 
         _collide = false;
-    }
-
-    public void PlayServingAnimationCurve()
-    {
-        animationCurveStarted = true;
-        animationCurveTimeElapsed = 0.0f;
-        animationStartPosition = transform.position;
-    }
-
-    public void StopServingAnimationCurve()
-    {
-        animationCurveStarted = false;
-    }
-
-    private void FixedUpdate()
-    {
-        if(animationCurveStarted)
-        {
-            animationCurveTimeElapsed += Time.deltaTime;
-            GetComponent<Rigidbody>().MovePosition(
-                new Vector3(animationStartPosition.x,
-                animationStartPosition.y + servingAnimationCurve.Evaluate(animationCurveTimeElapsed),
-                animationStartPosition.z));
-        }
     }
 }
