@@ -74,12 +74,12 @@ public class ScoreManager
         {
             _referee.IncreaseServiceTimes();
         }
-        else if (_currentSet.AddPoint(teamNumber))
+        else if (_currentSet.AddPoint(teamNumber, _referee))
         {
             // Won set
             _referee.ResetServiceTimes();
             _results[teamNumber - 1]++;
-            if (_results[teamNumber - 1] > MAX_SETS/2)
+            if (_results[teamNumber - 1] > MAX_SETS / 2)
             {
                 // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);

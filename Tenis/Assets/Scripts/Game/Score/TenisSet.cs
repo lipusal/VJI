@@ -80,13 +80,15 @@ public class TenisSet
         return false;
     }
 
-    public bool AddPoint(int playerId)
+    public bool AddPoint(int playerId, Referee referee)
     {
         ScoreManager.GetInstance().GetReferee().SetServing(true);
         
         if (_currentGame.AddPoint(playerId))
         {
-            
+            referee.MakeCelebrateAndAngry(playerId, true);
+            int opponentId = (playerId % 2) + 1;
+            referee.MakeCelebrateAndAngry(opponentId, false);
             if (AddGame(playerId))
             {
                 return true;

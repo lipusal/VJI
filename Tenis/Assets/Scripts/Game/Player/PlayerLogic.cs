@@ -301,7 +301,7 @@ public class PlayerLogic : MonoBehaviour
 //    }
     private void HitBall()
     {
-        if (_ball != null)
+        if (_ball != null && _isCharging)
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
             Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
