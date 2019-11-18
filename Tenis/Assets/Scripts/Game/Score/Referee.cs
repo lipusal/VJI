@@ -133,13 +133,6 @@ public class Referee
             }
             else if (IsOut(bouncePosition))
             {
-//                if (_serviceTimes == 1)
-//                {
-//                    Debug.Log("First service Out");
-//                    _serviceTimes = 2;
-//                    MakePlayerServe(hitter);
-//                    return 0;
-//                } TODO when check for second service enabled
                 Debug.Log("out");
                 returnValue = -1;
             }
@@ -196,7 +189,13 @@ public class Referee
     {
         if (_isServing)
         {
-          return CheckServiceLimits(bouncePosition);
+            int bouncingSide = GetBouncingSide(bouncePosition);
+            int hittingSide = GetHittingSide(BallLogic.Instance.GetHittingPlayer());
+            if (hittingSide == bouncingSide)
+            {
+                return true;
+            }
+            return CheckServiceLimits(bouncePosition);
         }
 
         if (bouncePosition.x < _southCourtSide.x || bouncePosition.x > _northCourtSide.x)
