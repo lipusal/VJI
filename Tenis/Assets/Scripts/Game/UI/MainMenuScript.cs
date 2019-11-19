@@ -30,7 +30,11 @@ public class MainMenuScript : MonoBehaviour
     {
         
         // Initialize some stuff
-//        SceneManager.SetGameMode(play2Players); implemented on master
+//        ScoreManager.SetGameMode(play2Players); implemented on master
+        if (!play2Players)
+        {
+//            ScoreManager.SetDifficulty(1); implemented on master
+        }
         SceneManager.LoadScene("TenisMatch");
     }
     
