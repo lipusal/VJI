@@ -124,7 +124,7 @@ public class ScoreManager
     /// </summary>
     /// <param name="currentGamePoints">Current game points</param>
     /// <returns>1 if team 1 is on game point, 2 if team 2 is on game point, 0 otherwise.</returns>
-    private int isGamePoint(int[] currentGamePoints)
+    private int IsGamePoint(int[] currentGamePoints)
     {
         int team1Score = currentGamePoints[0], team2Score = currentGamePoints[1];
         int difference = Math.Abs(team1Score - team2Score);
@@ -149,28 +149,28 @@ public class ScoreManager
     /// <param name="currentGamePoints">Current game points</param>
     /// <param name="games">Current set games per team</param>
     /// <returns>1 if team 1 is on set point, 2 if team 2 is on set point, 0 otherwise.</returns>
-    private int isSetPoint(int[] currentGamePoints, int[] games)
+    private int IsSetPoint(int[] currentGamePoints, int[] games)
     {
-        int gamePointTeam = isGamePoint(currentGamePoints);
+        int gamePointTeam = IsGamePoint(currentGamePoints);
         if (gamePointTeam == 0)
         {
             return 0;
         }
 
-        int posibleWinnerGames = 0, otherPlayerGames = 0;
+        int possibleWinnerGames = 0, otherPlayerGames = 0;
 
         if (gamePointTeam == 1)
         {
-            posibleWinnerGames = games[0] + 1;
+            possibleWinnerGames = games[0] + 1;
             otherPlayerGames = games[1];
         }
         else
         {
-            posibleWinnerGames = games[1] + 1;
+            possibleWinnerGames = games[1] + 1;
             otherPlayerGames = games[0];
         }
-        if (posibleWinnerGames == TenisSet.MAX_GAMES_PER_SET - 1 && (posibleWinnerGames - otherPlayerGames >= 2) ||
-            posibleWinnerGames == TenisSet.MAX_GAMES_PER_SET)
+        if (possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET - 1 && (possibleWinnerGames - otherPlayerGames >= 2) ||
+            possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET)
         {
             return gamePointTeam;
         }
@@ -178,6 +178,32 @@ public class ScoreManager
         return 0;
     }
 
+    private int IsMatchPoint(int[] currentGamePoints, int[] games)
+    {
+        int possibleWinnerTeam = IsSetPoint(currentGamePoints, games);
+        int possibleWinnerSets = 0;
+        if (possibleWinnerTeam == 0)
+        {
+            return 0;
+        }
+        else if (possibleWinnerTeam == 1)
+        {
+            possibleWinnerSets = _currentSet.GetResults()[0];
+        }
+        else
+        {
+            possibleWinnerSets = _currentSet.GetResults()[1];
+
+        }
+
+        if (possibleWinnerSets > maxSets / 2)
+        {
+            return possibleWinnerTeam;
+        }
+
+        return 0;
+    }
+    
     /// <summary>
     /// Play audio of score corresponding to the given points.
     /// </summary>
