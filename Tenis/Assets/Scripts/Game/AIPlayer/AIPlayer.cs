@@ -63,6 +63,7 @@ public class AIPlayer : MonoBehaviour
             _id = 2;
         }
         Setinitialposition();
+        SetDifficulty(ScoreManager.GetInstance().GetGameDifficulty());
         SetSpeed();
         SetTimeToBounce();
     }

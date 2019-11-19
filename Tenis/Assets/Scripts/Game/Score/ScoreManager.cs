@@ -12,8 +12,8 @@ public class ScoreManager
     /// Maximum number of sets to play. Best of MAX_SETS wins, ie. it is enough to win (MAX_SETS/2) + 1 sets (integer division).
     /// E.g. If MAX_SETS is 3, 2 consecutive sets is enough to win. 3 sets would be played if each player has won 1 set.
     /// </summary>
-    private const int MAX_SETS = 3;
-//  private const int MAX_SETS = 2;
+//    private const int MAX_SETS = 3;
+  private const int MAX_SETS = 1;
 
     private TenisSet[] _sets;
     private TenisSet _currentSet;
@@ -36,6 +36,7 @@ public class ScoreManager
         _currentSet = new TenisSet();
         _sets[_setNumber] = _currentSet;
         _winnerId = 0;
+        _difficulty = 1;// default difficulty
     }
 
     public static ScoreManager GetInstance()
@@ -146,6 +147,7 @@ public class ScoreManager
             BallLogic.Instance.DeactivateCollisions();
             if (OnPoint(hitterId))
             {
+                BallLogic.Instance.DeactivateCollisions();
                 if (hitterId == 1)
                 {
                     Debug.Log("You win");
@@ -156,6 +158,8 @@ public class ScoreManager
                     Debug.Log("You lose");
                     _gameManagerLogic.EndGame(false);
                 }
+
+                return;
             }
         }
         else if (result < 0)
@@ -320,7 +324,10 @@ public class ScoreManager
     
     public void DeactivateServingWalls(int id)
     {
-        _referee.DeactivateServingWalls(id);
+        if (_referee != null)
+        {
+            _referee.DeactivateServingWalls(id);
+        }
     }
 
     public bool CanPlayerHit(int playerId)
@@ -347,5 +354,25 @@ public class ScoreManager
         _difficulty = difficulty;
     }
 
-  
+
+    public bool IsTwoPlayers()
+    {
+        return _twoPlayers;
+    }
+
+    public int GetGameDifficulty()
+    {
+        return _difficulty;
+    }
+
+    public void ResetScore()
+    {
+        _results = new int[2];
+        _sets = new TenisSet[MAX_SETS];
+        _setNumber = 0;
+        _currentSet = new TenisSet();
+        _sets[_setNumber] = _currentSet;
+        _winnerId = 0;
+        _referee = null;
+    }
 }
