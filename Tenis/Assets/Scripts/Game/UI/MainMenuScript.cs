@@ -28,13 +28,9 @@ public class MainMenuScript : MonoBehaviour
 
     public void OnPlayClick(bool play2Players)
     {
-        if (play2Players)
-        {
-            // Do nothing until implemented
-            return;
-        }
-        // Initialize some stuff
         
+        // Initialize some stuff
+//        SceneManager.SetGameMode(play2Players); implemented on master
         SceneManager.LoadScene("TenisMatch");
     }
     
