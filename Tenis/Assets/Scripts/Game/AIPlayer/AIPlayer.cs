@@ -72,7 +72,7 @@ public class AIPlayer : MonoBehaviour
     {
         if (_isServing)
         {
-            if (_playerAnimation.IsIdle())
+            if (!_playerAnimation.isCelebratingOrAngry())
             {
                 if (Math.Abs(_timeToServe) < 0.01)
                 {

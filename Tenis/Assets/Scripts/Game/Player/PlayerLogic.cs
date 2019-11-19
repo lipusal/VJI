@@ -215,7 +215,12 @@ public class PlayerLogic : MonoBehaviour
 
         if (ActionMapper.GetHitPressed(hitButton) && ball.GetHittingPlayer() != _id)
         {
-            if (!_isCharging)
+            if (!_isCharging && _isServing)
+            {
+                _currentHitForce = minHitForce;
+                _isCharging = true;
+            }
+            else if (!_isCharging && ball.GetHittingPlayer() != 0)
             {
                 _currentHitForce = minHitForce;
                 if (!_isServing)
@@ -224,10 +229,9 @@ public class PlayerLogic : MonoBehaviour
                     _ballSide = BallLogic.Instance.GetSide(transform.position);
                     _playerAnimation.StartHittingAnimation(_ballSide);
                 }
-
                 _isCharging = true;
             }
-            else
+            else if(_isCharging)
             {
                 _currentHitForce += deltaHitForce * Time.deltaTime;
                 _currentHitForce = Math.Min(_currentHitForce, maxHitForce);

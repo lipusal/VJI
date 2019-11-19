@@ -102,4 +102,12 @@ public class PlayerAnimation
         AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
         return (currentState.IsName("idle") || currentState.IsName("idle Movement"));
     }
+
+    public bool isCelebratingOrAngry()
+    {
+        AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
+        return (currentState.IsName("celebration1") || currentState.IsName("celebration2") ||
+                currentState.IsName("celebrationWithJump") || currentState.IsName("angry") ||
+                currentState.IsName("breaking_racket"));
+    }
 }
