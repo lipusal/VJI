@@ -299,4 +299,9 @@ public class AIPlayer : MonoBehaviour
                 break;
         }
     }
+
+    public void SetDifficulty(int currentDifficulty)
+    {
+        difficulty = currentDifficulty;
+    }
 }

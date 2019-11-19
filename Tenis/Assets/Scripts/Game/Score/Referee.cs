@@ -45,6 +45,7 @@ public class Referee
     
     // game mode
     private bool _twoPlayers;
+    private int _difficulty;
 
     
 
@@ -57,7 +58,8 @@ public class Referee
                     GameObject northWestServiceWall,GameObject northMiddleServiceWall,
                     Vector3 southServiceDelimiter, Vector3 eastServiceDelimiter,
                     Vector3 westServiceDelimiter, Vector3 northServiceDelimiter,
-                    PlayerLogic player1, AIPlayer aiPlayer, Player2Logic player2, bool twoPlayers)
+                    PlayerLogic player1, AIPlayer aiPlayer, Player2Logic player2, 
+                    bool twoPlayers, int difficulty)
     {
         _eastCourtSide = eastCourtSide;
         _westCourtSide = westCourtSide;
@@ -70,6 +72,7 @@ public class Referee
         _serviceTimes = 0;
         _twoPlayers = false;//TODO update on creator and receive it as parameter
 //        _twoPlayers = twoPlayers; TODO juan uncomment this        
+        _difficulty = difficulty;
 
         _southServiceWall = southServiceWall;
         _southEastServiceWall = southEastServiceWall;
@@ -98,6 +101,10 @@ public class Referee
         if (_twoPlayers)
         {
             _player2.SetGameMode(_twoPlayers);
+        }
+        else
+        {
+            _aiPlayer.SetDifficulty(_difficulty);
         }
     }
 
