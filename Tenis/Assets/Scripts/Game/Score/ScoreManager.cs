@@ -157,18 +157,9 @@ public class ScoreManager
             return 0;
         }
 
-        int possibleWinnerGames = 0, otherPlayerGames = 0;
-
-        if (gamePointTeam == 1)
-        {
-            possibleWinnerGames = games[0] + 1;
-            otherPlayerGames = games[1];
-        }
-        else
-        {
-            possibleWinnerGames = games[1] + 1;
-            otherPlayerGames = games[0];
-        }
+        int possibleWinnerGames = gamePointTeam == 1 ? games[0] + 1 : games[1] + 1;
+        int otherPlayerGames = gamePointTeam == 1 ? games[1] : games[0];
+           
         if (possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET - 1 && (possibleWinnerGames - otherPlayerGames >= 2) ||
             possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET)
         {
@@ -182,19 +173,15 @@ public class ScoreManager
     {
         int possibleWinnerTeam = IsSetPoint(currentGamePoints, games);
         int possibleWinnerSets = 0;
+
         if (possibleWinnerTeam == 0)
         {
             return 0;
         }
-        else if (possibleWinnerTeam == 1)
-        {
-            possibleWinnerSets = _currentSet.GetResults()[0];
-        }
-        else
-        {
-            possibleWinnerSets = _currentSet.GetResults()[1];
-
-        }
+        
+        int player1Sets = _currentSet.GetResults()[0];
+        int player2Sets = _currentSet.GetResults()[1];
+        possibleWinnerSets = possibleWinnerTeam == 1 ? player1Sets + 1 : player2Sets + 1;
 
         if (possibleWinnerSets > maxSets / 2)
         {
