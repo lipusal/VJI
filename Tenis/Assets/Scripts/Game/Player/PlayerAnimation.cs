@@ -100,6 +100,6 @@ public class PlayerAnimation
     public bool IsIdle()
     {
         AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
-        return (currentState.IsName("idle"));
+        return (currentState.IsName("idle") || currentState.IsName("idle Movement"));
     }
 }

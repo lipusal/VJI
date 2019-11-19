@@ -72,21 +72,23 @@ public class AIPlayer : MonoBehaviour
     {
         if (_isServing)
         {
-            
-            if (Math.Abs(_timeToServe) < 0.01)
+            if (_playerAnimation.IsIdle())
             {
-                _timeToServe = Random.Range(0.0f, 1.0f) + 1.0f;
+                if (Math.Abs(_timeToServe) < 0.01)
+                {
+                    _timeToServe = Random.Range(0.0f, 1.0f) + 1.0f;
+                }
+
+                _elapsedTime = _elapsedTime + Time.deltaTime;
+                if (_elapsedTime >= _timeToServe)
+                {
+                    AimServe();
+                    _elapsedTime = 0;
+                    _timeToServe = 0;
+                    SetServing(false);
+                }
             }
 
-            _elapsedTime = _elapsedTime + Time.deltaTime;
-            if (_elapsedTime >= _timeToServe)
-            {
-                AimServe();
-                _elapsedTime = 0;
-                _timeToServe = 0;
-                SetServing(false);
-            }
-            
         }
         else
         {
