@@ -99,8 +99,66 @@ public class ScoreManager
         // Reset ball and server
         BallLogic.Instance.ResetConfig();
         _referee.MakePlayerServe(1); //TODO change to opponent when game
+        TriggerCallout();
 
         return false;
+    }
+
+    /// <summary>
+    ///  Triggers the callout UI panel with the new score, or special game conditions (ie. match point).
+    /// </summary>
+    private void TriggerCallout()
+    {
+        // TODO NOW check if in special condition. If so, call TriggerCallout with the correct message. If not, don't do anything.
+        
+        throw new NotImplementedException();
+    }
+    
+    private void TriggerCallout(string message)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Checks if the current match score is in game point condition.
+    /// </summary>
+    /// <param name="currentGamePoints">Current game points</param>
+    /// <returns>1 if team 1 is on game point, 2 if team 2 is on game point, 0 otherwise.</returns>
+    private int isGamePoint(int[] currentGamePoints)
+    {
+        int team1Score = currentGamePoints[0], team2Score = currentGamePoints[1];
+        if ((team1Score == 3 && team2Score < 3) || (team1Score == 4 && team2Score < 4))
+        {
+            return 1;
+        }
+        if ((team2Score == 3 && team1Score < 3) || (team2Score == 4 && team1Score < 4))
+        {
+            return 2;
+        }
+
+        return 0;
+    }
+    
+    /// <summary>
+    /// Checks if the current score is in set point condition.
+    /// </summary>
+    /// <param name="currentGamePoints">Current game points</param>
+    /// <param name="games">Current set games per team</param>
+    /// <returns>1 if team 1 is on set point, 2 if team 2 is on set point, 0 otherwise.</returns>
+    private int isSetPoint(int[] currentGamePoints, int[] games)
+    {
+        int gamePointTeam = isGamePoint(currentGamePoints);
+        if (gamePointTeam == 0) return 0;
+
+        int team1Games = games[0], team2Games = games[1];
+        if (gamePointTeam == 1 && team1Games == TenisSet.MAX_GAMES_PER_SET - 2 && (team1Games - team2Games >= 2) || team1Games == TenisSet.MAX_GAMES_PER_SET)
+        {
+            return 1;
+        }
+        
+        // TODO NOW team 2
+
+        return 0;
     }
 
     /// <summary>

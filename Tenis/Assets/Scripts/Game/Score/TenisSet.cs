@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class TenisSet
 {
-    private const int MAX_GAMES_PER_SET = 7;
+    public const int MAX_GAMES_PER_SET = 7;
 //    private const int MAX_GAMES_PER_SET = 2;
     private readonly TenisGame[] _games;
     private readonly int[] _results;
