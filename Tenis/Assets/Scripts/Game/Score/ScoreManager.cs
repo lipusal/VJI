@@ -127,13 +127,17 @@ public class ScoreManager
     private int isGamePoint(int[] currentGamePoints)
     {
         int team1Score = currentGamePoints[0], team2Score = currentGamePoints[1];
-        if ((team1Score == 3 && team2Score < 3) || (team1Score == 4 && team2Score < 4))
+        int difference = Math.Abs(team1Score - team2Score);
+        if (difference >= 1)
         {
-            return 1;
-        }
-        if ((team2Score == 3 && team1Score < 3) || (team2Score == 4 && team1Score < 4))
-        {
-            return 2;
+            if (team1Score >= 3 && team1Score > team2Score)
+            {
+                return 1;
+            }
+            else if (team2Score >= 3 && team2Score > team1Score)
+            {
+                return 2;
+            }
         }
 
         return 0;
