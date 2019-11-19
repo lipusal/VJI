@@ -152,16 +152,29 @@ public class ScoreManager
     private int isSetPoint(int[] currentGamePoints, int[] games)
     {
         int gamePointTeam = isGamePoint(currentGamePoints);
-        if (gamePointTeam == 0) return 0;
-
-        int team1Games = games[0], team2Games = games[1];
-        if (gamePointTeam == 1 && team1Games == TenisSet.MAX_GAMES_PER_SET - 2 && (team1Games - team2Games >= 2) || team1Games == TenisSet.MAX_GAMES_PER_SET)
+        if (gamePointTeam == 0)
         {
-            return 1;
+            return 0;
+        }
+
+        int posibleWinnerGames = 0, otherPlayerGames = 0;
+
+        if (gamePointTeam == 1)
+        {
+            posibleWinnerGames = games[0] + 1;
+            otherPlayerGames = games[1];
+        }
+        else
+        {
+            posibleWinnerGames = games[1] + 1;
+            otherPlayerGames = games[0];
+        }
+        if (posibleWinnerGames == TenisSet.MAX_GAMES_PER_SET - 1 && (posibleWinnerGames - otherPlayerGames >= 2) ||
+            posibleWinnerGames == TenisSet.MAX_GAMES_PER_SET)
+        {
+            return gamePointTeam;
         }
         
-        // TODO NOW team 2
-
         return 0;
     }
 
