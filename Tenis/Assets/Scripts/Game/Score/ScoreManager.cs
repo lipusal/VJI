@@ -20,6 +20,7 @@ public class ScoreManager
     private int _setNumber;
     private int[] _results;
     private Referee _referee;
+    private bool _twoPlayers;
     
     private static ScoreManager _instance;
     private GameManagerLogic _gameManagerLogic;
@@ -61,7 +62,7 @@ public class ScoreManager
                                 southMiddleServiceWall, northServiceWall, northEastServiceWall,
                                 northWestServiceWall, northMiddleServiceWall, southServiceDelimiter,
                                 eastServiceDelimiter, westServiceDelimiter, northServiceDelimiter,
-                                player1, Aiplayer, player2);
+                                player1, Aiplayer, player2, _twoPlayers);
     }
     
     /**
@@ -328,5 +329,10 @@ public class ScoreManager
     public int GetWinnerId()
     {
         return _winnerId;
+    }
+
+    public void SetGameMode(bool twoPlayers)
+    {
+        _twoPlayers = twoPlayers;
     }
 }

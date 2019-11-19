@@ -57,7 +57,7 @@ public class Referee
                     GameObject northWestServiceWall,GameObject northMiddleServiceWall,
                     Vector3 southServiceDelimiter, Vector3 eastServiceDelimiter,
                     Vector3 westServiceDelimiter, Vector3 northServiceDelimiter,
-                    PlayerLogic player1, AIPlayer aiPlayer, Player2Logic player2)
+                    PlayerLogic player1, AIPlayer aiPlayer, Player2Logic player2, bool twoPlayers)
     {
         _eastCourtSide = eastCourtSide;
         _westCourtSide = westCourtSide;
@@ -69,6 +69,7 @@ public class Referee
         _isServing = true;
         _serviceTimes = 0;
         _twoPlayers = false;//TODO update on creator and receive it as parameter
+//        _twoPlayers = twoPlayers; TODO juan uncomment this        
 
         _southServiceWall = southServiceWall;
         _southEastServiceWall = southEastServiceWall;
