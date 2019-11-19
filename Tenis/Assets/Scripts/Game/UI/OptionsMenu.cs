@@ -15,8 +15,9 @@ public class OptionsMenu : MonoBehaviour
   {
     bool playerWon = GameManagerLogic.GetPlayerWon();
     bool towPlayers = ScoreManager.GetInstance().IsTwoPlayers();
+    int difficulty = ScoreManager.GetInstance().GetGameDifficulty();
     _option = 0;
-    if (towPlayers)
+    if (towPlayers || (playerWon && difficulty == 3))
     {
       actionText.text = "MAIN MENU";
       _option = 1;

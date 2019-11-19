@@ -70,8 +70,7 @@ public class Referee
         _previousToLastHitter = 0;
         _isServing = true;
         _serviceTimes = 0;
-        _twoPlayers = false;//TODO update on creator and receive it as parameter
-//        _twoPlayers = twoPlayers; TODO juan uncomment this        
+        _twoPlayers = twoPlayers; //TODO juan uncomment this        
         _difficulty = difficulty;
 
         _southServiceWall = southServiceWall;

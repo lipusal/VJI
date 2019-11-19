@@ -10,20 +10,8 @@ namespace Game.GameManager
     
         public void EndGame(bool playerWon)
         {
-            ScoreManager scoreManager = ScoreManager.GetInstance();
-            int difficulty = scoreManager.GetGameDifficulty();
-            if (scoreManager.IsTwoPlayers() || !_playerWon || difficulty != 3)
-            {
-                _playerWon = playerWon;
-                Invoke(nameof(LoadEndGameScene), delayTime);
-            }
-            else
-            {
-                scoreManager.SetGameDifficulty(difficulty + 1);
-                scoreManager.ResetScore();
-                Invoke(nameof(LoadNextMatch), delayTime);
-            }
-            
+            _playerWon = playerWon;
+            Invoke(nameof(LoadEndGameScene), delayTime);
         }
 
         private void LoadEndGameScene()
@@ -34,11 +22,6 @@ namespace Game.GameManager
         public static bool GetPlayerWon()
         {
             return _playerWon;
-        }
-
-        private void LoadNextMatch()
-        {
-            SceneManager.LoadScene("TenisMatch");
         }
     }
 }

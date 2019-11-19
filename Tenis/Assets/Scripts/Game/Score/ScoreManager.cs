@@ -37,6 +37,7 @@ public class ScoreManager
         _sets[_setNumber] = _currentSet;
         _winnerId = 0;
         _difficulty = 1;// default difficulty
+        _twoPlayers = false;
     }
 
     public static ScoreManager GetInstance()
