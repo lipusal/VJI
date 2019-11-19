@@ -239,7 +239,7 @@ public class AIPlayer : MonoBehaviour
         }
         else
         {
-            z = -6.24f;
+            z = -7.24f;
         }
 
         if (_isServing)
@@ -249,7 +249,8 @@ public class AIPlayer : MonoBehaviour
         }
         else
         {
-            x = 26.0f;
+            ScoreManager.GetInstance().DeactivateServingWalls(_id);
+            x = 25.5f;
         }
 
         _characterController.enabled = false;

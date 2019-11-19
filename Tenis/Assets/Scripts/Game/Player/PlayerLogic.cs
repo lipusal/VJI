@@ -126,7 +126,7 @@ public class PlayerLogic : MonoBehaviour
         }
         else
         {
-
+            ScoreManager.GetInstance().DeactivateServingWalls(_id);
             x = -27f;
         }
 

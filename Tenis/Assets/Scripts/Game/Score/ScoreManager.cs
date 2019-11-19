@@ -317,6 +317,11 @@ public class ScoreManager
     {
         _referee.ActivateServingWalls(id);
     }
+    
+    public void DeactivateServingWalls(int id)
+    {
+        _referee.DeactivateServingWalls(id);
+    }
 
     public bool CanPlayerHit(int playerId)
     {
@@ -341,4 +346,6 @@ public class ScoreManager
     {
         _difficulty = difficulty;
     }
+
+  
 }

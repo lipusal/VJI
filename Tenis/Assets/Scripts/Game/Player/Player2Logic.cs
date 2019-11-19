@@ -38,6 +38,7 @@ public class Player2Logic : PlayerLogic
         }
         else
         {
+            ScoreManager.GetInstance().DeactivateServingWalls(_id);
             x = 26.0f;
         }
 
