@@ -120,13 +120,70 @@ public class ScoreManager
     /// </summary>
     private void TriggerCallout()
     {
-        // TODO NOW check if in special condition. If so, call TriggerCallout with the correct message. If not, don't do anything.
-        CalloutScript.Instance.TriggerCallout("Point");
+        // Check if in special condition, and trigger callout with first special condition, if any.
+        int advantageTeam;
+
+        // Match point?
+        advantageTeam = IsMatchPoint(_currentSet.GetCurrentGameResults(), GetSetsResults());
+        if (advantageTeam != 0)
+        {
+            CalloutScript.Instance.TriggerCallout($"Match point {GetTeamName(advantageTeam)}{GetBreakPointSuffix(advantageTeam)}"); ;
+            return;
+        }
+        // Set point?
+        advantageTeam = IsSetPoint(_currentSet.GetCurrentGameResults(), GetSetsResults());
+        if (advantageTeam != 0)
+        {
+            CalloutScript.Instance.TriggerCallout($"Set point {GetTeamName(advantageTeam)}{GetBreakPointSuffix(advantageTeam)}");
+            return;
+        }
+        // Game point?
+        advantageTeam = IsGamePoint(_currentSet.GetCurrentGameResults());
+        if (advantageTeam != 0)
+        {
+            CalloutScript.Instance.TriggerCallout($"Game point {GetTeamName(advantageTeam)}{GetBreakPointSuffix(advantageTeam)}");
+            return;
+        }
     }
     
-    private void TriggerCallout(string message)
+    /// <summary>
+    /// Build a string saying ", double break point", ", triple break point", etc. as appropriate. If no break point, return
+    /// an empty string.
+    /// </summary>
+    /// <param name="advantageTeam">Team about to win a game.</param>
+    /// <returns>The break point string, prefixed with a comma and a space. Empty string if no break point.</returns>
+    private string GetBreakPointString(int advantageTeam)
     {
-        throw new NotImplementedException();
+        if (GetServingTeam() == advantageTeam)
+        {
+            return "";
+        }
+        // Break point state
+        int pointDifference = Math.Abs(_currentSet.GetCurrentGameResults()[0] - _currentSet.GetCurrentGameResults()[1]);
+        string modifier;
+        switch (pointDifference)
+        {
+            case 3:
+                modifier = "Triple ";
+                break;
+            case 2:
+                modifier = "Double ";
+                break;
+            default:
+                modifier = "";
+                break;
+        }
+
+        return modifier.Equals("") ? "Break point" : $"{modifier}break point";
+    }
+
+    /// <summary>
+    /// Equivalent to GetBreakPointString but prefixed with a comma and a space if necessary.
+    /// </summary>
+    private string GetBreakPointSuffix(int advantageTeam)
+    {
+        string baseStr = GetBreakPointString(advantageTeam);
+        return baseStr.Equals("") ? "" : $", {baseStr.ToLower()}";
     }
 
     /// <summary>
@@ -200,7 +257,7 @@ public class ScoreManager
 
         return 0;
     }
-    
+
     /// <summary>
     /// Play audio of score corresponding to the given points.
     /// </summary>
@@ -454,6 +511,25 @@ public class ScoreManager
         _sets[_setNumber] = _currentSet;
         _winnerId = 0;
         _referee = null;
+    }
+
+    /// <summary>
+    /// Get the team name of the given team number. Adapts to 1/2 player mode.
+    /// </summary>
+    /// <param name="teamNumber">Team number. 1 or 2.</param>
+    /// <returns>Team name in the current mode.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">If teamNumber is out of range.</exception>
+    public string GetTeamName(int teamNumber)
+    {
+        switch (teamNumber)
+        {
+            case 1:
+                return "Player 1";
+            case 2:
+                return IsTwoPlayers() ? "Player 2" : "PC";
+            default:
+                throw new ArgumentOutOfRangeException($"Team number must be between 1 and 2, provided: {teamNumber}");
+        }
     }
     
     public int MaxSets
