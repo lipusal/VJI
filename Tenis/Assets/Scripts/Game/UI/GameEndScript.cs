@@ -12,6 +12,7 @@ namespace Game.UI
         public void Start()
         {
             bool playerWon = GameManagerLogic.GetPlayerWon();
+
             if (ScoreManager.GetInstance().IsTwoPlayers())
             {
                 endGameText.text = playerWon ? "Player 1 Wins!" : "Player 2 Wins!";
@@ -19,7 +20,16 @@ namespace Game.UI
             }
             else
             {
-                endGameText.text = playerWon ? "You Win!" : "You Lose";
+                if (ScoreManager.GetInstance().GetGameDifficulty() == 4 && playerWon)
+                {
+                    endGameText.text =  "CONGRATULATIONS YOU WON!";
+                    endGameText.fontSize = 100.0f;
+
+                }
+                else
+                {
+                    endGameText.text = playerWon ? "You Win!" : "You Lose";
+                }
             }
         }
 

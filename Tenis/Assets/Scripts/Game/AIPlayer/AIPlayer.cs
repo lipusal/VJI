@@ -50,7 +50,7 @@ public class AIPlayer : MonoBehaviour
         _newPosition = true;
         _scoreManager = ScoreManager.GetInstance();
         _timeToServe = 0;
-        difficulty = difficulty > 3 ? 3 : difficulty;
+        difficulty = difficulty > 4 ? 4 : difficulty;
         difficulty = difficulty < 1 ? 1 : difficulty;
         
         
@@ -135,6 +135,10 @@ public class AIPlayer : MonoBehaviour
             if (difficulty > 1 && BallLogic.Instance.GetCurrentVelocity().z < 0)
             {
                 _desiredPosition = _desiredPosition + new Vector3(0, 0, -1.5f);
+            }
+            if (difficulty == 4 && BallLogic.Instance.GetCurrentVelocity().z > 0)
+            {
+                _desiredPosition = _desiredPosition + new Vector3(0, 0, 1.0f);
             }
             _newPosition = false;
         }
@@ -285,6 +289,9 @@ public class AIPlayer : MonoBehaviour
             case 3:
                 _speed = 10f;
                 break;
+            case 4:
+                _speed = 12f;
+                break;
         }
     }
 
@@ -300,6 +307,9 @@ public class AIPlayer : MonoBehaviour
                 break;
             case 3:
                 _timeToBounce = 1.8f;
+                break;
+            case 4:
+                _timeToBounce = 1.7f;
                 break;
         }
     }

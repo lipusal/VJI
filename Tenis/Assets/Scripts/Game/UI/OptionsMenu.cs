@@ -9,16 +9,23 @@ public class OptionsMenu : MonoBehaviour
 {
   private float _delayTime = 0.5f;
   public TextMeshProUGUI actionText;
+  public GameObject extraHardButton;
   private int _option;
 
   public void Start()
   {
     bool playerWon = GameManagerLogic.GetPlayerWon();
-    bool towPlayers = ScoreManager.GetInstance().IsTwoPlayers();
+    bool twoPlayers = ScoreManager.GetInstance().IsTwoPlayers();
     int difficulty = ScoreManager.GetInstance().GetGameDifficulty();
+    extraHardButton.SetActive(false);
     _option = 0;
-    if (towPlayers || (playerWon && difficulty == 3))
+
+    if (twoPlayers || (playerWon && difficulty >= 3))
     {
+      if (difficulty == 3)
+      {
+        extraHardButton.SetActive(true);
+      }
       actionText.text = "MAIN MENU";
       _option = 1;
     }
@@ -78,6 +85,14 @@ public class OptionsMenu : MonoBehaviour
     ScoreManager scoreManager = ScoreManager.GetInstance();
     int difficulty = scoreManager.GetGameDifficulty();
     scoreManager.SetGameDifficulty(difficulty);
+    scoreManager.ResetScore();
+    Invoke(nameof(LoadNextMatch), _delayTime);
+  }
+
+  public void ExtraHard()
+  {
+    ScoreManager scoreManager = ScoreManager.GetInstance();
+    scoreManager.SetGameDifficulty(4);
     scoreManager.ResetScore();
     Invoke(nameof(LoadNextMatch), _delayTime);
   }
