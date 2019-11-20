@@ -4,6 +4,7 @@ using System.Linq;
 using FrameLord;
 using Game.GameManager;
 using Game.Score;
+using Game.UI;
 using UnityEngine;
 
 public class ScoreManager
@@ -120,8 +121,7 @@ public class ScoreManager
     private void TriggerCallout()
     {
         // TODO NOW check if in special condition. If so, call TriggerCallout with the correct message. If not, don't do anything.
-        
-        throw new NotImplementedException();
+        CalloutScript.Instance.TriggerCallout("Point");
     }
     
     private void TriggerCallout(string message)
