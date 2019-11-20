@@ -11,31 +11,15 @@ public class MainMenuScript : MonoBehaviour
     public GameObject mainScreen, settingsScreen;
     public Button[] setButtons;
 
-//    private void Update()
-//    {
-//        foreach (var button in setButtons)
-//        {
-//            if (button.GetComponent<TextMeshProUGUI>().text == ScoreManager.GetInstance().MaxSets.ToString())
-//            {
-//                button.OnSelect(null);
-//            }
-//            else
-//            {
-//                button.OnDeselect(null);
-//            }
-//        }
-//    }
-
     public void OnPlayClick(bool play2Players)
     {
-        
         // Initialize some stuff
         ScoreManager scoreManager = ScoreManager.GetInstance();
-//        scoreManager.ResetScore(); implemented on master
-//        scoreManager.SetGameMode(play2Players); implemented on master
+        scoreManager.ResetScore();
+        scoreManager.SetGameMode(play2Players);
         if (!play2Players)
         {
-//            scoreManager.SetDifficulty(1); implemented on master
+            scoreManager.SetGameDifficulty(1);
         }
         SceneManager.LoadScene("TenisMatch");
     }
