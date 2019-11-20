@@ -393,6 +393,10 @@ public class ScoreManager
         return result;
     }
 
+    /// <summary>
+    /// Get the serving team.
+    /// </summary>
+    /// <returns>1 for player 1 (south), 2 for player 2/PC (north).</returns>
     public int GetServingTeam()
     {
         return _currentSet.GetServingTeam();
