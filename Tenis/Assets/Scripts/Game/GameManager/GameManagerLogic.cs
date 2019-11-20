@@ -16,7 +16,7 @@ namespace Game.GameManager
 
         private void LoadEndGameScene()
         {
-            SceneManager.LoadScene("GameEndedScene");
+            SceneManager.LoadScene("GameEndScene");
         }
 
         public static bool GetPlayerWon()
