@@ -1,121 +1,64 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FrameLord;
 using Game.Input;
+using Game.Score;
+using TMPro;
 using UnityEngine;
 
-public class Player2Logic : MonoBehaviour
+public class Player2Logic : PlayerLogic
 {
-    // Button to move left
-    public KeyCode leftButton = KeyCode.LeftArrow;
-    // Button to move right
-    public KeyCode rightButton = KeyCode.RightArrow;
-    // Button to move forward
-    public KeyCode forwardButton = KeyCode.UpArrow;
-    // Button to move backward
-    public KeyCode bacwardButton = KeyCode.DownArrow;
-    // Button to hit
-    public KeyCode hitButton = KeyCode.A;
-
-    public Transform aimTarget;
-    public float aimTargetSpeed;
-    
-    public float movementSpeed = 14f;
-    public float hitForce = 40f;
-    
-    // Is true after hit button is pressed
-    private bool _isHitting;
-    // Is true after hit button is released;
-    private bool _finishHitting;
-
-    // Moving Left or Right (-1: left, 1: right, 0: none)
-    private int moveLeftRightValue;
-    // Moving Up or Down (-1: down, 1: up, 0: none)
-    private int moveForwardBackwardValue;
-    private CharacterController _characterController;
-
-    void Start()
+    public override void SetInitialPosition()
     {
-        _characterController = GetComponent<CharacterController>();
-        _isHitting = false;
-        _finishHitting = false;
-        moveLeftRightValue = 0;
-        moveForwardBackwardValue = 0;
-    }
-
-    void Update()
-    {
-        ReadInput();
-
-        if(!_isHitting)
+        Vector3 currentPosition = transform.position;
+        _isCharging = false;
+        ResetToIdle();
+        float x, z;
+        Side servingSide = _scoreManager.GetServingSide();
+        if (IsTwoPlayers())
         {
-            UpdatePosition();
+            DisableTarget();
+        }
+        
+        if (servingSide == Side.RIGHT)
+        {
+            z = 6.57f;
         }
         else
         {
-            UpdateAimTargetPosition();
-        }
-    }
-    
-    private void ReadInput()
-    {
-        moveLeftRightValue = 0;
-        moveForwardBackwardValue = 0;
-        _finishHitting = false;
-
-        if (ActionMapper.GetMoveLeft(leftButton))
-        {
-            moveLeftRightValue += -1;
-        }
-        
-        if (ActionMapper.GetMoveRight(rightButton))
-        {
-            moveLeftRightValue += 1;
+            z = -6.24f;
         }
 
-        if (ActionMapper.GetMoveForward(forwardButton))
+        if (_isServing)
         {
-            moveForwardBackwardValue += 1;
+            SetAimPosition(servingSide);
+            ScoreManager.GetInstance().ActivateServingWalls(_id);
+            x = 32f;
         }
-        
-        if (ActionMapper.GetMoveBackward(bacwardButton))
+        else
         {
-            moveForwardBackwardValue += -1;
-        }
-
-        if (ActionMapper.GetHitPressed(hitButton))
-        {
-            _isHitting = true;
+            ScoreManager.GetInstance().DeactivateServingWalls(_id);
+            x = 26.0f;
         }
 
-        if (ActionMapper.GetHitReleased(hitButton))
-        {
-            _isHitting = false;
-            _finishHitting = true;
-        }
-    }
-    
-    private void UpdatePosition()
-    {
-        float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
-        float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
-
-        _characterController.Move(new Vector3(leftRightMove, 0, forwardBackardMove));
+        _characterController.enabled = false;
+        Vector3 newPosition = new Vector3(x, currentPosition.y, z);
+        transform.position = newPosition;
+        _characterController.enabled = true;
     }
 
-    private void UpdateAimTargetPosition()
+    public override void SetAimPosition(Side servingSide)
     {
-        aimTarget.Translate(new Vector3(aimTargetSpeed * moveLeftRightValue * Time.deltaTime, 0, aimTargetSpeed * moveForwardBackwardValue * Time.deltaTime));
-    }
-    
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Ball"))
+        float x = -12.5f, z;
+        if (servingSide == Side.RIGHT)
         {
-            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
-            
-            other.GetComponent<Rigidbody>().velocity = aimDirection * hitForce + new Vector3(0, 6.2f, 0);
+            z = -5.6f;
         }
+        else
+        {
+            z = 5.6f;
+        }
+        aimTarget.position = new Vector3(x, aimTarget.position.y, z);
     }
 }

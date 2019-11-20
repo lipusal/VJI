@@ -37,10 +37,15 @@ public class Referee
     // players
     private PlayerLogic _player1;
     private AIPlayer _aiPlayer;
-
+    private Player2Logic _player2;
+    
     // service related
     private bool _isServing;
     private int _serviceTimes;
+    
+    // game mode
+    private bool _twoPlayers;
+    private int _difficulty;
 
     
 
@@ -53,7 +58,8 @@ public class Referee
                     GameObject northWestServiceWall,GameObject northMiddleServiceWall,
                     Vector3 southServiceDelimiter, Vector3 eastServiceDelimiter,
                     Vector3 westServiceDelimiter, Vector3 northServiceDelimiter,
-                    PlayerLogic player1, AIPlayer aiPlayer)
+                    PlayerLogic player1, AIPlayer aiPlayer, Player2Logic player2, 
+                    bool twoPlayers, int difficulty)
     {
         _eastCourtSide = eastCourtSide;
         _westCourtSide = westCourtSide;
@@ -63,7 +69,9 @@ public class Referee
         _lastHitter = 0;
         _previousToLastHitter = 0;
         _isServing = true;
-        _serviceTimes = 1;
+        _serviceTimes = 0;
+        _twoPlayers = twoPlayers; //TODO juan uncomment this        
+        _difficulty = difficulty;
 
         _southServiceWall = southServiceWall;
         _southEastServiceWall = southEastServiceWall;
@@ -81,6 +89,40 @@ public class Referee
 
         _player1 = player1;
         _aiPlayer = aiPlayer;
+        _player2 = player2;
+        SetGameMode();
+        DisableExtraPlayer();
+    }
+
+    private void SetGameMode()
+    {
+        _player1.SetGameMode(_twoPlayers);
+        if (_twoPlayers)
+        {
+            _player2.SetGameMode(_twoPlayers);
+        }
+        else
+        {
+            _aiPlayer.SetDifficulty(_difficulty);
+        }
+    }
+
+    private void DisableExtraPlayer()
+    {
+        if (_twoPlayers)
+        {
+            _aiPlayer.gameObject.SetActive(false);
+            _aiPlayer.GetComponent<Collider>().enabled = false;
+        }
+        else
+        {
+            foreach(var collider in _player2.GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
+            _player2.gameObject.SetActive(false);
+
+        }
     }
 
     // Returns -1 if is point for opponent, 1 if is point for hitting team or zero if it is not point
@@ -108,13 +150,6 @@ public class Referee
             }
             else if (IsOut(bouncePosition))
             {
-//                if (_serviceTimes == 1)
-//                {
-//                    Debug.Log("First service Out");
-//                    _serviceTimes = 2;
-//                    MakePlayerServe(hitter);
-//                    return 0;
-//                } TODO when check for second service enabled
                 Debug.Log("out");
                 returnValue = -1;
             }
@@ -129,8 +164,45 @@ public class Referee
                 _lastBoucedSide = 0;
             }
         }
-
+        
         return returnValue;
+    }
+
+    public void MakeCelebrateAndAngry(int hitter, bool celebrate)
+    {
+        if (hitter == 1)
+        {
+            if (celebrate)
+            {
+                _player1.Celebrate();
+            }
+            else
+            {
+                _player1.Angry();                
+            }
+        }
+        else if (_twoPlayers)
+        {
+            if (celebrate)
+            {
+                _player2.Celebrate();
+            }
+            else
+            {
+                _player2.Angry();
+            }
+        }
+        else
+        {
+            if (celebrate)
+            {
+                _aiPlayer.Celebrate();
+            }
+            else
+            {
+                _aiPlayer.Angry();
+            }
+        }
     }
 
     public void UpdateLastHitter(int hitter)
@@ -171,7 +243,13 @@ public class Referee
     {
         if (_isServing)
         {
-          return CheckServiceLimits(bouncePosition);
+            int bouncingSide = GetBouncingSide(bouncePosition);
+            int hittingSide = GetHittingSide(BallLogic.Instance.GetHittingPlayer());
+            if (hittingSide == bouncingSide)
+            {
+                return true;
+            }
+            return CheckServiceLimits(bouncePosition);
         }
 
         if (bouncePosition.x < _southCourtSide.x || bouncePosition.x > _northCourtSide.x)
@@ -195,7 +273,12 @@ public class Referee
     {
         Side servingSide = ScoreManager.GetInstance().GetServingSide();
         int servingTeam = ScoreManager.GetInstance().GetServingTeam();
-        Side expectedSide = servingSide == Side.RIGHT ? Side.LEFT : Side.RIGHT;
+        Side expectedSide = servingSide;
+        if (servingTeam == 1)
+        {
+             expectedSide = servingSide == Side.RIGHT ? Side.LEFT : Side.RIGHT;
+        }
+
         return IsOutsideServiceBox(bouncePosition, servingTeam, expectedSide);
     }
 
@@ -291,9 +374,8 @@ public class Referee
     public void SetServing(bool serving)
     {
         _isServing = serving;
-        _serviceTimes = 1;
-       // int servingTeam = ScoreManager.GetInstance().GetServingTeam();
-       int servingTeam = 1; //TODO next version should use comented line and switch service between games
+        int servingTeam = ScoreManager.GetInstance().GetServingTeam();
+//       int servingTeam = 1; //TODO next version should use comented line and switch service between games
        if (servingTeam == 1)
         {
             _player1.SetServing(serving);
@@ -361,15 +443,46 @@ public class Referee
         {
             _player1.SetServing(true);
             _player1.SetInitialPosition();
-            _aiPlayer.SetServing(false);
-            _aiPlayer.Setinitialposition();
+            if (!_twoPlayers)
+            {
+                _aiPlayer.SetServing(false);
+                _aiPlayer.Setinitialposition();
+            }
+            else
+            {
+                _player2.SetServing(false);
+                _player2.SetInitialPosition();
+            }
         }
         else if(hitterId == 2)
         {
             _player1.SetServing(false);
             _player1.SetInitialPosition();
-            _aiPlayer.SetServing(true);
-            _aiPlayer.Setinitialposition();
+            if (!_twoPlayers)
+            {
+                _aiPlayer.SetServing(true);
+                _aiPlayer.Setinitialposition();
+            }
+            else
+            {
+                _player2.SetServing(true);
+                _player2.SetInitialPosition();
+            }
         }
+    }
+
+    public int GetServiceTimes()
+    {
+        return _serviceTimes;
+    }
+
+    public void IncreaseServiceTimes()
+    {
+        _serviceTimes++;
+    }
+
+    public void ResetServiceTimes()
+    {
+        _serviceTimes = 0;
     }
 }

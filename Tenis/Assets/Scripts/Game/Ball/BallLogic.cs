@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class BallLogic : MonoBehaviorSingleton<BallLogic>
 {
+    public delegate void BallHitDelegate(int hittingPlayerId);
+    public BallHitDelegate ballHitDelegate;
+
     private Rigidbody _rigidbody;
     
     private ScoreManager _scoreManager;
@@ -15,6 +18,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 
     private bool _isEnabled;
     private BallPhysic _ballPhysic;
+    private bool _collide;
 
     private void Start()
     {
@@ -22,31 +26,37 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         _rigidbody = GetComponent<Rigidbody>();
         _scoreManager = ScoreManager.GetInstance();
         _ballPhysic = new BallPhysic();
+        _collide = true;
         ResetConfig();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Wall"))
+        if (_collide)
         {
-            _scoreManager.ManageBounce(transform.position, _hittingPlayer);
-            AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_WALL);
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            ResetConfig();
-        }
-        else if (collision.gameObject.CompareTag("Ground"))
-        {
-            AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_BOUNCE);
-            _scoreManager.ManageBounce(transform.position, _hittingPlayer);
-        }
-        else if (collision.gameObject.CompareTag("Net"))
-        {
-           AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_NET);
-        }
-        else
-        {
-            Debug.Log("something else");
-            //TODO add point to hitter
+            ballHitDelegate(_hittingPlayer);
+
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                _scoreManager.ManageBounce(transform.position, _hittingPlayer);
+                AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_WALL);
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                ResetConfig();
+            }
+            else if (collision.gameObject.CompareTag("Ground"))
+            {
+                AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_BOUNCE);
+                _scoreManager.ManageBounce(transform.position, _hittingPlayer);
+            }
+            else if (collision.gameObject.CompareTag("Net"))
+            {
+                AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_NET);
+            }
+            else
+            {
+                Debug.Log("something else");
+                //TODO add point to hitter
+            }
         }
     }
 
@@ -83,6 +93,7 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
 
     public void AppearBall(Vector3 position, Vector3 velocity)
     {
+        _collide = true;
         _isEnabled = true;
         transform.position = position;
         GetComponent<Collider>().enabled = true;
@@ -132,5 +143,17 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
     public float GetHeight()
     {
         return transform.position.y;
+    }
+
+    public void DeactivateCollisions()
+    {
+        GetComponent<Collider>().enabled = false;
+
+        _collide = false;
+    }
+
+    public Vector3 GetCurrentVelocity()
+    {
+        return _rigidbody.velocity;
     }
 }

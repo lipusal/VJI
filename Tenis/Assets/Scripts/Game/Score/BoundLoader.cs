@@ -29,7 +29,8 @@ public class BoundLoader : MonoBehaviour
 
     // players
     public PlayerLogic player1;
-    public AIPlayer player2;
+    public AIPlayer aiPlayer;
+    public Player2Logic player2;
     void Start()
     {
         ScoreManager.GetInstance().LoadReferee(eastCourtSide.position, westCourtSide.position,
@@ -39,7 +40,7 @@ public class BoundLoader : MonoBehaviour
                                             northWestServiceWall, northMiddleServiceWall, 
                                             southServiceDelimiter.position, eastServiceDelimiter.position,
                                             westServiceDelimiter.position, northServiceDelimiter.position,
-                                            player1, player2, FindObjectOfType<GameManagerLogic>());
+                                            player1, aiPlayer, player2, FindObjectOfType<GameManagerLogic>());
         Debug.Log("creating referee");
     }
     

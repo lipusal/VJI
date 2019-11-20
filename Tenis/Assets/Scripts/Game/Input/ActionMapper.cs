@@ -26,7 +26,7 @@ namespace Game.Input
 
         public static bool GetHitPressed(KeyCode hitButton)
         {
-            return UnityEngine.Input.GetKeyDown(hitButton);
+            return UnityEngine.Input.GetKey(hitButton);
         }
 
         public static bool GetHitReleased(KeyCode hitButton)

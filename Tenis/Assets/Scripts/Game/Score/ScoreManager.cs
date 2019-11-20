@@ -19,6 +19,8 @@ public class ScoreManager
     private int _setNumber;
     private int[] _results;
     private Referee _referee;
+    private bool _twoPlayers;
+    private int _difficulty;
     
     private static ScoreManager _instance;
     private GameManagerLogic _gameManagerLogic;
@@ -33,6 +35,8 @@ public class ScoreManager
         _currentSet = new TenisSet();
         _sets[_setNumber] = _currentSet;
         _winnerId = 0;
+        _difficulty = 1;// default difficulty
+        _twoPlayers = false;
     }
 
     public static ScoreManager GetInstance()
@@ -51,8 +55,8 @@ public class ScoreManager
         GameObject northEastServiceWall, GameObject northWestServiceWall, 
         GameObject northMiddleServiceWall,  Vector3 southServiceDelimiter,
         Vector3 eastServiceDelimiter, Vector3 westServiceDelimiter,
-        Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer player2,
-        GameManagerLogic gameManagerLogic)
+        Vector3 northServiceDelimiter, PlayerLogic player1, AIPlayer Aiplayer,
+        Player2Logic player2, GameManagerLogic gameManagerLogic)
     {
         _gameManagerLogic = gameManagerLogic;
         _referee = new Referee(eastCourtSide, westCourtSide, southCourtSide, northCourtSide,
@@ -60,7 +64,7 @@ public class ScoreManager
                                 southMiddleServiceWall, northServiceWall, northEastServiceWall,
                                 northWestServiceWall, northMiddleServiceWall, southServiceDelimiter,
                                 eastServiceDelimiter, westServiceDelimiter, northServiceDelimiter,
-                                player1, player2);
+                                player1, Aiplayer, player2, _twoPlayers, _difficulty);
     }
     
     /**
@@ -69,11 +73,16 @@ public class ScoreManager
      */
     public bool OnPoint(int teamNumber)
     {
-        if (_currentSet.AddPoint(teamNumber))
+        if (_referee.GetIsServing() && _referee.GetServiceTimes() == 0)
+        {
+            _referee.IncreaseServiceTimes();
+        }
+        else if (_currentSet.AddPoint(teamNumber, _referee))
         {
             // Won set
+            _referee.ResetServiceTimes();
             _results[teamNumber - 1]++;
-            if (_results[teamNumber - 1] > maxSets/2)
+            if (_results[teamNumber - 1] > maxSets / 2)
             {
                 // Won match
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WIN);
@@ -91,6 +100,7 @@ public class ScoreManager
         else
         {
             // Won point, show score
+            _referee.ResetServiceTimes();
             int[] points = _currentSet.GetCurrentGameResults();
             SayScore(points[0], points[1]);
             AudioManager.Instance.PlaySound((int) SoundId.SOUND_CLAP);
@@ -98,7 +108,7 @@ public class ScoreManager
         
         // Reset ball and server
         BallLogic.Instance.ResetConfig();
-        _referee.MakePlayerServe(1); //TODO change to opponent when game
+        _referee.MakePlayerServe(GetServingTeam()); //TODO change to opponent when game
         TriggerCallout();
 
         return false;
@@ -202,7 +212,15 @@ public class ScoreManager
         }
         else if (team1Points != 0 || team2Points != 0) // No callout for 0-0
         {
-            AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team1Points, team2Points));
+            if (GetServingTeam() == 1)
+            {
+                AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team1Points, team2Points));
+            }
+            else
+            {
+                AudioManager.Instance.PlaySound(TenisGameSoundList.GetPointSoundId(team2Points, team1Points));
+
+            }
         }
     }
 
@@ -211,8 +229,10 @@ public class ScoreManager
         int result = _referee.IsPoint(bouncePosition, hitterId);
         if (result > 0)
         {
+            BallLogic.Instance.DeactivateCollisions();
             if (OnPoint(hitterId))
             {
+                BallLogic.Instance.DeactivateCollisions();
                 if (hitterId == 1)
                 {
                     Debug.Log("You win");
@@ -223,14 +243,18 @@ public class ScoreManager
                     Debug.Log("You lose");
                     _gameManagerLogic.EndGame(false);
                 }
+
+                return;
             }
         }
         else if (result < 0)
         {
+            BallLogic.Instance.DeactivateCollisions();
             if (_referee.IsOut(bouncePosition))
             {
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_OUT);
             }
+          
             int opponentId = (hitterId % 2) + 1;
             if (OnPoint(opponentId))
             {
@@ -245,6 +269,7 @@ public class ScoreManager
                     _gameManagerLogic.EndGame(false);
                 }
             }
+            
         }
 
         if(result == 0 && hitterId != 0)
@@ -252,7 +277,6 @@ public class ScoreManager
             _referee.SetServing(false);
         }
         _referee.ResetHitters();
-
     }
 
     public string[] GetPartialResults()
@@ -324,11 +348,11 @@ public class ScoreManager
         
         if ((results[0] + results[1]) % 2 == 0)
         {
-            resultSide = servingTeam == 1 ? Side.RIGHT : Side.LEFT;
+            resultSide =  Side.RIGHT;
         }
         else
         {
-            resultSide = servingTeam == 1 ? Side.LEFT : Side.RIGHT;
+            resultSide = Side.LEFT;
         }
 
         return resultSide;
@@ -377,6 +401,14 @@ public class ScoreManager
     {
         _referee.ActivateServingWalls(id);
     }
+    
+    public void DeactivateServingWalls(int id)
+    {
+        if (_referee != null)
+        {
+            _referee.DeactivateServingWalls(id);
+        }
+    }
 
     public bool CanPlayerHit(int playerId)
     {
@@ -391,10 +423,42 @@ public class ScoreManager
     {
         return _winnerId;
     }
+
+    public void SetGameMode(bool twoPlayers)
+    {
+        _twoPlayers = twoPlayers;
+    }
+
+    public void SetGameDifficulty(int difficulty)
+    {
+        _difficulty = difficulty;
+    }
+
+
+    public bool IsTwoPlayers()
+    {
+        return _twoPlayers;
+    }
+
+    public int GetGameDifficulty()
+    {
+        return _difficulty;
+    }
+
+    public void ResetScore()
+    {
+        _results = new int[2];
+        _sets = new TenisSet[maxSets];
+        _setNumber = 0;
+        _currentSet = new TenisSet();
+        _sets[_setNumber] = _currentSet;
+        _winnerId = 0;
+        _referee = null;
+    }
+    
     public int MaxSets
     {
         get => maxSets;
         set => maxSets = value;
     }
-    
 }
