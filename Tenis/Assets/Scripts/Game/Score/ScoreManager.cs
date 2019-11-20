@@ -90,13 +90,15 @@ public class ScoreManager
                 AudioManager.Instance.PlaySound((int) SoundId.SOUND_WOW_CLAP);
                 BallLogic.Instance.ResetConfig();
                 _winnerId = teamNumber;
-                
+                CalloutScript.Instance.TriggerCallout($"Game, set and match {GetTeamName(teamNumber)}!");
+
                 return true;
             }
             // Advance to next set
             _currentSet = new TenisSet();
             _setNumber++;
             _sets[_setNumber] = _currentSet;
+            CalloutScript.Instance.TriggerCallout($"Set {GetTeamName(teamNumber)}");
         }
         else
         {
@@ -124,14 +126,14 @@ public class ScoreManager
         int advantageTeam;
 
         // Match point?
-        advantageTeam = IsMatchPoint(_currentSet.GetCurrentGameResults(), GetSetsResults());
+        advantageTeam = IsMatchPoint(_currentSet.GetCurrentGameResults(), _currentSet.GetResults(), GetSetsResults());
         if (advantageTeam != 0)
         {
             CalloutScript.Instance.TriggerCallout($"Match point {GetTeamName(advantageTeam)}{GetBreakPointSuffix(advantageTeam)}"); ;
             return;
         }
         // Set point?
-        advantageTeam = IsSetPoint(_currentSet.GetCurrentGameResults(), GetSetsResults());
+        advantageTeam = IsSetPoint(_currentSet.GetCurrentGameResults(), _currentSet.GetResults());
         if (advantageTeam != 0)
         {
             CalloutScript.Instance.TriggerCallout($"Set point {GetTeamName(advantageTeam)}{GetBreakPointSuffix(advantageTeam)}");
@@ -214,9 +216,9 @@ public class ScoreManager
     /// Checks if the current score is in set point condition.
     /// </summary>
     /// <param name="currentGamePoints">Current game points</param>
-    /// <param name="games">Current set games per team</param>
+    /// <param name="currentSetGames">Current set games per team</param>
     /// <returns>1 if team 1 is on set point, 2 if team 2 is on set point, 0 otherwise.</returns>
-    private int IsSetPoint(int[] currentGamePoints, int[] games)
+    private int IsSetPoint(int[] currentGamePoints, int[] currentSetGames)
     {
         int gamePointTeam = IsGamePoint(currentGamePoints);
         if (gamePointTeam == 0)
@@ -224,8 +226,8 @@ public class ScoreManager
             return 0;
         }
 
-        int possibleWinnerGames = gamePointTeam == 1 ? games[0] + 1 : games[1] + 1;
-        int otherPlayerGames = gamePointTeam == 1 ? games[1] : games[0];
+        int possibleWinnerGames = gamePointTeam == 1 ? currentSetGames[0] + 1 : currentSetGames[1] + 1;
+        int otherPlayerGames = gamePointTeam == 1 ? currentSetGames[1] : currentSetGames[0];
            
         if (possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET - 1 && (possibleWinnerGames - otherPlayerGames >= 2) ||
             possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET)
@@ -236,9 +238,9 @@ public class ScoreManager
         return 0;
     }
 
-    private int IsMatchPoint(int[] currentGamePoints, int[] games)
+    private int IsMatchPoint(int[] currentGamePoints, int[] currentSetGames, int[] sets)
     {
-        int possibleWinnerTeam = IsSetPoint(currentGamePoints, games);
+        int possibleWinnerTeam = IsSetPoint(currentGamePoints, currentSetGames);
         int possibleWinnerSets = 0;
 
         if (possibleWinnerTeam == 0)
@@ -246,8 +248,8 @@ public class ScoreManager
             return 0;
         }
         
-        int player1Sets = _currentSet.GetResults()[0];
-        int player2Sets = _currentSet.GetResults()[1];
+        int player1Sets = sets[0];
+        int player2Sets = sets[1];
         possibleWinnerSets = possibleWinnerTeam == 1 ? player1Sets + 1 : player2Sets + 1;
 
         if (possibleWinnerSets > maxSets / 2)

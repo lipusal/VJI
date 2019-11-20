@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using Game.UI;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class TenisSet
 {
@@ -92,6 +89,10 @@ public class TenisSet
             if (AddGame(playerId))
             {
                 return true;
+            }
+            else
+            {
+                CalloutScript.Instance.TriggerCallout($"Game {ScoreManager.GetInstance().GetTeamName(playerId)}");
             }
             _currentGame = new TenisGame();
             _gameNumber++;
