@@ -18,6 +18,7 @@ public class PowerBar : MonoBehaviour
         _powerBar.maxValue = _playerLogicComponent.maxHitForce;
 
         BallLogic.Instance.ballHitDelegate += ResetPowerBar;
+        _playerLogicComponent.initialPositionSetEvent += ResetBar;
     }
 
     // Update is called once per frame
@@ -33,7 +34,12 @@ public class PowerBar : MonoBehaviour
     {
         if(!_playerLogicComponent.IsChargingHit() && hittingPlayerId == _playerLogicComponent.GetId())
         {
-          _powerBar.value = _powerBar.minValue;
+            ResetBar();
         }
+    }
+
+    private void ResetBar()
+    {
+        _powerBar.value = _powerBar.minValue;
     }
 }

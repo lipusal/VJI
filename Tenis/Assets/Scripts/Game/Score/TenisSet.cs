@@ -49,13 +49,14 @@ public class TenisSet
         else
         {
             _results[playerId - 1]++;
+            _servingTeam = (_servingTeam  % 2) + 1;
+
             if (HasWon(playerId))
             {
                 _winner = playerId;
                 return true;
             }
             
-            _servingTeam = (_servingTeam  % 2) + 1;
         }
 
         return false;

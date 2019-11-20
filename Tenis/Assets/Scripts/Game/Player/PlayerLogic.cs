@@ -26,6 +26,9 @@ public class PlayerLogic : MonoBehaviour
 
     //Ball to be animated on serve
     public GameObject animatableServeBallPrefab;
+    
+    public delegate void OnInitialPositionSetDelegate();
+    public OnInitialPositionSetDelegate initialPositionSetEvent;
 
     public Transform aimTarget;
     public float aimTargetSpeed = 18;
@@ -134,6 +137,7 @@ public class PlayerLogic : MonoBehaviour
         Vector3 newPosition = new Vector3(x, currentPosition.y, z);
         transform.position = newPosition;
         _characterController.enabled = true;
+        initialPositionSetEvent();
     }
 
     public virtual void SetAimPosition(Side servingSide)
