@@ -554,4 +554,9 @@ public class ScoreManager
         get => gamesPerSet;
         set => gamesPerSet = value;
     }
+
+    public TenisSet[] GetFinalResult()
+    {
+        return _sets;
+    }
 }
