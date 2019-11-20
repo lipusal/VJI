@@ -18,8 +18,11 @@ public class EndGameScoreBoard : MonoBehaviour
 
         for (int i = 0; i < quantity; i++)
         {
-            player1Result = player1Result + sets[i].GetResult()[0] + "  ";
-            player2Result = player2Result + sets[i].GetResult()[1] + "  ";
+            if (sets[i] != null)
+            {
+                player1Result = player1Result + sets[i].GetResult()[0] + "  ";
+                player2Result = player2Result + sets[i].GetResult()[1] + "  ";
+            }
         }
 
         player1Points.text = player1Result;
