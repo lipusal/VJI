@@ -297,6 +297,7 @@ public class ScoreManager
             if (OnPoint(hitterId))
             {
                 BallLogic.Instance.DeactivateCollisions();
+                _currentSet.ResetCurrentGame();
                 if (hitterId == 1)
                 {
                     Debug.Log("You win");

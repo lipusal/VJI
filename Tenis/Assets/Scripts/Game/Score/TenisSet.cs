@@ -122,4 +122,9 @@ public class TenisSet
     {
         return _servingTeam;
     }
+
+    public void ResetCurrentGame()
+    {
+        _currentGame = new TenisGame();
+    }
 }
