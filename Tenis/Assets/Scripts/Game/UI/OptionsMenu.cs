@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class OptionsMenu : MonoBehaviour
 {
-  private float _delayTime = 1f;
+  private float _delayTime = 0.5f;
   public TextMeshProUGUI actionText;
   private int _option;
 
@@ -88,6 +88,6 @@ public class OptionsMenu : MonoBehaviour
   }
   private void LoadMainMenu()
   {
-//    SceneManager.LoadScene("TenisMatch"); TODO replace with main menu
+    SceneManager.LoadScene("MainMenu");
   }
 }
