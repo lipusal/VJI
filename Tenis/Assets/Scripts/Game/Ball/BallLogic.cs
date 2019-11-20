@@ -51,6 +51,12 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
             else if (collision.gameObject.CompareTag("Net"))
             {
                 AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_NET);
+                if (transform.position.y <= -1.3)
+                {
+                    DesapearBall();
+                    _rigidbody.velocity = Vector3.zero;
+                    _scoreManager.ManageBounce(transform.position, _hittingPlayer);
+                }
             }
             else
             {

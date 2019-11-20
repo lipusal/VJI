@@ -131,6 +131,10 @@ public class Referee
         int returnValue = 0;
         if (hitter != 0)
         {
+            if (BallLogic.Instance.IsEnabled() == false)
+            {
+                return -1;
+            }
             int currentSide = GetBouncingSide(bouncePosition);
             int hittingSide = GetHittingSide(hitter);
             if (currentSide == _lastBoucedSide && _lastBoucedSide != 0 && _previousToLastHitter == 0)
