@@ -1,10 +1,9 @@
-using Game.UI;
+﻿using Game.UI;
 using UnityEngine;
 
 public class TenisSet
 {
-//    private const int MAX_GAMES_PER_SET = 7;
-    public const int MAX_GAMES_PER_SET = 1;
+    public const int MAX_GAMES_PER_SET = 2; // TODO make this a variable (not constant), move it to ScoreManager, and change it from main menu
     private readonly TenisGame[] _games;
     private readonly int[] _results;
     private TenisGame _currentGame;
