@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
-    public GameObject mainScreen, settingsScreen;
+    public GameObject mainScreen, settingsScreen, infoScreen;
     public TextMeshProUGUI setsTitle, gamesPerSetTitle;
 
     private void Update()
@@ -33,6 +33,11 @@ public class MainMenuScript : MonoBehaviour
     public void OnSettingsClick()
     {
         GoToSettings();
+    }
+
+    public void OnInfoClick()
+    {
+        GoToInfo();
     }
     
     public void OnBackClick()
@@ -61,10 +66,17 @@ public class MainMenuScript : MonoBehaviour
         settingsScreen.SetActive(true);
         mainScreen.SetActive(false);
     }
+
+    private void GoToInfo()
+    {
+        infoScreen.SetActive(true);
+        mainScreen.SetActive(false);
+    }
     
     private void GoToMainScreen()
     {
         settingsScreen.SetActive(false);
+        infoScreen.SetActive(false);
         mainScreen.SetActive(true);
     }
 }
