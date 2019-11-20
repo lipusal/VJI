@@ -9,7 +9,13 @@ using UnityEngine.UI;
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject mainScreen, settingsScreen;
-    public Button[] setButtons;
+    public TextMeshProUGUI setsTitle, gamesPerSetTitle;
+
+    private void Update()
+    {
+        setsTitle.SetText($"Sets to play: {ScoreManager.GetInstance().MaxSets}");
+        gamesPerSetTitle.SetText($"Games per set: {ScoreManager.GetInstance().GamesPerSet}");
+    }
 
     public void OnPlayClick(bool play2Players)
     {
@@ -43,6 +49,11 @@ public class MainMenuScript : MonoBehaviour
     public void SetMaxSets(int maxSets)
     {
         ScoreManager.GetInstance().MaxSets = maxSets;
+    }
+    
+    public void SetGamesPerSet(int gamesPerSet)
+    {
+        ScoreManager.GetInstance().GamesPerSet = gamesPerSet;
     }
 
     private void GoToSettings()

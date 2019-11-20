@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class TenisSet
 {
-    public const int MAX_GAMES_PER_SET = 2; // TODO make this a variable (not constant), move it to ScoreManager, and change it from main menu
     private readonly TenisGame[] _games;
     private readonly int[] _results;
     private TenisGame _currentGame;
@@ -13,9 +12,9 @@ public class TenisSet
     // 0 if no one has won the game yet, 1 if player one won and 2 if player two won.
     private int _winner;
 
-    public TenisSet()
+    public TenisSet(int gamesPerSet)
     {
-        _games = new TenisGame[MAX_GAMES_PER_SET + MAX_GAMES_PER_SET - 1];
+        _games = new TenisGame[2 * gamesPerSet - 1];
         _results = new int[2];
         _winner = 0;
         _currentGame = new TenisGame();
@@ -68,7 +67,7 @@ public class TenisSet
         int playerGames = _results[playerId - 1];
         int otherPlayerGames = _results[otherPlayerId - 1];
 
-        if (playerGames == MAX_GAMES_PER_SET - 1 && (playerGames - otherPlayerGames >= 2) || playerGames == MAX_GAMES_PER_SET)
+        if (playerGames == ScoreManager.GetInstance().GamesPerSet - 1 && (playerGames - otherPlayerGames >= 2) || playerGames == ScoreManager.GetInstance().GamesPerSet)
         {
             return true;
         }

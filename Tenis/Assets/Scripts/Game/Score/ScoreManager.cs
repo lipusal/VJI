@@ -13,7 +13,12 @@ public class ScoreManager
     /// Maximum number of sets to play. Best of MAX_SETS wins, ie. it is enough to win (MAX_SETS/2) + 1 sets (integer division).
     /// E.g. If MAX_SETS is 3, 2 consecutive sets is enough to win. 3 sets would be played if each player has won 1 set.
     /// </summary>
-    private int maxSets = 3;
+    private int maxSets = 1;
+
+    /// <summary>
+    /// Number of games necessary to win a set.
+    /// </summary>
+    private int gamesPerSet = 2;
 
     private TenisSet[] _sets;
     private TenisSet _currentSet;
@@ -33,7 +38,7 @@ public class ScoreManager
         _results = new int[2];
         _sets = new TenisSet[maxSets];
         _setNumber = 0;
-        _currentSet = new TenisSet();
+        _currentSet = new TenisSet(GamesPerSet);
         _sets[_setNumber] = _currentSet;
         _winnerId = 0;
         _difficulty = 1;// default difficulty
@@ -95,7 +100,7 @@ public class ScoreManager
                 return true;
             }
             // Advance to next set
-            _currentSet = new TenisSet();
+            _currentSet = new TenisSet(GamesPerSet);
             _setNumber++;
             _sets[_setNumber] = _currentSet;
             CalloutScript.Instance.TriggerCallout($"Set {GetTeamName(teamNumber)}");
@@ -229,8 +234,8 @@ public class ScoreManager
         int possibleWinnerGames = gamePointTeam == 1 ? currentSetGames[0] + 1 : currentSetGames[1] + 1;
         int otherPlayerGames = gamePointTeam == 1 ? currentSetGames[1] : currentSetGames[0];
            
-        if (possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET - 1 && (possibleWinnerGames - otherPlayerGames >= 2) ||
-            possibleWinnerGames == TenisSet.MAX_GAMES_PER_SET)
+        if (possibleWinnerGames == GamesPerSet - 1 && (possibleWinnerGames - otherPlayerGames >= 2) ||
+            possibleWinnerGames == GamesPerSet)
         {
             return gamePointTeam;
         }
@@ -513,7 +518,7 @@ public class ScoreManager
         _results = new int[2];
         _sets = new TenisSet[maxSets];
         _setNumber = 0;
-        _currentSet = new TenisSet();
+        _currentSet = new TenisSet(GamesPerSet);
         _sets[_setNumber] = _currentSet;
         _winnerId = 0;
         _referee = null;
@@ -542,5 +547,11 @@ public class ScoreManager
     {
         get => maxSets;
         set => maxSets = value;
+    }
+
+    public int GamesPerSet
+    {
+        get => gamesPerSet;
+        set => gamesPerSet = value;
     }
 }
