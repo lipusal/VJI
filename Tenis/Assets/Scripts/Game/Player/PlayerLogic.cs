@@ -85,7 +85,7 @@ public class PlayerLogic : MonoBehaviour
         _currentHitForce = minHitForce;
         _playerAnimation =  new PlayerAnimation(GetComponent<Animator>());
         _aimStartPosition = aimTarget.position;
-        _maxReach = 5f;//TODO update later with sphere collider radius
+        _maxReach = 5f;
         _scoreManager = ScoreManager.GetInstance();
         SetID();
         SetIsServing();
@@ -240,21 +240,14 @@ public class PlayerLogic : MonoBehaviour
 
         if (ActionMapper.GetHitReleased(hitButton))
         {
-//              _isCharging = false;
-//            _finishHitting = true;
             if (_isServing && ball.GetHittingPlayer() == 0)
             {
                 _isCharging = false;
                 _playerAnimation.StartServeAnimation();
 
                 _animatedServingBall = Instantiate(animatableServeBallPrefab, transform.position + Vector3.up*animatableServeBallPrefab.GetComponent<BallServeAnimation>().verticalAppearOffset, Quaternion.identity);
-               // ball.PlayServingAnimationCurve();
             }
-            //            else
-            //            {
-            //                //DetectBallSide();
-            //                _playerAnimation.StartHittingAnimation(_ballSide);
-            //            }
+           
         }
     }
 
@@ -265,8 +258,6 @@ public class PlayerLogic : MonoBehaviour
         _playerAnimation.AnimateMovement(leftRightMove, forwardBackardMove);
         var vec = new Vector3(forwardBackardMove, 0, -leftRightMove);
         _characterController.SimpleMove(vec * _playerSpeed);
-        //TODO steps sound as animation event
-       // AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS); 
     }
 
    
@@ -287,13 +278,9 @@ public class PlayerLogic : MonoBehaviour
         if (_ball != null && _isCharging)
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
-            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
             float time = GetTimeToBounce(1.0f, 2.5f);
-//           Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 1.5f);//change time in function of currentHitForce
-           Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);//change time in function of currentHitForce
-
-           //            _ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, 6.2f, 0);
-            _ball.GetComponent<Rigidbody>().velocity = velocity;
+           Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
+           _ball.GetComponent<Rigidbody>().velocity = velocity;
             _currentHitForce = minHitForce;
             BallLogic.Instance.SetHittingPlayer(_id);
             BallLogic.Instance.ballHitDelegate(_id);
@@ -315,17 +302,13 @@ public class PlayerLogic : MonoBehaviour
     private void Serve()
     {
         Vector3 currentPosition = transform.position;
-//        Vector3 aimDirection = (aimTarget.position - currentPosition).normalized;
-        //float serveForce = 40f; //TODO use a private variable for serve force
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero);
         float time = GetTimeToBounce(0.8f, 2.0f);
         Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
         ball.GetComponent<Rigidbody>().velocity = velocity;
-//        ball.GetComponent<Rigidbody>().velocity = aimDirection * _currentHitForce + new Vector3(0, -1.2f, 0);
         BallLogic.Instance.SetHittingPlayer(_id);
         Destroy(_animatedServingBall);
-        //ball.StopServingAnimationCurve();
     }
 
 
@@ -341,7 +324,6 @@ public class PlayerLogic : MonoBehaviour
             if (distance <= _maxReach && BallLogic.Instance.GetHeight() < 3.85f)
             {
                 _ball = other.gameObject;
-                //todo animation of hit activate value
                 HitBall();
             }
         }
@@ -350,7 +332,6 @@ public class PlayerLogic : MonoBehaviour
     public void SetServing(bool serving)
     {
         _isServing = serving;
-       // _currentHitForce = minHitForce;
     }
 
     public int GetId()

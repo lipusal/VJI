@@ -157,7 +157,6 @@ public class AIPlayer : MonoBehaviour
             _characterController.Move(Time.deltaTime * _speed * movingDirection);
             _playerAnimation.StartMoveAnimation(GetMovementDirection(movingDirection));
             return true;
-//        AudioManager.Instance.PlaySound(transform.position, (int) SoundId.SOUND_STEPS);     
         }
 
         return false;
@@ -192,7 +191,6 @@ public class AIPlayer : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-//            Vector3 aimDirection = (aimTarget.position - transform.position).normalized;
             _playerAnimation.StartHittingAnimation(Side.RIGHT);
             HitBall();
         }
@@ -212,8 +210,6 @@ public class AIPlayer : MonoBehaviour
     {
         BallLogic ball = BallLogic.Instance;
         Vector3 aimPosition = _AIStrategy.GeneratePositionBasedOnDifficulty(difficulty);
-//        Vector3 aimPosition = _AIStrategy.GenerateRandomPosition();
-//        Vector3 aimPosition = _AIStrategy.GenerateAwayFromPlayerPosition();
         Vector3 velocity = BallLogic.Instance.GetVelocity(aimPosition, _timeToBounce);//change time in function of currentHitForce
         AudioManager.Instance.PlaySound(ball.transform.position, (int) SoundId.SOUND_HIT);
         ball.GetComponent<Rigidbody>().velocity = velocity;
@@ -228,7 +224,7 @@ public class AIPlayer : MonoBehaviour
     
     private void DeleteBallReference()
     {
-        //TODO its here just to use same animation as player 1
+        // its here just to use same animation as player 1
     }
 
     public void Setinitialposition()

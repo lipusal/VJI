@@ -39,12 +39,12 @@ public class TenisSet
     {
         if (_winner != 0)
         {
-            Debug.Log("El set ya termino");//TODO make exception
+            Debug.Log("El set ya termino");
    
         }
         else if (playerId != 1 && playerId != 2)
         {
-            Debug.Log("No existe el id del jugador para agregar game");//TODO make exception
+            Debug.Log("No existe el id del jugador para agregar game");
         }
         else
         {

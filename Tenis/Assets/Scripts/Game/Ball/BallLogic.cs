@@ -61,7 +61,6 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
             else
             {
                 Debug.Log("something else");
-                //TODO add point to hitter
             }
         }
     }
@@ -75,7 +74,6 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         {
             int opponentId = (playerId % 2) + 1;
             ScoreManager.GetInstance().OnPoint(opponentId);
-            //TODO check if match finished
         }
     }
 
@@ -84,7 +82,6 @@ public class BallLogic : MonoBehaviorSingleton<BallLogic>
         DesapearBall();
         _hittingPlayer = 0;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-//        GetComponent<ParticleSystem>().Pause();
         ParticleSystem.EmissionModule emissionModule = GetComponent<ParticleSystem>().emission;
         emissionModule.enabled = false;
 

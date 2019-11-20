@@ -70,7 +70,7 @@ public class Referee
         _previousToLastHitter = 0;
         _isServing = true;
         _serviceTimes = 0;
-        _twoPlayers = twoPlayers; //TODO juan uncomment this        
+        _twoPlayers = twoPlayers; 
         _difficulty = difficulty;
 
         _southServiceWall = southServiceWall;
@@ -239,7 +239,6 @@ public class Referee
             return 1;
         }
         
-        //TODO exception invalid hitter
         return 2;
     }
 
@@ -379,7 +378,6 @@ public class Referee
     {
         _isServing = serving;
         int servingTeam = ScoreManager.GetInstance().GetServingTeam();
-//       int servingTeam = 1; //TODO next version should use comented line and switch service between games
        if (servingTeam == 1)
         {
             _player1.SetServing(serving);
@@ -404,7 +402,6 @@ public class Referee
 
     public void ActivateServingWalls(int id)
     {
-       //TODO implement enable walls
        if (id == 1) //south
        {
            _southServiceWall.GetComponent<Collider>().enabled = true;
@@ -422,7 +419,6 @@ public class Referee
     }
     public void DeactivateServingWalls(int id)
     {
-        //TODO implement enable walls
         if (id == 1) //south
         {
             _southServiceWall.GetComponent<Collider>().enabled = false;

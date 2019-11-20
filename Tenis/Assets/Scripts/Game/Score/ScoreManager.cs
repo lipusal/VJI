@@ -116,7 +116,7 @@ public class ScoreManager
         
         // Reset ball and server
         BallLogic.Instance.ResetConfig();
-        _referee.MakePlayerServe(GetServingTeam()); //TODO change to opponent when game
+        _referee.MakePlayerServe(GetServingTeam());
         TriggerCallout();
 
         return false;
