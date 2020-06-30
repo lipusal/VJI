@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
-    public KeyCode pauseKey = KeyCode.Escape;
+    public KeyCode[] pauseKeys = { KeyCode.Escape, KeyCode.JoystickButton7 }; // Start on PS, Menu on XBox (note, will poll any controller)
     public GameObject pauseMenu;
     public GameObject scoreboard;
     private bool _isPaused;
@@ -19,7 +20,7 @@ public class PauseMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(pauseKey))
+        if (ActionMapper.IsButtonPressed(pauseKeys))
         {
             if (_isPaused)
             {

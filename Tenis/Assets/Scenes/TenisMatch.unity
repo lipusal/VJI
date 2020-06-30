@@ -24362,8 +24362,11 @@ MonoBehaviour:
   leftButton: 276
   rightButton: 275
   forwardButton: 273
-  bacwardButton: 274
+  backwardButton: 274
   hitButton: 108
+  horizontalAxis: Horizontal1
+  verticalAxis: Vertical1
+  hitJoystickButton: 352
   animatableServeBallPrefab: {fileID: 7074531575897229647, guid: 839011c8677016b4481c644e92696f94,
     type: 3}
   aimTarget: {fileID: 598947288}
@@ -31724,8 +31727,11 @@ MonoBehaviour:
   leftButton: 97
   rightButton: 100
   forwardButton: 119
-  bacwardButton: 115
+  backwardButton: 274
   hitButton: 99
+  horizontalAxis: Horizontal2
+  verticalAxis: Vertical2
+  hitJoystickButton: 372
   animatableServeBallPrefab: {fileID: 7074531575897229647, guid: 839011c8677016b4481c644e92696f94,
     type: 3}
   aimTarget: {fileID: 1492476147}

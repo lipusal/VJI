@@ -9,20 +9,18 @@ using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
 {
-    // Button to move left
-    public KeyCode leftButton = KeyCode.LeftArrow;
+    // Keyboard buttons
+    public KeyCode leftButton = KeyCode.LeftArrow,
+                    rightButton = KeyCode.RightArrow,
+                    forwardButton = KeyCode.UpArrow,
+                    backwardButton = KeyCode.DownArrow,
+                    hitButton = KeyCode.A;
 
-    // Button to move right
-    public KeyCode rightButton = KeyCode.RightArrow;
+    // Joystick axes/buttons
+    public String horizontalAxis = "Horizontal1",
+                    verticalAxis = "Vertical1";
+    public KeyCode hitJoystickButton = KeyCode.Joystick1Button2; // Square on PS, X on XBox
 
-    // Button to move forward
-    public KeyCode forwardButton = KeyCode.UpArrow;
-
-    // Button to move backward
-    public KeyCode bacwardButton = KeyCode.DownArrow;
-
-    // Button to hit
-    public KeyCode hitButton = KeyCode.A;
 
     //Ball to be animated on serve
     public GameObject animatableServeBallPrefab;
@@ -197,27 +195,27 @@ public class PlayerLogic : MonoBehaviour
         BallLogic ball = BallLogic.Instance;
 
 
-        if (ActionMapper.GetMoveLeft(leftButton))
+        if (ActionMapper.GetMoveLeft(leftButton, horizontalAxis))
         {
             moveLeftRightValue += -1;
         }
 
-        if (ActionMapper.GetMoveRight(rightButton))
+        if (ActionMapper.GetMoveRight(rightButton, horizontalAxis))
         {
             moveLeftRightValue += 1;
         }
 
-        if (ActionMapper.GetMoveForward(forwardButton))
+        if (ActionMapper.GetMoveForward(forwardButton, verticalAxis))
         {
             moveForwardBackwardValue += 1;
         }
 
-        if (ActionMapper.GetMoveBackward(bacwardButton))
+        if (ActionMapper.GetMoveBackward(backwardButton, verticalAxis))
         {
             moveForwardBackwardValue += -1;
         }
 
-        if (ActionMapper.GetHitPressed(hitButton) && ball.GetHittingPlayer() != _id)
+        if (ActionMapper.GetHitPressed(hitButton, hitJoystickButton) && ball.GetHittingPlayer() != _id)
         {
             if (!_isCharging && _isServing)
             {
@@ -242,7 +240,7 @@ public class PlayerLogic : MonoBehaviour
             }
         }
 
-        if (ActionMapper.GetHitReleased(hitButton))
+        if (ActionMapper.GetHitReleased(hitButton, hitJoystickButton))
         {
             if (_isServing && ball.GetHittingPlayer() == 0)
             {
