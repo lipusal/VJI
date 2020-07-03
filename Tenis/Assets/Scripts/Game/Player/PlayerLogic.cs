@@ -37,7 +37,8 @@ public class PlayerLogic : MonoBehaviour
     private float _maxReach;
     public float minHitForce = 18f;
     public float deltaHitForce = 20.0f; // How much force is added per second while charging
-     public float maxHitForce = 40f;
+    public float maxHitForce = 40f;
+    public float _playerHitForce = 20f;
 
     public float _minimumOffSetToHitBall = -3.0f;
 
@@ -280,7 +281,10 @@ public class PlayerLogic : MonoBehaviour
         if (_ball != null && _isCharging)
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
-            float time = GetTimeToBounce(1.0f, 2.5f);
+            float minTime = GetHitMinTime();
+            float maxTime = GetHitMaxTime();
+            float time = GetTimeToBounce(minTime, maxTime);
+//            float time = GetTimeToBounce(1.0f, 2.5f);
            Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
            _ball.GetComponent<Rigidbody>().velocity = velocity;
             _currentHitForce = minHitForce;
@@ -290,6 +294,52 @@ public class PlayerLogic : MonoBehaviour
 
         _finishHitting = true;
         _isCharging = false;
+    }
+
+    private float GetHitMaxTime()
+    {
+        float maxTime = 4.0f;
+        if (_playerHitForce >= 80)
+        {
+            maxTime = 2.0f;
+        }
+        else if (_playerHitForce >= 60)
+        {
+            maxTime = 2.5f;
+        }
+        else if (_playerHitForce >= 40)
+        {
+            maxTime = 3.0f;
+        }
+        else if (_playerHitForce >= 20)
+        {
+            maxTime = 3.5f;
+        }
+
+        return maxTime;
+    }
+
+    private float GetHitMinTime()
+    {
+        float minTime = 2.0f;
+        if (_playerHitForce >= 80)
+        {
+            minTime = 1.0f;
+        }
+        else if (_playerHitForce >= 60)
+        {
+            minTime = 1.2f;
+        }
+        else if (_playerHitForce >= 40)
+        {
+            minTime = 1.5f;
+        }
+        else if (_playerHitForce >= 20)
+        {
+            minTime = 1.8f;
+        }
+
+        return minTime;
     }
 
     private float GetTimeToBounce(float minTime, float maxTime)
