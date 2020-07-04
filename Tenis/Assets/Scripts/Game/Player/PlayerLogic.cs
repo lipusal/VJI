@@ -362,13 +362,62 @@ public class PlayerLogic : MonoBehaviour
         Vector3 currentPosition = transform.position;
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero);
+//        float minTime = GetServeMinTime();
+//        float maxTime = GetServeMaxTime();
         float time = GetTimeToBounce(0.8f, 2.0f);
-        Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
+        Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 2.2f);
         ball.GetComponent<Rigidbody>().velocity = velocity;
         BallLogic.Instance.SetHittingPlayer(_id);
         Destroy(_animatedServingBall);
     }
 
+    private float GetServeMaxTime()
+    {
+        float serveForce = _stats.GetServeForce(); 
+        float maxTime = 2.2f;
+        if (serveForce >= 80)
+        {
+            maxTime = 1.4f;
+        }
+        else if (serveForce >= 60)
+        {
+            maxTime = 1.8f;
+        }
+        else if (serveForce >= 40)
+        {
+            maxTime = 1.9f;
+        }
+        else if (serveForce >= 20)
+        {
+            maxTime = 2.0f;
+        }
+
+        return maxTime;
+    }
+
+    private float GetServeMinTime()
+    {
+        float serveForce = _stats.GetServeForce();
+        float minTime = 1.4f;
+        if (serveForce >= 80)
+        {
+            minTime = 0.6f;
+        }
+        else if (serveForce >= 60)
+        {
+            minTime = 0.8f;
+        }
+        else if (serveForce >= 40)
+        {
+            minTime = 1.0f;
+        }
+        else if (serveForce >= 20)
+        {
+            minTime = 1.2f;
+        }
+
+        return minTime;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
