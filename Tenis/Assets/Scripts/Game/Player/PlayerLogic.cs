@@ -40,7 +40,7 @@ public class PlayerLogic : MonoBehaviour
     public float deltaHitForce = 20.0f; // How much force is added per second while charging
     public float maxHitForce = 40f;
     public float _hitForce = 20f; // TODO remove
-    
+    public float _serveForce = 20f; // TODO remove
     private PlayerStats _stats; 
     public float _minimumOffSetToHitBall = -3.0f;
 
@@ -91,7 +91,7 @@ public class PlayerLogic : MonoBehaviour
         _aimStartPosition = aimTarget.position;
         _maxReach = 5f;
         _scoreManager = ScoreManager.GetInstance();
-        _stats = new PlayerStats(_hitForce, 100f, 100f); 
+        _stats = new PlayerStats(_hitForce, _serveForce, _playerSpeed); 
         SetID();
         SetIsServing();
         SetInitialPosition();
@@ -259,11 +259,12 @@ public class PlayerLogic : MonoBehaviour
 
     private void UpdatePosition()
     {
+        float playerSpeed = _stats.GetSpeed();
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
         _playerAnimation.AnimateMovement(leftRightMove, forwardBackardMove);
         var vec = new Vector3(forwardBackardMove, 0, -leftRightMove);
-        _characterController.SimpleMove(vec * _playerSpeed);
+        _characterController.SimpleMove(vec * playerSpeed);
     }
 
    
