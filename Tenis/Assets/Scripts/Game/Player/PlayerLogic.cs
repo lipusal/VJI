@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FrameLord;
 using Game.Input;
+using Game.Player;
 using Game.Score;
 using TMPro;
 using UnityEngine;
@@ -38,8 +39,9 @@ public class PlayerLogic : MonoBehaviour
     public float minHitForce = 18f;
     public float deltaHitForce = 20.0f; // How much force is added per second while charging
     public float maxHitForce = 40f;
-    public float _playerHitForce = 20f;
-
+    public float _hitForce = 20f; // TODO remove
+    
+    private PlayerStats _stats; 
     public float _minimumOffSetToHitBall = -3.0f;
 
     protected ScoreManager _scoreManager;
@@ -89,6 +91,7 @@ public class PlayerLogic : MonoBehaviour
         _aimStartPosition = aimTarget.position;
         _maxReach = 5f;
         _scoreManager = ScoreManager.GetInstance();
+        _stats = new PlayerStats(_hitForce, 100f, 100f); 
         SetID();
         SetIsServing();
         SetInitialPosition();
@@ -298,20 +301,21 @@ public class PlayerLogic : MonoBehaviour
 
     private float GetHitMaxTime()
     {
+        float hitForce = _stats.GetHitForce(); 
         float maxTime = 4.0f;
-        if (_playerHitForce >= 80)
+        if (hitForce >= 80)
         {
             maxTime = 2.0f;
         }
-        else if (_playerHitForce >= 60)
+        else if (hitForce >= 60)
         {
             maxTime = 2.5f;
         }
-        else if (_playerHitForce >= 40)
+        else if (hitForce >= 40)
         {
             maxTime = 3.0f;
         }
-        else if (_playerHitForce >= 20)
+        else if (hitForce >= 20)
         {
             maxTime = 3.5f;
         }
@@ -321,20 +325,21 @@ public class PlayerLogic : MonoBehaviour
 
     private float GetHitMinTime()
     {
+        float hitForce = _stats.GetHitForce();
         float minTime = 2.0f;
-        if (_playerHitForce >= 80)
+        if (hitForce >= 80)
         {
             minTime = 1.0f;
         }
-        else if (_playerHitForce >= 60)
+        else if (hitForce >= 60)
         {
             minTime = 1.2f;
         }
-        else if (_playerHitForce >= 40)
+        else if (hitForce >= 40)
         {
             minTime = 1.5f;
         }
-        else if (_playerHitForce >= 20)
+        else if (hitForce >= 20)
         {
             minTime = 1.8f;
         }
