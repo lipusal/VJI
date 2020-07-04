@@ -362,10 +362,10 @@ public class PlayerLogic : MonoBehaviour
         Vector3 currentPosition = transform.position;
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero);
-//        float minTime = GetServeMinTime();
-//        float maxTime = GetServeMaxTime();
-        float time = GetTimeToBounce(0.8f, 2.0f);
-        Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, 2.2f);
+        float minTime = GetServeMinTime();
+        float maxTime = GetServeMaxTime();
+        float time = GetTimeToBounce(minTime, maxTime);
+        Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
         ball.GetComponent<Rigidbody>().velocity = velocity;
         BallLogic.Instance.SetHittingPlayer(_id);
         Destroy(_animatedServingBall);
