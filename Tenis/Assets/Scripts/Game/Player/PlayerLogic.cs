@@ -34,7 +34,7 @@ public class PlayerLogic : MonoBehaviour
     public MeshRenderer aimTargetRenderer;
     public float movementSpeed = 14f;
     private float _currentHitForce;
-    private float _playerSpeed = 50f;
+    public float _playerSpeed = 50f;
     private float _maxReach;
     public float minHitForce = 18f;
     public float deltaHitForce = 20.0f; // How much force is added per second while charging
@@ -259,7 +259,7 @@ public class PlayerLogic : MonoBehaviour
 
     private void UpdatePosition()
     {
-        float playerSpeed = _stats.GetSpeed();
+        float playerSpeed = GetPlayerSpeed(_stats.GetSpeed());
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
         _playerAnimation.AnimateMovement(leftRightMove, forwardBackardMove);
@@ -267,7 +267,28 @@ public class PlayerLogic : MonoBehaviour
         _characterController.SimpleMove(vec * playerSpeed);
     }
 
-   
+    private float GetPlayerSpeed(float speed)
+    {
+        float playerSpeed = 30f;
+        if (speed >= 80)
+        {
+            playerSpeed = 65f;
+        }
+        else if (speed >= 60)
+        {
+            playerSpeed = 55f;
+        }
+        else if (speed >= 40)
+        {
+            playerSpeed = 45f;
+        }
+        else if (speed >= 20)
+        {
+            playerSpeed = 40f;
+        }
+        return playerSpeed;
+    }
+
 
     private void UpdateAimTargetPosition()
     {
