@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FrameLord;
 using Game.Input;
+using Game.Player;
 using Game.Score;
 using TMPro;
 using UnityEngine;
@@ -33,12 +34,14 @@ public class PlayerLogic : MonoBehaviour
     public MeshRenderer aimTargetRenderer;
     public float movementSpeed = 14f;
     private float _currentHitForce;
-    private float _playerSpeed = 50f;
+    public float _playerSpeed = 50f;
     private float _maxReach;
     public float minHitForce = 18f;
     public float deltaHitForce = 20.0f; // How much force is added per second while charging
-     public float maxHitForce = 40f;
-
+    public float maxHitForce = 40f;
+    public float _hitForce = 20f; // TODO remove
+    public float _serveForce = 20f; // TODO remove
+    private PlayerStats _stats; 
     public float _minimumOffSetToHitBall = -3.0f;
 
     protected ScoreManager _scoreManager;
@@ -88,6 +91,7 @@ public class PlayerLogic : MonoBehaviour
         _aimStartPosition = aimTarget.position;
         _maxReach = 5f;
         _scoreManager = ScoreManager.GetInstance();
+        _stats = new PlayerStats(_hitForce, _serveForce, _playerSpeed); 
         SetID();
         SetIsServing();
         SetInitialPosition();
@@ -255,14 +259,36 @@ public class PlayerLogic : MonoBehaviour
 
     private void UpdatePosition()
     {
+        float playerSpeed = GetPlayerSpeed(_stats.GetSpeed());
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
         _playerAnimation.AnimateMovement(leftRightMove, forwardBackardMove);
         var vec = new Vector3(forwardBackardMove, 0, -leftRightMove);
-        _characterController.SimpleMove(vec * _playerSpeed);
+        _characterController.SimpleMove(vec * playerSpeed);
     }
 
-   
+    private float GetPlayerSpeed(float speed)
+    {
+        float playerSpeed = 30f;
+        if (speed >= 80)
+        {
+            playerSpeed = 65f;
+        }
+        else if (speed >= 60)
+        {
+            playerSpeed = 55f;
+        }
+        else if (speed >= 40)
+        {
+            playerSpeed = 45f;
+        }
+        else if (speed >= 20)
+        {
+            playerSpeed = 40f;
+        }
+        return playerSpeed;
+    }
+
 
     private void UpdateAimTargetPosition()
     {
@@ -280,7 +306,10 @@ public class PlayerLogic : MonoBehaviour
         if (_ball != null && _isCharging)
         {
             AudioManager.Instance.PlaySound(_ball.transform.position, (int) SoundId.SOUND_HIT);
-            float time = GetTimeToBounce(1.0f, 2.5f);
+            float minTime = GetHitMinTime();
+            float maxTime = GetHitMaxTime();
+            float time = GetTimeToBounce(minTime, maxTime);
+//            float time = GetTimeToBounce(1.0f, 2.5f);
            Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
            _ball.GetComponent<Rigidbody>().velocity = velocity;
             _currentHitForce = minHitForce;
@@ -290,6 +319,54 @@ public class PlayerLogic : MonoBehaviour
 
         _finishHitting = true;
         _isCharging = false;
+    }
+
+    private float GetHitMaxTime()
+    {
+        float hitForce = _stats.GetHitForce(); 
+        float maxTime = 4.0f;
+        if (hitForce >= 80)
+        {
+            maxTime = 2.0f;
+        }
+        else if (hitForce >= 60)
+        {
+            maxTime = 2.5f;
+        }
+        else if (hitForce >= 40)
+        {
+            maxTime = 3.0f;
+        }
+        else if (hitForce >= 20)
+        {
+            maxTime = 3.5f;
+        }
+
+        return maxTime;
+    }
+
+    private float GetHitMinTime()
+    {
+        float hitForce = _stats.GetHitForce();
+        float minTime = 2.0f;
+        if (hitForce >= 80)
+        {
+            minTime = 1.0f;
+        }
+        else if (hitForce >= 60)
+        {
+            minTime = 1.2f;
+        }
+        else if (hitForce >= 40)
+        {
+            minTime = 1.5f;
+        }
+        else if (hitForce >= 20)
+        {
+            minTime = 1.8f;
+        }
+
+        return minTime;
     }
 
     private float GetTimeToBounce(float minTime, float maxTime)
@@ -306,13 +383,62 @@ public class PlayerLogic : MonoBehaviour
         Vector3 currentPosition = transform.position;
         BallLogic ball = BallLogic.Instance;
         ball.AppearBall(new Vector3(currentPosition.x + 0.1f, 4.05f, currentPosition.z), Vector3.zero);
-        float time = GetTimeToBounce(0.8f, 2.0f);
+        float minTime = GetServeMinTime();
+        float maxTime = GetServeMaxTime();
+        float time = GetTimeToBounce(minTime, maxTime);
         Vector3 velocity = BallLogic.Instance.GetVelocity(aimTarget.position, time);
         ball.GetComponent<Rigidbody>().velocity = velocity;
         BallLogic.Instance.SetHittingPlayer(_id);
         Destroy(_animatedServingBall);
     }
 
+    private float GetServeMaxTime()
+    {
+        float serveForce = _stats.GetServeForce(); 
+        float maxTime = 2.2f;
+        if (serveForce >= 80)
+        {
+            maxTime = 1.4f;
+        }
+        else if (serveForce >= 60)
+        {
+            maxTime = 1.8f;
+        }
+        else if (serveForce >= 40)
+        {
+            maxTime = 1.9f;
+        }
+        else if (serveForce >= 20)
+        {
+            maxTime = 2.0f;
+        }
+
+        return maxTime;
+    }
+
+    private float GetServeMinTime()
+    {
+        float serveForce = _stats.GetServeForce();
+        float minTime = 1.4f;
+        if (serveForce >= 80)
+        {
+            minTime = 0.6f;
+        }
+        else if (serveForce >= 60)
+        {
+            minTime = 0.8f;
+        }
+        else if (serveForce >= 40)
+        {
+            minTime = 1.0f;
+        }
+        else if (serveForce >= 20)
+        {
+            minTime = 1.2f;
+        }
+
+        return minTime;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
