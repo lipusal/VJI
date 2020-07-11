@@ -34,13 +34,10 @@ public class PlayerLogic : MonoBehaviour
     public MeshRenderer aimTargetRenderer;
     public float movementSpeed = 14f;
     private float _currentHitForce;
-    public float _playerSpeed = 50f;
     private float _maxReach;
     public float minHitForce = 18f;
     public float deltaHitForce = 20.0f; // How much force is added per second while charging
     public float maxHitForce = 40f;
-    public float _hitForce = 20f; // TODO remove
-    public float _serveForce = 20f; // TODO remove
     private PlayerStats _stats; 
     public float _minimumOffSetToHitBall = -3.0f;
 
@@ -91,7 +88,7 @@ public class PlayerLogic : MonoBehaviour
         _aimStartPosition = aimTarget.position;
         _maxReach = 5f;
         _scoreManager = ScoreManager.GetInstance();
-        _stats = new PlayerStats(_hitForce, _serveForce, _playerSpeed); 
+        _stats = PlayerStats.GetInstance(); 
         SetID();
         SetIsServing();
         SetInitialPosition();
@@ -259,7 +256,7 @@ public class PlayerLogic : MonoBehaviour
 
     private void UpdatePosition()
     {
-        float playerSpeed = GetPlayerSpeed(_stats.GetSpeed());
+        float playerSpeed = GetPlayerSpeed(_stats.Speed);
         float leftRightMove = movementSpeed * moveLeftRightValue * Time.deltaTime;
         float forwardBackardMove = movementSpeed * moveForwardBackwardValue * Time.deltaTime;
         _playerAnimation.AnimateMovement(leftRightMove, forwardBackardMove);
@@ -323,7 +320,7 @@ public class PlayerLogic : MonoBehaviour
 
     private float GetHitMaxTime()
     {
-        float hitForce = _stats.GetHitForce(); 
+        float hitForce = _stats.HitForce; 
         float maxTime = 4.0f;
         if (hitForce >= 80)
         {
@@ -347,7 +344,7 @@ public class PlayerLogic : MonoBehaviour
 
     private float GetHitMinTime()
     {
-        float hitForce = _stats.GetHitForce();
+        float hitForce = _stats.HitForce;
         float minTime = 2.0f;
         if (hitForce >= 80)
         {
@@ -394,7 +391,7 @@ public class PlayerLogic : MonoBehaviour
 
     private float GetServeMaxTime()
     {
-        float serveForce = _stats.GetServeForce(); 
+        float serveForce = _stats.ServeForce; 
         float maxTime = 2.2f;
         if (serveForce >= 80)
         {
@@ -418,7 +415,7 @@ public class PlayerLogic : MonoBehaviour
 
     private float GetServeMinTime()
     {
-        float serveForce = _stats.GetServeForce();
+        float serveForce = _stats.ServeForce;
         float minTime = 1.4f;
         if (serveForce >= 80)
         {

@@ -7,6 +7,9 @@ using Game.Score;
 using Game.UI;
 using UnityEngine;
 
+/// <summary>
+/// Singleton that tracks score and exports methods related to score decisions.
+/// </summary>
 public class ScoreManager
 {
     /// <summary>

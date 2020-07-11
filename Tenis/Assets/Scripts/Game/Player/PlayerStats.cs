@@ -2,30 +2,62 @@ namespace Game.Player
 {
     public class PlayerStats
     {
-        private float _hitForce;
-        private float _serveForce;
-        private float _speed;
+        private static PlayerStats _instance;
+        public const int DefaultHitForce = 45; 
+        public const int DefaultServeForce = 45; 
+        public const int DefaultSpeed = 45;
+        public const int MaxStatSum = 201;
 
-        public PlayerStats(float hitForce, float serveForce, float speed)
+        public static PlayerStats GetInstance()
         {
-            _hitForce = hitForce;
-            _serveForce = serveForce;
-            _speed = speed;
+            if (_instance == null)
+            {
+                _instance = new PlayerStats();
+            }
+
+            return _instance;
         }
 
-        public float GetHitForce()
+        private PlayerStats()
         {
-            return _hitForce;
+            HitForce = DefaultHitForce;
+            ServeForce = DefaultServeForce;
+            Speed = DefaultSpeed;
         }
 
-        public float GetServeForce()
+        /// <summary>
+        /// Set all values to 0.
+        /// </summary>
+        public void Zero()
         {
-            return _serveForce;
+            HitForce = 0;
+            ServeForce = 0;
+            Speed = 0;
         }
 
-        public float GetSpeed()
+        /// <summary>
+        /// Set all values to defaults.
+        /// </summary>
+        public void Reset()
         {
-            return _speed;
+            HitForce = DefaultHitForce;
+            ServeForce = DefaultServeForce;
+            Speed = DefaultSpeed;
         }
+
+        /// <summary>
+        /// Get the sum of all stats.
+        /// </summary>
+        /// <returns>Sum of all stats.</returns>
+        public float GetTotal()
+        {
+            return HitForce + ServeForce + Speed;
+        }
+
+        public float HitForce { get; set; }
+
+        public float ServeForce { get; set; }
+
+        public float Speed { get; set; }
     }
 }
